@@ -33,11 +33,9 @@ class LkMeiTuanOrderController extends AdminController
             $grid->column('num');
 //            $grid->column('shop_id');//所属商家
             $grid->column('profit_ratio')->display(function () {
-                return '10%';
+                return ($this->profit_ratio*100).'%';
             });//让利比例
-            $grid->column('integral')->display(function () {
-                return $this->price*0.5;
-            });//获得积分
+            $grid->column('integral');//获得积分
 
             $grid->column('user.username','买家用户名');//买家用户名
             $grid->column('user.phone','买家手机');//买家手机

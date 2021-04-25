@@ -32,6 +32,21 @@ class OrderController extends AdminController
             $grid->column('status')->display(function ($v){
                 return Order::$statusLabel[$v] ?? $v;
             });
+            $grid->column('pay_status')->display(function($v){
+                if($v=='await'){
+                    return '待支付';
+                }elseif($v=='pending'){
+                    return '支付处理中';
+                }elseif($v=='succeeded'){
+                    return '支付成功';
+                }elseif($v=='failed'){
+                    return '支付失败';
+                }else{
+                    return "订单异常";
+                }
+            });//支付状态
+//            支付状态：await 待支付；pending 支付处理中； succeeded 支付成功；failed 支付失败
+
             $grid->column('name');
             $grid->column('remark');
             $grid->column('created_at');
@@ -45,13 +60,17 @@ class OrderController extends AdminController
             $grid->disableDeleteButton();
             // 禁用显示按钮
             $grid->disableViewButton();
-
+            //筛选
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
                 $filter->equal('uid');
                 $filter->equal('business_uid');
                 $filter->equal('status')->select(function () {
                     return Order::$statusLabel;
+                });
+                //支付状态
+                $filter->equal('pay_status')->select(function () {
+                    return Order::$pay_status;
                 });
 
             });

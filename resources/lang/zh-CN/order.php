@@ -12,6 +12,7 @@ return [
         'status' => '状态',
         'name' => '消费商品名',
         'remark' => '备注',
+        'pay_status' => '支付状态',
     ],
     'options' => [
     ],

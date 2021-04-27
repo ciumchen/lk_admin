@@ -75,12 +75,15 @@ class OrderController extends AdminController
 
             });
 
+            //审核订单按钮
             $grid->actions(function (Grid\Displayers\Actions $actions) {
                 if($actions->row->status == Order::STATUS_DEFAULT)
                 {
                     $actions->append(new VerifyOrder());
                 }
             });
+
+
         });
     }
 

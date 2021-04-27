@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Repositories\LkPhoneBillOrder;
+use App\Admin\Repositories\Order;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
@@ -86,7 +87,7 @@ class LkPhoneBillOrderController extends AdminController
                 'integral' => '获得积分',
                 'user.username' => '买家用户名',
                 'user.phone' => '买家手机',
-                'status' => '订单状态',
+                'status' => '订单支付状态',
                 'refund_fee' => '退款金额',
                 'aftersales_status' => '售后状态',
                 'order_from' => '订单来源',
@@ -126,6 +127,10 @@ class LkPhoneBillOrderController extends AdminController
                 $filter->equal('shop_id');
                 $filter->equal('user.phone','买家手机号');
                 $filter->equal('order_no');
+                //支付状态
+                $filter->equal('status')->select(function () {
+                    return Order::$pay_status;
+                });
             });
         });
     }
@@ -157,10 +162,10 @@ class LkPhoneBillOrderController extends AdminController
     protected function form()
     {
         return Form::make(new LkPhoneBillOrder(), function (Form $form) {
-            $form->display('id');
-            $form->display('shop_id');
-            $form->display('user_id');
-            $form->display('order_no');
+//            $form->display('id');
+//            $form->display('shop_id');
+//            $form->display('user_id');
+//            $form->display('order_no');
             $form->text('status');
 
         });

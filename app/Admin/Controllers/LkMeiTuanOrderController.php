@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Admin\Repositories\LkMeiTuanOrder;
 use App\Admin\Repositories\LkPhoneBillOrder;
+use App\Admin\Repositories\Order;
 use App\Models\CityNode;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
@@ -127,6 +128,10 @@ class LkMeiTuanOrderController extends AdminController
                 $filter->equal('shop_id');
                 $filter->equal('user.phone','买家手机号');
                 $filter->equal('order_no');
+                //支付状态
+                $filter->equal('status')->select(function () {
+                    return Order::$pay_status;
+                });
             });
         });
     }

@@ -1,7 +1,7 @@
 <?php
 return [
     'labels' => [
-        'LkOilCardOrder' => '油卡充值列表',
+        'LkPhoneBillOrder' => '话费充值列表',
     ],
     'fields' => [
         'cat_id' => '类目ID',
@@ -15,7 +15,7 @@ return [
         'pay_time' => '付款时间',
         'end_time' => '结束时间',
         'modified_time' => '最后更新时间',
-        'status' => '订单状态',
+        'status' => '支付状态',
         'aftersales_status' => '售后状态',
         'complaints_status' => '订单投诉状态',
         'refund_fee' => '退款金额',

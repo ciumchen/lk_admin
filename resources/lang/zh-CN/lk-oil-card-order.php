@@ -1,7 +1,7 @@
 <?php
 return [
     'labels' => [
-        'LkPhoneBillOrder' => '话费充值列表',
+        'LkOilCardOrder' => '油卡充值列表',
     ],
     'fields' => [
         'cat_id' => '类目ID',

@@ -27,6 +27,11 @@ class Order extends Model
         return $this->belongsTo(User::class, 'business_uid','id');
     }
 
+    public function select_trade_order()
+    {
+        return $this->belongsTo(TradeOrder::class, 'id','oid');
+    }
+
     /**商家资料
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

@@ -20,13 +20,17 @@ class OrderController extends AdminController
     {
         return Grid::make(new Order(), function (Grid $grid) {
             $grid->model()->orderBy('id','desc');
-            $grid->model()->with(['user','business']);
+            $grid->model()->with(['user','business','select_trade_order']);
+
             $grid->column('id')->sortable();
             $grid->column('uid');
 
             $grid->column('business_uid');
+
+            $grid->column('select_trade_order.order_no','订单号');
+
             $grid->column('business.phone',"商家手机号");
-            $grid->column('user.phone','消费者手机号');
+            $grid->column('select_trade_order.numeric','录入消费者手机号');
             $grid->column('profit_ratio');
             $grid->column('price');
             $grid->column('profit_price');

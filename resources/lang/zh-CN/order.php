@@ -15,6 +15,7 @@ return [
         'name' => '消费商品名',
         'remark' => '备注',
         'pay_status' => '支付状态',
+        'order_no' => '订单号',
     ],
 
 

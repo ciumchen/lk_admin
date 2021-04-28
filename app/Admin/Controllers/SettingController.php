@@ -64,7 +64,7 @@ class SettingController extends AdminController
             $form->display('id');
             $form->text('key');
             $form->text('value');
-            $form->file('app_url', '若是文件或图片，无需填写参数值')->accept('apk,ipa')->disk('oss')->move('/download')->autoUpload();
+            $form->file('app_url', '若是文件或图片，无需填写参数值')->accept('apk,ipa')->maxSize(512000)->disk('oss')->move('/download')->autoUpload();
 
             $form->text('msg');
             $form->saving(function (Form $form) {

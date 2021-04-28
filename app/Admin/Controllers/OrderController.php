@@ -98,6 +98,9 @@ class OrderController extends AdminController
                 'id' => 'ID',
                 'uid' => '消费者UID',
                 'business_uid' => '	商家UID',
+
+                'select_trade_order.order_no' => '订单号',
+
                 'business.phone' => '商家手机号',
                 'profit_ratio' => '让利比列(%)',
 
@@ -119,6 +122,7 @@ class OrderController extends AdminController
                     $row['user.phone'] = $row['user']['phone'];
                     $row['business.phone'] = $row['business']['phone'];
 
+                    $row['select_trade_order.order_no'] = $row['select_trade_order']['order_no'];
                     $row['select_trade_order.numeric'] = $row['select_trade_order']['numeric'];
 
                     if($row['status']==1){

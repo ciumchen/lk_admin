@@ -15,7 +15,7 @@ class LkMeiTuanOrderController extends AdminController
 {
     /**
      * Make a grid builder.
-     *
+     *美团卡订单
      * @return Grid
      */
     protected function grid()
@@ -39,7 +39,8 @@ class LkMeiTuanOrderController extends AdminController
             $grid->column('integral');//获得积分
 
             $grid->column('user.username','买家用户名');//买家用户名
-            $grid->column('user.phone','买家手机');//买家手机
+            $grid->column('numeric','美团卡');//充值手机号
+            $grid->column('telecom','运营商');//运营商
 
             $grid->column('status')->display(function($v){
                 if($v=='await'){
@@ -73,7 +74,7 @@ class LkMeiTuanOrderController extends AdminController
             //禁用显示按钮
             $grid->disableViewButton();
             //禁用编辑按钮
-            //$grid->disableEditButton();
+            $grid->disableEditButton();
 
             $titles = [
                 'id' => 'ID',
@@ -87,8 +88,12 @@ class LkMeiTuanOrderController extends AdminController
                 'profit_ratio' => '商家让利',
                 'integral' => '获得积分',
                 'user.username' => '买家用户名',
-                'user.phone' => '买家手机',
-                'status' => '订单状态',
+
+                'numeric' => '美团卡',
+                'telecom' => '运营商',
+
+
+                'status' => '订单支付状态',
                 'refund_fee' => '退款金额',
                 'aftersales_status' => '售后状态',
                 'order_from' => '订单来源',
@@ -102,7 +107,7 @@ class LkMeiTuanOrderController extends AdminController
                 foreach ($rows as $index => &$row) {
                     // 这里假设role就是关联数据
                     $row['user.username'] = $row['user']['username'];
-                    $row['user.phone'] = $row['user']['phone'];
+//                    $row['user.phone'] = $row['numeric'];
                     if($row['status']=='await'){
                         $row['status']="待支付";
                     }elseif($row['status']=='pending'){
@@ -126,7 +131,9 @@ class LkMeiTuanOrderController extends AdminController
                 $filter->equal('id');
                 $filter->equal('goods_id');
                 $filter->equal('shop_id');
-                $filter->equal('user.phone','买家手机号');
+
+                $filter->equal('numeric','美团卡');
+
                 $filter->equal('order_no');
                 //支付状态
                 $filter->equal('status')->select(function () {
@@ -160,15 +167,15 @@ class LkMeiTuanOrderController extends AdminController
      *编辑订单
      * @return Form
      */
-    protected function form()
-    {
-        return Form::make(new LkPhoneBillOrder(), function (Form $form) {
-            $form->display('id');
-            $form->display('shop_id');
-            $form->display('user_id');
-            $form->display('order_no');
-            $form->text('status');
-
-        });
-    }
+//    protected function form()
+//    {
+//        return Form::make(new LkPhoneBillOrder(), function (Form $form) {
+////            $form->display('id');
+////            $form->display('shop_id');
+////            $form->display('user_id');
+////            $form->display('order_no');
+//            $form->text('status');
+//
+//        });
+//    }
 }

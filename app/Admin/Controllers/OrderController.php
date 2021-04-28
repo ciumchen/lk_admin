@@ -23,9 +23,10 @@ class OrderController extends AdminController
             $grid->model()->with(['user','business']);
             $grid->column('id')->sortable();
             $grid->column('uid');
-            $grid->column('user.phone','消费者');
+
             $grid->column('business_uid');
-            $grid->column('business.phone',"商家");
+            $grid->column('business.phone',"商家手机号");
+            $grid->column('user.phone','消费者手机号');
             $grid->column('profit_ratio');
             $grid->column('price');
             $grid->column('profit_price');
@@ -60,6 +61,8 @@ class OrderController extends AdminController
             $grid->disableDeleteButton();
             // 禁用显示按钮
             $grid->disableViewButton();
+
+
             //筛选
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
@@ -82,6 +85,66 @@ class OrderController extends AdminController
                     $actions->append(new VerifyOrder());
                 }
             });
+
+
+
+
+            $titles = [
+                'id' => 'ID',
+                'uid' => '消费者UID',
+                'business_uid' => '	商家UID',
+                'business.phone' => '商家手机号',
+                'profit_ratio' => '让利比列(%)',
+                'user.phone' => '消费者手机号',
+                'price' => '消费金额',
+                'profit_price' => '实际让利金额',
+                'status' => '审核状态',
+                'pay_status' => '	支付状态',
+                'name' => '消费商品名',
+                'remark' => '备注',
+                'created_at' => '创建时间',
+                'updated_at' => '更新时间',
+
+            ];
+            $grid->export($titles)->rows(function (array $rows) {
+                foreach ($rows as $index => &$row) {
+                    // 这里假设role就是关联数据
+                    $row['user.phone'] = $row['user']['phone'];
+                    $row['business.phone'] = $row['business']['phone'];
+
+                    if($row['status']==1){
+                        $row['status']="审核中";
+                    }elseif($row['status']==2){
+                        $row['status']="审核通过";
+                    }elseif($row['status']==3){
+                        $row['status']="审核失败";
+                    }
+
+                    //支付状态
+                    if($row['pay_status']=='await'){
+                        $row['pay_status']="待支付";
+                    }elseif($row['pay_status']=='pending'){
+                        $row['pay_status']="支付处理中";
+                    }elseif($row['pay_status']=='succeeded'){
+                        $row['pay_status']="支付成功";
+                    }elseif($row['pay_status']=='failed'){
+                        $row['pay_status']="支付失败";
+                    }else{
+                        $row['pay_status']="订单异常";
+                    }
+
+                }
+                return $rows;
+            });
+
+
+
+
+
+
+
+
+
 
 
         });

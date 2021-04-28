@@ -25,6 +25,7 @@ return [
         'phone' => '买家手机',
         'profit_ratio' => '商家让利',
         'integral' => '获得积分',
+        'numeric' => '美团卡号',
     ],
     'options' => [
     ],

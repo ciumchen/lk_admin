@@ -68,6 +68,7 @@ class OrderController extends AdminController
                 $filter->equal('id');
                 $filter->equal('uid');
                 $filter->equal('business_uid');
+                $filter->equal('profit_price');
                 $filter->equal('status')->select(function () {
                     return Order::$statusLabel;
                 });

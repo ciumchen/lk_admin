@@ -100,7 +100,9 @@ class OrderController extends AdminController
                 'business_uid' => '	商家UID',
                 'business.phone' => '商家手机号',
                 'profit_ratio' => '让利比列(%)',
-                'user.phone' => '消费者手机号',
+
+                'select_trade_order.numeric' => '录入消费者手机号',
+
                 'price' => '消费金额',
                 'profit_price' => '实际让利金额',
                 'status' => '审核状态',
@@ -116,6 +118,8 @@ class OrderController extends AdminController
                     // 这里假设role就是关联数据
                     $row['user.phone'] = $row['user']['phone'];
                     $row['business.phone'] = $row['business']['phone'];
+
+                    $row['select_trade_order.numeric'] = $row['select_trade_order']['numeric'];
 
                     if($row['status']==1){
                         $row['status']="审核中";

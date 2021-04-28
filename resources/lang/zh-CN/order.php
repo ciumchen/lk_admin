@@ -1,7 +1,7 @@
 <?php
 return [
     'labels' => [
-        'Order' => '订单列表',
+        'Order' => '商家录单列表',
     ],
 //    'fields' => [
 //        'uid' => '消费者UID',

@@ -57,7 +57,16 @@ class LkPhoneBillOrderController extends AdminController
 
             $grid->column('refund_fee');
             $grid->column('aftersales_status');
-            $grid->column('order_from');
+
+            $grid->column('order_from')->display(function($v){
+                if($v=='alipay'){
+                    return '支付宝支付';
+                }elseif($v=='wx'){
+                    return '微信支付';
+                }else{
+                    return "其他支付";
+                }
+            });//订单来源
 
             $grid->column('timeout_action_time');
             $grid->column('pay_time')->display(function (){
@@ -118,6 +127,14 @@ class LkPhoneBillOrderController extends AdminController
                     }else{
                         $row['status']="订单异常";
                     }
+
+                    if($row['order_from']=='alipay'){
+                        $row['order_from']="支付宝支付";
+                    }elseif($row['order_from']=='wx'){
+                        $row['order_from']="微信支付";
+                    }else{
+                        $row['order_from']="其他支付";
+                    }//订单来源
 
                     $row['pay_time']=date('Y-m-d H:i:s',$row['pay_time']);
 

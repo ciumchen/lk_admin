@@ -39,7 +39,7 @@ class LkMeiTuanOrderController extends AdminController
             $grid->column('integral');//获得积分
 
             $grid->column('user.username','买家用户名');//买家用户名
-            $grid->column('numeric','美团卡');//充值手机号
+            $grid->column('numeric','美团卡号');//充值手机号
             $grid->column('telecom','运营商');//运营商
 
             $grid->column('status')->display(function($v){
@@ -58,7 +58,17 @@ class LkMeiTuanOrderController extends AdminController
 
             $grid->column('refund_fee');
             $grid->column('aftersales_status');
-            $grid->column('order_from');
+
+            $grid->column('order_from')->display(function($v){
+                if($v=='alipay'){
+                    return '支付宝支付';
+                }elseif($v=='wx'){
+                    return '微信支付';
+                }else{
+                    return "其他支付";
+                }
+            });//订单来源
+
 
             $grid->column('timeout_action_time');
             $grid->column('pay_time')->display(function (){
@@ -89,7 +99,7 @@ class LkMeiTuanOrderController extends AdminController
                 'integral' => '获得积分',
                 'user.username' => '买家用户名',
 
-                'numeric' => '美团卡',
+                'numeric' => '美团卡号',
                 'telecom' => '运营商',
                 'price' => '商品价格',
 
@@ -120,6 +130,15 @@ class LkMeiTuanOrderController extends AdminController
                         $row['status']="订单异常";
                     }
 
+
+                    if($row['order_from']=='alipay'){
+                        $row['order_from']="支付宝支付";
+                    }elseif($row['order_from']=='wx'){
+                        $row['order_from']="微信支付";
+                    }else{
+                        $row['order_from']="其他支付";
+                    }//订单来源
+
                     $row['pay_time']=date('Y-m-d H:i:s',$row['pay_time']);
 
                 }
@@ -132,7 +151,7 @@ class LkMeiTuanOrderController extends AdminController
                 $filter->equal('goods_id');
                 $filter->equal('shop_id');
 
-                $filter->equal('numeric','美团卡');
+                $filter->equal('numeric','美团卡号');
 
                 $filter->equal('order_no');
                 //支付状态

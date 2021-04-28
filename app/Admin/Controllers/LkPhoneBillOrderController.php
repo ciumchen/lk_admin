@@ -81,7 +81,7 @@ class LkPhoneBillOrderController extends AdminController
                 'order_no' => '订单号',
 //                'goods_bn' => '明细商品的编码',
                 'title' => '商品标题',
-                'price' => '商品价格',
+
                 'num' => '购买数量',
 //                'shop_id' => '所属商家',
                 'profit_ratio' => '商家让利',
@@ -90,7 +90,7 @@ class LkPhoneBillOrderController extends AdminController
 
                 'numeric' => '充值手机号',
                 'telecom' => '运营商',
-
+                'price' => '商品价格',
 
                 'status' => '订单支付状态',
                 'refund_fee' => '退款金额',

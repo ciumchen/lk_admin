@@ -23,6 +23,10 @@ class Order extends EloquentRepository
     const PAY_STATUS_SUCCEEDED = 'succeeded';
     const PAY_STATUS_FAILED = 'failed';
 
+    const LD_ORDER_SELECT1 = '录单';
+    const LD_ORDER_SELECT2 = '话费';
+    const LD_ORDER_SELECT3 = '油卡';
+    const LD_ORDER_SELECT4 = '美团';
     /**
      * 状态
      * @var array
@@ -38,5 +42,12 @@ class Order extends EloquentRepository
         self::PAY_STATUS_PENDING => "支付处理中",
         self::PAY_STATUS_SUCCEEDED => "支付成功",
         self::PAY_STATUS_FAILED => "支付失败",
+    );
+
+    public static $ld_order_select = array(
+        self::LD_ORDER_SELECT1 => "录单",
+        self::LD_ORDER_SELECT2 => "话费",
+        self::LD_ORDER_SELECT3 => "油卡",
+        self::LD_ORDER_SELECT4 => "美团",
     );
 }

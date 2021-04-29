@@ -17,6 +17,8 @@ class IntegralLog extends EloquentRepository
     /**
      * 类型.
      */
+    const USER_STATUS_SF1 = 1;
+    const USER_STATUS_SF2 = 2;
 
     /**
      * 类型文本.
@@ -24,5 +26,7 @@ class IntegralLog extends EloquentRepository
      * @var array
      */
     public static $operateTypeTexts = [
+        self::USER_STATUS_SF1 => "普通用户",
+        self::USER_STATUS_SF2 => "商家",
     ];
 }

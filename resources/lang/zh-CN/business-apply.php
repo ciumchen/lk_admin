@@ -11,7 +11,7 @@ return [
         'work' => '主营业务',
         'category_id' => '店铺类别',
         'remark' => '备注',
-        'status' => '状态',
+        'status' => '审核状态',
     ],
     'options' => [
     ],

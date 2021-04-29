@@ -36,6 +36,7 @@ class LimitPriceBusiness extends Form implements LazyRenderable
             DB::transaction(function () use ($BusinessData,$limitPrice) {
 
                 $BusinessData->limit_price = $limitPrice;
+                $BusinessData->state = 1;
                 $BusinessData->save();
             });
         } catch (\Exception $e) {

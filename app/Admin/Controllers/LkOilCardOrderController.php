@@ -145,12 +145,13 @@ class LkOilCardOrderController extends AdminController
             //筛选
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
-                $filter->equal('goods_id');
-                $filter->equal('shop_id');
-
-                $filter->equal('numeric','油卡号');
+//                $filter->equal('goods_id');
+//                $filter->equal('shop_id');
 
                 $filter->equal('order_no');
+                $filter->equal('numeric','油卡号');
+
+
                 //支付状态
                 $filter->equal('status')->select(function () {
                     return Order::$pay_status;

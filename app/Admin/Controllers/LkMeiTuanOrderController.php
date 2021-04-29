@@ -148,12 +148,12 @@ class LkMeiTuanOrderController extends AdminController
             //筛选
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
-                $filter->equal('goods_id');
-                $filter->equal('shop_id');
-
+//                $filter->equal('goods_id');
+//                $filter->equal('shop_id');
+                $filter->equal('order_no');
                 $filter->equal('numeric','美团卡号');
 
-                $filter->equal('order_no');
+
                 //支付状态
                 $filter->equal('status')->select(function () {
                     return Order::$pay_status;

@@ -24,7 +24,7 @@ class BusinessApplyController extends AdminController
             $grid->column('uid');
             $grid->column('img')->display(function ($v){
                 return "<a href='".env('OSS_URL').$v."' target='_blank'>查看营业执照</a>";
-            });;
+            });
             $grid->column('phone');
             $grid->column('name');
             $grid->column('work');
@@ -58,8 +58,12 @@ class BusinessApplyController extends AdminController
             });
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
+                $filter->equal('uid');
                 $filter->equal('phone');
                 $filter->equal('name');
+                $filter->equal('status')->select(function () {
+                    return BusinessApply::$statusLabel;
+                });
 
             });
         });

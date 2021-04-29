@@ -23,7 +23,8 @@ class UserDataController extends AdminController
             $grid->model()->with(['user']);
             $grid->column('id')->sortable();
             $grid->column('uid');
-            $grid->column('user.phone','用户名');
+            $grid->column('user.username','用户名');
+            $grid->column('user.phone','用户手机号');
             $grid->column('last_login');
             $grid->column('last_ip');
             $grid->column('change_address_time');
@@ -49,6 +50,8 @@ class UserDataController extends AdminController
                 $filter->equal('uid');
                 $filter->equal('id_card');
                 $filter->equal('name');
+                $filter->equal('user.username','用户名');
+                $filter->equal('user.phone','用户手机号');
                 $filter->equal('last_ip');
                 $filter->equal('change_password_ip');
 

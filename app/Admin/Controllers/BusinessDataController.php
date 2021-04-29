@@ -25,8 +25,16 @@ class BusinessDataController extends AdminController
             $grid->model()->with(['user','cate','province','city','district']);
             $grid->column('id')->sortable();
             $grid->column('uid');
-            $grid->column('user.phone','用户名');
-            $grid->column('banners');
+            $grid->column('user.username','用户名');
+            $grid->column('user.phone','用户手机号');
+            $grid->column('banners')->display(function ($v){
+                if ($v){
+                    return "<a href='".env('OSS_URL').$v."' target='_blank'>商家头图</a>";
+                }else{
+                    return "没有上传图片";
+                }
+
+            });
             $grid->column('contact_number');
             $grid->column('address');
             $grid->column('province.name',"省份");
@@ -37,7 +45,7 @@ class BusinessDataController extends AdminController
             $grid->column('cate.name','商家类型');
             $grid->column('status', '状态')->display(function ($v){
                 return BusinessData::$statusLabel[$v];
-            });;
+            });
             $grid->column('run_time');
             $grid->column('content');
             $grid->column('name');
@@ -63,7 +71,10 @@ class BusinessDataController extends AdminController
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
                 $filter->equal('uid');
+                $filter->equal('user.username','用户名');
+                $filter->equal('user.phone','用户手机号');
                 $filter->equal('contact_number');
+                $filter->equal('limit_price', '单日录单限额');
 
             });
         });

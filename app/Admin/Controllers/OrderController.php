@@ -72,6 +72,8 @@ class OrderController extends AdminController
                 $filter->equal('id');
                 $filter->equal('uid');
                 $filter->equal('business_uid');
+                $filter->equal('select_trade_order.order_no','订单号');
+                $filter->equal('select_trade_order.numeric','录入消费者手机号');
                 $filter->equal('profit_price');
                 $filter->equal('name')->select(function () {
                     return Order::$ld_order_select;

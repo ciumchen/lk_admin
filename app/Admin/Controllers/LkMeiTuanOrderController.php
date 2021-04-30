@@ -98,6 +98,7 @@ class LkMeiTuanOrderController extends AdminController
                 'profit_ratio' => '商家让利',
                 'integral' => '获得积分',
                 'user.id' => '消费者UID',
+                'remarks' => '美团卡用户姓名',
 
                 'numeric' => '美团卡号',
                 'telecom' => '运营商',

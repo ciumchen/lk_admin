@@ -38,8 +38,9 @@ class LkMeiTuanOrderController extends AdminController
             });//让利比例
             $grid->column('integral');//获得积分
 
-            $grid->column('user.username','买家用户名');//买家用户名
-            $grid->column('numeric','美团卡号');//充值手机号
+            $grid->column('user.id','消费者UID');//买家uid
+//            $grid->column('user.username','买家用户名');//买家用户名
+            $grid->column('numeric','美团卡号');//美团卡号
             $grid->column('telecom','运营商');//运营商
 
             $grid->column('status')->display(function($v){
@@ -56,8 +57,8 @@ class LkMeiTuanOrderController extends AdminController
                 }
             });//订单状态
 
-            $grid->column('refund_fee');
-            $grid->column('aftersales_status');
+//            $grid->column('refund_fee');
+//            $grid->column('aftersales_status');
 
             $grid->column('order_from')->display(function($v){
                 if($v=='alipay'){
@@ -69,12 +70,11 @@ class LkMeiTuanOrderController extends AdminController
                 }
             });//订单来源
 
-
-            $grid->column('timeout_action_time');
+//            $grid->column('timeout_action_time');
             $grid->column('pay_time')->display(function (){
                 return date('Y-m-d H:i:s',$this->pay_time);
             });
-            $grid->column('end_time');
+//            $grid->column('end_time');
             $grid->column('modified_time');
 
             // 禁用删除按钮
@@ -97,26 +97,26 @@ class LkMeiTuanOrderController extends AdminController
 //                'shop_id' => '所属商家',
                 'profit_ratio' => '商家让利',
                 'integral' => '获得积分',
-                'user.username' => '买家用户名',
+                'user.id' => '消费者UID',
 
                 'numeric' => '美团卡号',
                 'telecom' => '运营商',
                 'price' => '商品价格',
 
                 'status' => '订单支付状态',
-                'refund_fee' => '退款金额',
-                'aftersales_status' => '售后状态',
+//                'refund_fee' => '退款金额',
+//                'aftersales_status' => '售后状态',
                 'order_from' => '订单来源',
-                'timeout_action_time' => '订单超时到期时间',
+//                'timeout_action_time' => '订单超时到期时间',
                 'pay_time' => '付款时间',
-                'end_time' => '结束时间',
+//                'end_time' => '结束时间',
                 'modified_time' => '最后更新时间',
 
             ];
             $grid->export($titles)->rows(function (array $rows) {
                 foreach ($rows as $index => &$row) {
                     // 这里假设role就是关联数据
-                    $row['user.username'] = $row['user']['username'];
+                    $row['user.id'] = $row['user']['id'];
 //                    $row['user.phone'] = $row['numeric'];
                     if($row['status']=='await'){
                         $row['status']="待支付";
@@ -129,7 +129,6 @@ class LkMeiTuanOrderController extends AdminController
                     }else{
                         $row['status']="订单异常";
                     }
-
 
                     if($row['order_from']=='alipay'){
                         $row['order_from']="支付宝支付";
@@ -148,8 +147,10 @@ class LkMeiTuanOrderController extends AdminController
             //筛选
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
+                $filter->equal('user.id','消费UID');
 //                $filter->equal('goods_id');
 //                $filter->equal('shop_id');
+
                 $filter->equal('order_no');
                 $filter->equal('numeric','美团卡号');
 

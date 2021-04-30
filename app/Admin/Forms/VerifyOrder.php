@@ -41,6 +41,11 @@ class VerifyOrder extends Form
         DB::beginTransaction();
         try{
             $order = \App\Models\Order::lockForUpdate()->find($id);
+            if ($order->status==2){
+                $this->location(null, '这条记录已审核通过，不能重复审核');
+                return false;
+            }
+
             $order->status = $status;
 
             //用户应返还几分比例

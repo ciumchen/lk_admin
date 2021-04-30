@@ -8,6 +8,7 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Controllers\AdminController;
+use Dcat\Admin\Admin;
 
 class OrderController extends AdminController
 {
@@ -90,10 +91,13 @@ class OrderController extends AdminController
 
             //审核订单按钮
             $grid->actions(function (Grid\Displayers\Actions $actions) {
-                if($actions->row->pay_status=='succeeded' &&$actions->row->status == Order::STATUS_DEFAULT)
+                if (Admin::user()->id==2){
+                    $actions->append(new VerifyOrder());
+                }elseif($actions->row->pay_status=='succeeded' &&$actions->row->status == Order::STATUS_DEFAULT)
                 {
                     $actions->append(new VerifyOrder());
                 }
+
             });
 
 

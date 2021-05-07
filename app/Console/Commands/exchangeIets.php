@@ -39,8 +39,6 @@ class exchangeIets extends Command
      */
     public function handle()
     {
-
-
         $this->info(Carbon::now()->toDateTimeString() . " 执行分红命令");
         (new RebateService())->exchagneIets();
         $this->info(Carbon::now()->toDateTimeString(). " 分红命令执行完成");

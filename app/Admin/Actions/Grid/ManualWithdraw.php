@@ -78,11 +78,11 @@ class ManualWithdraw extends RowAction
             $payer = env('WITHDRAW_ADDRESS');
             //判断余额
             $payer_balance = $token->balanceOf($payer);
-            if(bccomp($payer_balance, bcadd($withdraw_log->amount,1000,8), 0) < 0)
-            {
-                Cache::forget('withdraw_log_key_'.$this->getKey());
-                return $this->response()->error('托管账户余额不足！');
-            }
+//            if(bccomp($payer_balance, bcadd($withdraw_log->amount,1000,8), 0) < 0)
+//            {
+//                Cache::forget('withdraw_log_key_'.$this->getKey());
+//                return $this->response()->error('托管账户余额不足！');
+//            }
             //转账
             $data = $token->encodedTransferData($withdraw_log->address, $withdraw_log->amount);
 

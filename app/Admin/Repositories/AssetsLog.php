@@ -49,7 +49,7 @@ class AssetsLog extends EloquentRepository
         self::OPERATE_TYPE_DISTRICT_REBATE => '区站长分红',
         self::OPERATE_TYPE_CITY_REBATE => '市站长分红',
         self::OPERATE_TYPE_SHARE_B_REBATE => '邀请商家分红',
-        self::OPERATE_TYPE_EXCHANGE_IETS => '兑换IETS',
+        self::OPERATE_TYPE_EXCHANGE_IETS => '兑换',
         self::OPERATE_TYPE_EXCHANGE_IETS_SUB_ENCOURATGE => '兑换扣除',
         self::OPERATE_TYPE_IETS_TO_USDT => 'IETS兑换为USDT',
     ];

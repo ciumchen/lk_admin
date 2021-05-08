@@ -16,6 +16,7 @@ Route::group([
     //test测试
     $router->resource('test', 'TestController');
     $router->any('mytest', 'TestController@mytest');
+    $router->any('update_sjtt', 'TestController@update_sjtt');
 
     //话费订单、油卡订单、美团订单
     $router->resource('hfdd', 'LkPhoneBillOrderController');

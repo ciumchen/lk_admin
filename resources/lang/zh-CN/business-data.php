@@ -5,7 +5,7 @@ return [
     ],
     'fields' => [
         'uid' => '用户ID',
-        'banners' => '商家头图',
+//        'banners' => '商家头图',
         'contact_number' => '店铺电话',
         'address' => '商家详细地址',
         'province' => '省份',
@@ -19,7 +19,9 @@ return [
         'content' => '商家内容介绍',
         'name' => '商店名称',
         'is_recommend' => '推荐',
-        'sort' => '排序（数字越大越靠前）'
+        'sort' => '排序（数字越大越靠前）',
+        'img' => '营业执照',
+        'img2' => '商家头图'
     ],
     'options' => [
     ],

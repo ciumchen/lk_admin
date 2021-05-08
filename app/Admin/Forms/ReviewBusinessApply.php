@@ -119,6 +119,7 @@ class ReviewBusinessApply extends Form implements LazyRenderable
         $businessData->name = $businessApply->name;
         $businessData->status = 2;
         $businessData->category_id = 0;
+        $businessData->business_apply_id = $businessApply->id;
         $businessData->save();
     }
 

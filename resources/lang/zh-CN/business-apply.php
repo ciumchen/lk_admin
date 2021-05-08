@@ -4,7 +4,7 @@ return [
         'BusinessApply' => '商家申请',
     ],
     'fields' => [
-        'uid' => 'uid',
+        'uid' => '商户uid',
         'img' => '营业执照',
         'img2' => '商家头图',
         'phone' => '店铺电话',

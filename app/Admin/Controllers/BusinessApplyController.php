@@ -23,11 +23,11 @@ class BusinessApplyController extends AdminController
             $grid->column('id')->sortable();
             $grid->column('uid');
             $grid->column('img')->display(function ($v){
-                return "<a href='".env('OSS_URL').$v."' target='_blank'>营业执照</a>";
+                return "<a href='".env('OSS_URL').$v."' target='_blank'>查看营业执照</a>";
             });
             $grid->column('img2')->display(function ($v){
                 if ($v){
-                    return "<a href='".env('OSS_URL').$v."' target='_blank'>商家头图</a>";
+                    return "<a href='".env('OSS_URL').$v."' target='_blank'>查看商家头图</a>";
                 }else{
                     return "没有上传图片";
                 }

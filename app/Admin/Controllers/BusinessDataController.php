@@ -22,12 +22,20 @@ class BusinessDataController extends AdminController
     {
         return Grid::make(new BusinessData(), function (Grid $grid) {
             $grid->model()->orderBy('id','desc');
-            $grid->model()->with(['user','cate','province','city','district']);
+            $grid->model()->with(['user','cate','province','city','district','business_apply']);
             $grid->column('id')->sortable();
             $grid->column('uid');
 //            $grid->column('user.username','用户名');
             $grid->column('user.phone','用户手机号');
-            $grid->column('banners')->display(function ($v){
+            $grid->column('business_apply.img','营业执照')->display(function ($v){
+                if ($v){
+                    return "<a href='".env('OSS_URL').$v."' target='_blank'>营业执照</a>";
+                }else{
+                    return "没有上传图片";
+                }
+
+            });
+            $grid->column('business_apply.img2','商家头图')->display(function ($v){
                 if ($v){
                     return "<a href='".env('OSS_URL').$v."' target='_blank'>商家头图</a>";
                 }else{

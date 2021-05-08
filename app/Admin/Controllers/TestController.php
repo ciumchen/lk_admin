@@ -7,6 +7,7 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Controllers\AdminController;
+use Illuminate\Support\Facades\DB;
 
 class TestController extends AdminController
 {
@@ -81,4 +82,36 @@ class TestController extends AdminController
         dd($re);
 
     }
+
+    public function update_sjtt(){
+        set_time_limit(0);
+        $data = DB::table('business_data')->where('business_apply_id',0)->get()->toArray();
+//        echo '<pre>';
+//        var_dump($data);
+        try{
+            foreach ($data as $k=>$v){
+                $re = DB::table('business_apply')->where('status',2)->where('uid',$v->uid)->first('id');
+    //            var_dump($re->id);echo '<br/>';
+    //
+    //            echo  'uid:'.$v->uid.'=====business_data:'.$v->id.'==== business_apply:'.$re->id;
+    //            echo '<br/>';
+
+                DB::table('business_data')->where('id',$v->id)->update(['business_apply_id'=>$re->id]);
+
+            }
+
+        }catch (PDOException $e) {
+            report($e);
+            throw new LogicException('更新失败');
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+
+
+
+    }
+
+
+
 }

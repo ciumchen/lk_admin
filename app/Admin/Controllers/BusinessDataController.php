@@ -29,20 +29,21 @@ class BusinessDataController extends AdminController
             $grid->column('user.phone','用户手机号');
             $grid->column('business_apply.img','营业执照')->display(function ($v){
                 if ($v){
-                    return "<a href='".env('OSS_URL').$v."' target='_blank'>营业执照</a>";
+                    return "<a href='".env('OSS_URL').$v."' target='_blank'>查看</a>";
                 }else{
-                    return "没有上传图片";
+                    return "未上传";
                 }
 
             });
             $grid->column('business_apply.img2','商家头图')->display(function ($v){
                 if ($v){
-                    return "<a href='".env('OSS_URL').$v."' target='_blank'>商家头图</a>";
+                    return "<a href='".env('OSS_URL').$v."' target='_blank'>查看</a>";
                 }else{
-                    return "没有上传图片";
+                    return "未上传";
                 }
 
             });
+
             $grid->column('contact_number');
             $grid->column('address');
             $grid->column('province.name',"省份");
@@ -64,7 +65,7 @@ class BusinessDataController extends AdminController
             $grid->column('updated_at')->sortable();
 
             $grid->disableCreateButton();
-            $grid->disableEditButton();
+//            $grid->disableEditButton();
             $grid->disableViewButton();
             $grid->actions(function (Grid\Displayers\Actions $actions) {
                 if($actions->row->status == 1)

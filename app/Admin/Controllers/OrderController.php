@@ -91,7 +91,7 @@ class OrderController extends AdminController
 
             //审核订单按钮
             $grid->actions(function (Grid\Displayers\Actions $actions) {
-                if (Admin::user()->id==2){
+                if (Admin::user()->id==1||Admin::user()->id==2){
                     $actions->append(new VerifyOrder());
                 }elseif($actions->row->pay_status=='succeeded' &&$actions->row->status == Order::STATUS_DEFAULT)
                 {

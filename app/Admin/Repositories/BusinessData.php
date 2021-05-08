@@ -19,4 +19,9 @@ class BusinessData extends EloquentRepository
         2=>'休息',
         3=>'商家已被封禁',
     ];
+
+    public static $IS_RECOMMEND = [
+        0=>'否',
+        1=>'是',
+    ];
 }

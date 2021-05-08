@@ -25,7 +25,7 @@ class BusinessDataController extends AdminController
             $grid->model()->with(['user','cate','province','city','district']);
             $grid->column('id')->sortable();
             $grid->column('uid');
-            $grid->column('user.username','用户名');
+//            $grid->column('user.username','用户名');
             $grid->column('user.phone','用户手机号');
             $grid->column('banners')->display(function ($v){
                 if ($v){
@@ -40,8 +40,8 @@ class BusinessDataController extends AdminController
             $grid->column('province.name',"省份");
             $grid->column('city.name',"城市");
             $grid->column('district.name',"地区");
-            $grid->column('lt');
-            $grid->column('lg');
+//            $grid->column('lt');//经度
+//            $grid->column('lg');//纬度
             $grid->column('cate.name','商家类型');
             $grid->column('status', '状态')->display(function ($v){
                 return BusinessData::$statusLabel[$v];
@@ -71,10 +71,13 @@ class BusinessDataController extends AdminController
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
                 $filter->equal('uid');
-                $filter->equal('user.username','用户名');
+//                $filter->equal('user.username','用户名');
                 $filter->equal('user.phone','用户手机号');
                 $filter->equal('contact_number');
                 $filter->equal('limit_price', '单日录单限额');
+                $filter->equal('is_recommend', '推荐商家')->select(function () {
+                    return BusinessData::$IS_RECOMMEND;
+                });
 
             });
         });

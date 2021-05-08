@@ -6,7 +6,7 @@ return [
     'fields' => [
         'uid' => '用户ID',
         'banners' => '商家头图',
-        'contact_number' => '联系方式',
+        'contact_number' => '店铺电话',
         'address' => '商家详细地址',
         'province' => '省份',
         'city' => '城市',

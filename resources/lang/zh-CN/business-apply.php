@@ -5,8 +5,9 @@ return [
     ],
     'fields' => [
         'uid' => 'uid',
-        'img' => '营业执照图片',
-        'phone' => '联系电话',
+        'img' => '营业执照',
+        'img2' => '商家头图',
+        'phone' => '店铺电话',
         'name' => '商店名称',
         'work' => '主营业务',
         'category_id' => '店铺类别',

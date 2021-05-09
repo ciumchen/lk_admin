@@ -66,7 +66,7 @@ class BusinessDataController extends AdminController
             $grid->column('updated_at')->sortable();
 
             $grid->disableCreateButton();
-//            $grid->disableEditButton();
+            $grid->disableEditButton();
             $grid->disableViewButton();
             $grid->actions(function (Grid\Displayers\Actions $actions) {
                 if($actions->row->status == 1)

@@ -8,6 +8,7 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Controllers\AdminController;
+use Dcat\Admin\Admin;
 
 class BusinessApplyController extends AdminController
 {
@@ -36,9 +37,20 @@ class BusinessApplyController extends AdminController
             $grid->column('name');
             $grid->column('work');
             $grid->column('remark');
-            $grid->column('status')->display(function ($v){
-                return BusinessApply::$statusLabel[$v];
-            });
+//            $grid->column('status')->display(function ($v){
+//                return BusinessApply::$statusLabel[$v];
+//            });
+
+            $grid->column('status')->using([1 => '审核中', 2 => '审核通过',3=>'审核不通过'])->label([
+                1 => 'primary',
+                2 => 'success',
+                3 => 'danger',
+                4 => Admin::color()->info()
+            ]);
+
+
+
+
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
 

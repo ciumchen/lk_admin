@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Admin\Repositories\LkPhoneBillOrder;
 use App\Admin\Repositories\Order;
+use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
@@ -42,19 +43,28 @@ class LkPhoneBillOrderController extends AdminController
             $grid->column('numeric','充值手机号');//充值手机号
             $grid->column('telecom','运营商');//运营商
 
-            $grid->column('status')->display(function($v){
-                if($v=='await'){
-                    return '待支付';
-                }elseif($v=='pending'){
-                    return '支付处理中';
-                }elseif($v=='succeeded'){
-                    return '支付成功';
-                }elseif($v=='failed'){
-                    return '支付失败';
-                }else{
-                    return "订单异常";
-                }
-            });//订单状态
+//            $grid->column('status')->display(function($v){
+//                if($v=='await'){
+//                    return '待支付';
+//                }elseif($v=='pending'){
+//                    return '支付处理中';
+//                }elseif($v=='succeeded'){
+//                    return '支付成功';
+//                }elseif($v=='failed'){
+//                    return '支付失败';
+//                }else{
+//                    return "订单异常";
+//                }
+//            });//订单状态
+
+            $grid->column('status')->using(['await' => '待支付', 'pending' => '支付处理中','succeeded'=>'支付成功','failed'=>'支付失败','ddyc'=>"订单异常"])->label([
+                'await' => 'primary',
+                'pending' => 'orange',
+                'succeeded' => 'success',
+                'failed' => 'danger',
+                'ddyc' => 'dark',
+                4 => Admin::color()->info()
+            ]);
 
 //            $grid->column('refund_fee');
 //            $grid->column('aftersales_status');

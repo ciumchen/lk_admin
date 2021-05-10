@@ -112,6 +112,34 @@ class TestController extends AdminController
 
     }
 
+    //更新order表支付状态、订单异常
+    public function update_order_ddyc(){
+        set_time_limit(0);
+        $data = DB::table('order')->where('pay_status',null)->get('id')->toArray();
+        echo '修改order表订单异常';
+//        var_dump($data);
+//        echo '<pre>';
+//        var_dump($data);exit;
+        try{
+            foreach ($data as $k=>$v){
+                $re = DB::table('order')->where('id',$v->id)->update(['pay_status'=>'ddyc']);
+                var_dump($re);
+            }
+
+        }catch (PDOException $e) {
+            report($e);
+            throw new LogicException('更新失败');
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+
+
+
+
+
+    }
+
 
 
 }

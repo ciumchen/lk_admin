@@ -63,7 +63,7 @@ class BusinessDataController extends AdminController
 
             $grid->disableCreateButton();
             $grid->disableEditButton();
-            $grid->disableViewButton();
+//            $grid->disableViewButton();
             $grid->addTableClass(['table-text-center']);
             $grid->withBorder();
             $grid->actions(function (Grid\Displayers\Actions $actions) {
@@ -112,17 +112,16 @@ class BusinessDataController extends AdminController
 
     protected function detail($id)
     {
-        return Show::make($id, new BusinessData(), function (Show $show) {
-
-            $re = $show->model()->where('id',$show->id)->with(['user','cate','province','city','district','business_apply'])->first();
-var_dump($re->business_apply_id);
-            $apply_data = DB::table('business_apply')->where('id',$re->business_apply_id)->first();
+        return Show::make($id, new BusinessData(['user','cate','province','city','district','business_apply']), function (Show $show) {
             $show->field('id');
             $show->field('uid');
             $show->field('user.username','用户名');
             $show->field('user.phone','用户手机号');
-            $show->field('business_apply.img','营业执照');
-            $show->field('business_apply.img2','商家头图');
+//            $show->field('business_apply_id');
+            $show->field('name');
+            $show->field('content');
+
+            $show->field('cate.name','商家类型');
             $show->field('contact_number');
             $show->field('address');
             $show->field('province.name',"省份");
@@ -130,15 +129,31 @@ var_dump($re->business_apply_id);
             $show->field('district.name',"地区");
             $show->field('lt','经度');
             $show->field('lg','纬度');
-            $show->field('cate.name','商家类型');
 
-            $show->field('status', '状态');
+
+            $show->field('status', '状态')->using([1 => '正常', 2 => '休息',3=>'已关店',4=>'店铺已被封禁']);//1正常，2休息，3已关店,4店铺已被封禁
+
             $show->field('run_time');
-            $show->field('content');
-            $show->field('name');
+
             $show->field('limit_price', '单日录单限额');
             $show->field('is_recommend');
             $show->field('sort');
+
+            $show->field('business_apply.img','营业执照')->image(env('OSS_URL'),250,250);
+            $show->field('business_apply.img2','商家头图')->image(env('OSS_URL'),250,250);
+            $show->field('business_apply.img_just','身份证正面照')->image(env('OSS_URL'),250,250);
+            $show->field('business_apply.img_back','身份证反面照')->image(env('OSS_URL'),250,250);
+            $show->field('business_apply.img_hold','身份证手持照')->image(env('OSS_URL'),250,250);
+
+            $show->field('business_apply.img_details','店铺详情照')->image(env('OSS_URL'),250,250);
+
+
+//            $show->field('business_apply.img_details','店铺详情照')->display(function ($v) {
+//
+//                return json_decode($v, true);
+//
+//            })->image(env('OSS_URL'),250,250);
+
             $show->field('created_at');
             $show->field('updated_at');
 

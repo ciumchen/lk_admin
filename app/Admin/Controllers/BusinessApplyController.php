@@ -22,20 +22,16 @@ class BusinessApplyController extends AdminController
             $grid->model()->orderBy('id','desc');
             $grid->column('id')->sortable();
             $grid->column('uid');
-            $grid->column('img')->display(function ($v){
-                if ($v){
-                    return "<a href='".env('OSS_URL').$v."' target='_blank'>查看</a>";
-                }else{
-                    return "未上传";
-                }
-            });
-            $grid->column('img2')->display(function ($v){
-                if ($v){
-                    return "<a href='".env('OSS_URL').$v."' target='_blank'>查看</a>";
-                }else{
-                    return "未上传";
-                }
-            });
+//            $grid->column('img')->display(function ($v){
+//                if ($v){
+//                    return "<a href='".env('OSS_URL').$v."' target='_blank'>查看</a>";
+//                }else{
+//                    return "未上传";
+//                }
+//            });
+
+            $grid->column('img')->image(env('OSS_URL'),50,50);
+            $grid->column('img2','门头照')->image(env('OSS_URL'),50,50);
             $grid->column('phone');
             $grid->column('name');
             $grid->column('work');
@@ -49,6 +45,8 @@ class BusinessApplyController extends AdminController
             $grid->disableViewButton();
             $grid->disableCreateButton();
             $grid->disableEditButton();
+            $grid->addTableClass(['table-text-center']);
+            $grid->withBorder();
             $grid->actions(function ($actions) {
                 if($actions->row->status == 1 || $actions->row->status == 2){
                     // 去掉删除

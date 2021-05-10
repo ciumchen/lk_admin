@@ -11,6 +11,7 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Controllers\AdminController;
 use Dcat\Admin\Show;
+use Illuminate\Support\Facades\DB;
 
 class BusinessDataController extends AdminController
 {
@@ -28,22 +29,17 @@ class BusinessDataController extends AdminController
             $grid->column('uid');
 //            $grid->column('user.username','用户名');
             $grid->column('user.phone','用户手机号');
-            $grid->column('business_apply.img','营业执照')->display(function ($v){
-                if ($v){
-                    return "<a href='".env('OSS_URL').$v."' target='_blank'>查看</a>";
-                }else{
-                    return "未上传";
-                }
+//            $grid->column('business_apply.img','营业执照')->display(function ($v){
+//                if ($v){
+//                    return "<a href='".env('OSS_URL').$v."' target='_blank'>查看</a>";
+//                }else{
+//                    return "未上传";
+//                }
+//
+//            });
 
-            });
-            $grid->column('business_apply.img2','商家头图')->display(function ($v){
-                if ($v){
-                    return "<a href='".env('OSS_URL').$v."' target='_blank'>查看</a>";
-                }else{
-                    return "未上传";
-                }
-
-            });
+            $grid->column('business_apply.img','营业执照')->image(env('OSS_URL'),50,50);
+            $grid->column('business_apply.img2','门头照')->image(env('OSS_URL'),50,50);
 
             $grid->column('contact_number');
             $grid->column('address');
@@ -68,6 +64,8 @@ class BusinessDataController extends AdminController
             $grid->disableCreateButton();
             $grid->disableEditButton();
             $grid->disableViewButton();
+            $grid->addTableClass(['table-text-center']);
+            $grid->withBorder();
             $grid->actions(function (Grid\Displayers\Actions $actions) {
                 if($actions->row->status == 1)
                 {
@@ -115,6 +113,10 @@ class BusinessDataController extends AdminController
     protected function detail($id)
     {
         return Show::make($id, new BusinessData(), function (Show $show) {
+
+            $re = $show->model()->where('id',$show->id)->with(['user','cate','province','city','district','business_apply'])->first();
+var_dump($re->business_apply_id);
+            $apply_data = DB::table('business_apply')->where('id',$re->business_apply_id)->first();
             $show->field('id');
             $show->field('uid');
             $show->field('user.username','用户名');

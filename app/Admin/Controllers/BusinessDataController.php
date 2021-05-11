@@ -139,20 +139,16 @@ class BusinessDataController extends AdminController
             $show->field('is_recommend');
             $show->field('sort');
 
-            $show->field('business_apply.img','营业执照')->image(env('OSS_URL'),250,250);
-            $show->field('business_apply.img2','商家头图')->image(env('OSS_URL'),250,250);
-            $show->field('business_apply.img_just','身份证正面照')->image(env('OSS_URL'),250,250);
-            $show->field('business_apply.img_back','身份证反面照')->image(env('OSS_URL'),250,250);
-            $show->field('business_apply.img_hold','身份证手持照')->image(env('OSS_URL'),250,250);
+            $show->field('business_apply.img','营业执照')->image(env('OSS_URL'),50,50);
+            $show->field('business_apply.img2','商家头图')->image(env('OSS_URL'),50,50);
+            $show->field('business_apply.img_just','身份证正面照')->image(env('OSS_URL'),50,50);
+            $show->field('business_apply.img_back','身份证反面照')->image(env('OSS_URL'),50,50);
+            $show->field('business_apply.img_hold','身份证手持照')->image(env('OSS_URL'),50,50);
 
-            $show->field('business_apply.img_details','店铺详情照')->image(env('OSS_URL'),250,250);
+            $show->field('business_apply.img_details1','店铺详情照1')->image(env('OSS_URL'),50,50);
+            $show->field('business_apply.img_details2','店铺详情照2')->image(env('OSS_URL'),50,50);
+            $show->field('business_apply.img_details3','店铺详情照3')->image(env('OSS_URL'),50,50);
 
-
-//            $show->field('business_apply.img_details','店铺详情照')->display(function ($v) {
-//
-//                return json_decode($v, true);
-//
-//            })->image(env('OSS_URL'),250,250);
 
             $show->field('created_at');
             $show->field('updated_at');

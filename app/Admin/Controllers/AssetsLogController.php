@@ -54,6 +54,41 @@ class AssetsLogController extends AdminController
                 });
 
             });
+
+
+            $titles = [
+                'id' => 'ID',
+                'assets_type_id' => '资产类型ID',
+                'assets_name' => '资产名称',
+                'uid' => '用户UID',
+                'user.phone' => '用户',
+                'operate_type' => '操作类型',
+                'amount' => '变动数量',
+                'amount_before_change' => '变动前数量',
+                'tx_hash' => '交易Hash',
+                'ip' => 'IP',
+                'user_agent' => 'Ua',
+                'remark' => '备注',
+                'created_at' => '创建时间',
+                'updated_at' => '更新时间',
+
+            ];
+            $grid->export($titles)->rows(function (array $rows) {
+                foreach ($rows as $index => &$row) {
+                    // 这里假设role就是关联数据
+                    $row['user.phone'] = $row['user']['phone'];
+
+                }
+                return $rows;
+            });
+
+
+
+
+
+
+
+
         });
     }
 }

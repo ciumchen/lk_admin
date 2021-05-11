@@ -35,23 +35,6 @@ class OrderController extends AdminController
             $grid->column('profit_ratio');
             $grid->column('price');
             $grid->column('profit_price');
-//            $grid->column('status')->display(function ($v){
-//                return Order::$statusLabel[$v] ?? $v;
-//            });
-//            $grid->column('pay_status')->display(function($v){
-//                if($v=='await'){
-//                    return '待支付';
-//                }elseif($v=='pending'){
-//                    return '支付处理中';
-//                }elseif($v=='succeeded'){
-//                    return '支付成功';
-//                }elseif($v=='failed'){
-//                    return '支付失败';
-//                }else{
-//                    return "订单异常";
-//                }
-//            });//支付状态
-//            支付状态：await 待支付；pending 支付处理中； succeeded 支付成功；failed 支付失败
 
             $grid->column('status')->using([1 => '审核中', 2 => '审核通过',3=>'审核不通过'])->label([
                 1 => 'primary',

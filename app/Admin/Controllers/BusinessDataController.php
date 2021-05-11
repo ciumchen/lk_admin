@@ -29,14 +29,7 @@ class BusinessDataController extends AdminController
             $grid->column('uid');
 //            $grid->column('user.username','用户名');
             $grid->column('user.phone','用户手机号');
-//            $grid->column('business_apply.img','营业执照')->display(function ($v){
-//                if ($v){
-//                    return "<a href='".env('OSS_URL').$v."' target='_blank'>查看</a>";
-//                }else{
-//                    return "未上传";
-//                }
-//
-//            });
+
 
             $grid->column('business_apply.img','营业执照')->image(env('OSS_URL'),50,50);
             $grid->column('business_apply.img2','门头照')->image(env('OSS_URL'),50,50);
@@ -99,9 +92,19 @@ class BusinessDataController extends AdminController
      */
     protected function form()
     {
-        return Form::make(new BusinessData(), function (Form $form) {
-            $form->number('sort');
-            $form->switch('is_recommend');
+        return Form::make(new BusinessData(['user','cate','province','city','district','business_apply']), function (Form $form) {
+            $form->display('id');
+            $form->display('uid');
+            $form->display('name');
+
+            $form->display('business_apply.img','营业执照');
+            $form->display('business_apply.img2','商家门头照');
+            $form->display('business_apply.img_just','身份证正面');
+            $form->display('business_apply.img_back','身份证反面');
+            $form->display('business_apply.img_hold','身份证手持');
+            $form->display('business_apply.img_details1','商家详情照1');
+            $form->display('business_apply.img_details2','商家详情照2');
+            $form->display('business_apply.img_details3','商家详情照3');
 
             $form->display('created_at');
             $form->display('updated_at');

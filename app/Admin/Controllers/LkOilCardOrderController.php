@@ -43,20 +43,6 @@ class LkOilCardOrderController extends AdminController
             $grid->column('numeric','油卡号');//油卡号
             $grid->column('telecom','运营商');//运营商
 
-//            $grid->column('status')->display(function($v){
-//                if($v=='await'){
-//                    return '待支付';
-//                }elseif($v=='pending'){
-//                    return '支付处理中';
-//                }elseif($v=='succeeded'){
-//                    return '支付成功';
-//                }elseif($v=='failed'){
-//                    return '支付失败';
-//                }else{
-//                    return "订单异常";
-//                }
-//            });//订单状态
-
             $grid->column('status')->using(['await' => '待支付', 'pending' => '支付处理中','succeeded'=>'支付成功','failed'=>'支付失败','ddyc'=>"订单异常"])->label([
                 'await' => 'primary',
                 'pending' => 'orange',

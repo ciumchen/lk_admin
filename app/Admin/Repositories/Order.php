@@ -22,6 +22,7 @@ class Order extends EloquentRepository
     const PAY_STATUS_PENDING = 'pending';
     const PAY_STATUS_SUCCEEDED = 'succeeded';
     const PAY_STATUS_FAILED = 'failed';
+    const PAY_STATUS_DDYC = 'ddyc';
 
     const LD_ORDER_SELECT1 = '录单';
     const LD_ORDER_SELECT2 = '话费';
@@ -42,6 +43,7 @@ class Order extends EloquentRepository
         self::PAY_STATUS_PENDING => "支付处理中",
         self::PAY_STATUS_SUCCEEDED => "支付成功",
         self::PAY_STATUS_FAILED => "支付失败",
+        self::PAY_STATUS_DDYC => "订单异常",
     );
 
     public static $ld_order_select = array(

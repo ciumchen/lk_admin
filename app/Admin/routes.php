@@ -18,6 +18,10 @@ Route::group([
     $router->any('mytest', 'TestController@mytest');
     $router->any('update_sjtt', 'TestController@update_sjtt');
     $router->any('update_order_ddyc', 'TestController@update_order_ddyc');
+    $router->any('uploadImg', 'TestController@uploadImg');
+    $router->any('updateImg', 'TestController@updateImg');
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //话费订单、油卡订单、美团订单
     $router->resource('hfdd', 'LkPhoneBillOrderController');

@@ -97,7 +97,12 @@ class BusinessDataController extends AdminController
             $form->display('uid');
             $form->display('name');
 
-            $form->display('business_apply.img','营业执照');
+//            $form->display('business_apply.img','营业执照');
+
+            $form->image('business_apply.img','营业执照')->uniqueName()->accept('jpg,png,gif,jpeg', 'image/*')->disk('oss')->move('/business/category')->autoUpload();
+
+
+
             $form->display('business_apply.img2','商家门头照');
             $form->display('business_apply.img_just','身份证正面');
             $form->display('business_apply.img_back','身份证反面');

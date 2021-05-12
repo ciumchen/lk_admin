@@ -3,6 +3,9 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Repositories\Test;
+use App\Exceptions\LogicException;
+use App\Models\BusinessCategory;
+use App\Services\OssService;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
@@ -133,9 +136,27 @@ class TestController extends AdminController
             throw $e;
         }
 
+    }
 
+    //上传图片
+    public function uploadImg(){
 
+    if ($_FILES){
+        echo '<pre>';
+        var_dump($_FILES);
+//        $_FILES["file"]["tmp_name"]
 
+    }
+
+        return view('test/test');
+    }
+
+//更新图片url
+    public function updateImg(){
+        $data['img_url'] = '/business/category/9da43f6c05c29d0f1c498c0a6782d862.png';
+        $re = DB::table('business_category')->where('id',8)->update($data);
+
+        var_dump($re);
 
 
     }

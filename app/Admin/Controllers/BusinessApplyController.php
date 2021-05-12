@@ -64,6 +64,9 @@ class BusinessApplyController extends AdminController
                     // 去掉删除
                     $actions->disableDelete();
                 }
+                if (Admin::user()->id==1||Admin::user()->id==2){
+                    $actions->disableDelete(false);
+                }
 
                 // 去掉编辑
                 $actions->disableEdit();

@@ -96,6 +96,7 @@ class BusinessDataController extends AdminController
             $form->display('id');
             $form->display('uid');
             $form->display('name');
+            $form->display('is_recommend');
 
 //            $form->display('business_apply.img','营业执照');
 

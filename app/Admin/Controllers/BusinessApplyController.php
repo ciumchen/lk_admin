@@ -35,7 +35,7 @@ class BusinessApplyController extends AdminController
             $grid->column('img2','门头照')->image(env('OSS_URL'),50,50);
             $grid->column('phone');
             $grid->column('name');
-            $grid->column('work');
+//            $grid->column('work');
             $grid->column('remark');
 //            $grid->column('status')->display(function ($v){
 //                return BusinessApply::$statusLabel[$v];
@@ -90,6 +90,17 @@ class BusinessApplyController extends AdminController
                 });
 
             });
+        });
+    }
+
+    protected function form()
+    {
+        return Form::make(new BusinessApply(), function (Form $form) {
+            $form->display('id');
+            $form->text('name');
+            $form->number("sort")->default(0);
+            $form->display('created_at');
+            $form->display('updated_at');
         });
     }
 

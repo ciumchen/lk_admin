@@ -56,4 +56,9 @@ class BusinessData extends Model
         return $this->belongsTo(BusinessApply::class, 'business_apply_id','id');
     }
 
+    public function userIdImg()
+    {
+        return $this->belongsTo(UserIdImg::class, 'business_apply_id','business_apply_id');
+    }
+
 }

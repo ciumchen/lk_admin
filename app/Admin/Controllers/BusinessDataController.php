@@ -121,12 +121,11 @@ class BusinessDataController extends AdminController
 
     protected function detail($id)
     {
-        return Show::make($id, new BusinessData(['user','cate','province','city','district','business_apply','user_id_img']), function (Show $show) {
+        return Show::make($id, new BusinessData(['user','cate','province','city','district','business_apply','userIdImg']), function (Show $show) {
             $show->field('id');
             $show->field('uid');
             $show->field('user.username','用户名');
             $show->field('user.phone','用户手机号');
-//            $show->field('business_apply_id');
             $show->field('name');
             $show->field('content');
 
@@ -139,9 +138,7 @@ class BusinessDataController extends AdminController
             $show->field('lt','经度');
             $show->field('lg','纬度');
 
-
             $show->field('status', '状态')->using([1 => '正常', 2 => '休息',3=>'已关店',4=>'店铺已被封禁']);//1正常，2休息，3已关店,4店铺已被封禁
-
             $show->field('run_time');
 
             $show->field('limit_price', '单日录单限额');
@@ -150,9 +147,9 @@ class BusinessDataController extends AdminController
 
             $show->field('business_apply.img','营业执照')->image(env('OSS_URL'),50,50);
             $show->field('business_apply.img2','商家头图')->image(env('OSS_URL'),50,50);
-            $show->field('userIdImg.img_just','身份证正面照')->image(env('OSS_URL'),50,50);
-            $show->field('userIdImg.img_back','身份证反面照')->image(env('OSS_URL'),50,50);
-            $show->field('userIdImg.img_hold','身份证手持照')->image(env('OSS_URL'),50,50);
+            $show->field('user_id_img.img_just','身份证正面照')->image(env('OSS_URL'),50,50);
+            $show->field('user_id_img.img_back','身份证反面照')->image(env('OSS_URL'),50,50);
+            $show->field('user_id_img.img_hold','身份证手持照')->image(env('OSS_URL'),50,50);
 
             $show->field('business_apply.img_details1','店铺详情照1')->image(env('OSS_URL'),50,50);
             $show->field('business_apply.img_details2','店铺详情照2')->image(env('OSS_URL'),50,50);

@@ -30,6 +30,8 @@ class AssetsLog extends EloquentRepository
     const OPERATE_TYPE_SHARE_B_REBATE = 'share_b_rebate';//邀请商家
     const OPERATE_TYPE_EXCHANGE_IETS = 'exchagne_iets';//兑换iets
     const OPERATE_TYPE_EXCHANGE_IETS_SUB_ENCOURATGE = 'exchagne_iets_sub';//兑换扣除
+    const OPERATE_TYPE_IETS_TO_USDT = 'IETS兑换为USDT';
+
     /**
      * 类型文本.
      *
@@ -47,7 +49,8 @@ class AssetsLog extends EloquentRepository
         self::OPERATE_TYPE_DISTRICT_REBATE => '区站长分红',
         self::OPERATE_TYPE_CITY_REBATE => '市站长分红',
         self::OPERATE_TYPE_SHARE_B_REBATE => '邀请商家分红',
-        self::OPERATE_TYPE_EXCHANGE_IETS => '兑换IETS',
+        self::OPERATE_TYPE_EXCHANGE_IETS => '兑换',
         self::OPERATE_TYPE_EXCHANGE_IETS_SUB_ENCOURATGE => '兑换扣除',
+        self::OPERATE_TYPE_IETS_TO_USDT => 'IETS兑换为USDT',
     ];
 }

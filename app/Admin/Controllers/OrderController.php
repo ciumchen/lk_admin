@@ -35,23 +35,24 @@ class OrderController extends AdminController
             $grid->column('profit_ratio');
             $grid->column('price');
             $grid->column('profit_price');
-            $grid->column('status')->display(function ($v){
-                return Order::$statusLabel[$v] ?? $v;
-            });
-            $grid->column('pay_status')->display(function($v){
-                if($v=='await'){
-                    return '待支付';
-                }elseif($v=='pending'){
-                    return '支付处理中';
-                }elseif($v=='succeeded'){
-                    return '支付成功';
-                }elseif($v=='failed'){
-                    return '支付失败';
-                }else{
-                    return "订单异常";
-                }
-            });//支付状态
-//            支付状态：await 待支付；pending 支付处理中； succeeded 支付成功；failed 支付失败
+
+            $grid->column('status')->using([1 => '审核中', 2 => '审核通过',3=>'审核不通过'])->label([
+                1 => 'primary',
+                2 => 'success',
+                3 => 'danger',
+                4 => Admin::color()->info()
+            ]);
+
+            $grid->column('pay_status')->using(['await' => '待支付', 'pending' => '支付处理中','succeeded'=>'支付成功','failed'=>'支付失败','ddyc'=>"订单异常"])->label([
+                'await' => 'primary',
+                'pending' => 'orange',
+                'succeeded' => 'success',
+                'failed' => 'danger',
+                'ddyc' => 'dark',
+                4 => Admin::color()->info()
+            ]);
+
+
 
             $grid->column('name');
             $grid->column('remark');
@@ -66,6 +67,7 @@ class OrderController extends AdminController
             $grid->disableDeleteButton();
             // 禁用显示按钮
             $grid->disableViewButton();
+            $grid->perPages([20, 50, 100, 200, 500]);
 
 
             //筛选
@@ -91,7 +93,7 @@ class OrderController extends AdminController
 
             //审核订单按钮
             $grid->actions(function (Grid\Displayers\Actions $actions) {
-                if (Admin::user()->id==2){
+                if (Admin::user()->id==1||Admin::user()->id==2){
                     $actions->append(new VerifyOrder());
                 }elseif($actions->row->pay_status=='succeeded' &&$actions->row->status == Order::STATUS_DEFAULT)
                 {

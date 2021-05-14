@@ -229,34 +229,39 @@ class RebateService
      */
     public function exchagneIets()
     {
-        //回去IETS单价
-        $ietsPrice = Setting::getSetting('iets_price');
+        //获取USDT单价
+        $usdtPrice = Setting::getSetting('usdt_price');
+        if(!$usdtPrice)
+        {
+            echo "请设置usdt单价 \n";
+            return false;
+        }
         try {
             $encourage = AssetsType::where("assets_name", AssetsType::DEFAULT_ASSETS_ENCOURAGE)->first();
-            $iets = AssetsType::where("assets_name", AssetsType::DEFAULT_ASSETS_NAME)->first();
-            DB::transaction(function () use ($ietsPrice, $encourage, $iets) {
+            $usdt = AssetsType::where("assets_name", AssetsType::DEFAULT_ASSETS_NAME)->first();
+            DB::transaction(function () use ($usdtPrice, $encourage, $usdt) {
                 //获取余额大于0的用户
                 Asset::where("assets_name", AssetsType::DEFAULT_ASSETS_ENCOURAGE)
                     ->where("amount", ">", 0)
-                    ->chunkById(500,function($asset) use ($ietsPrice, $encourage, $iets) {
+                    ->chunkById(500,function($asset) use ($usdtPrice, $encourage, $usdt) {
                         foreach($asset as $v)
                         {
                             //计算能换多少个iets
-                            $exchangeAmount = bcdiv($v->amount, $ietsPrice, 8);
+                            $exchangeAmount = bcdiv($v->amount, $usdtPrice, 8);
                             //70%到余额，30%到冻结
                             //给用户加iets
                             AssetsService::BalancesChange(
                                 $v->uid,
-                                $iets->id,
-                                $iets->assets_name,
+                                $usdt->id,
+                                $usdt->assets_name,
                                 bcmul($exchangeAmount, 0.7, 8),
                                 AssetsLog::OPERATE_TYPE_EXCHANGE_IETS,
                                 "兑换IETS"
                             );
                             AssetsService::freezeChange(
                                 $v->uid,
-                                $iets->id,
-                                $iets->assets_name,
+                                $usdt->id,
+                                $usdt->assets_name,
                                 bcmul($exchangeAmount, 0.3, 8),
                                 FreezeLog::OPERATE_TYPE_EXCHANGE_IETS,
                                 "兑换IETS"

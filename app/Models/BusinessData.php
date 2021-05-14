@@ -50,5 +50,15 @@ class BusinessData extends Model
     {
         return $this->belongsTo(CityData::class, 'district','code');
     }
+    //申请商家
+    public function business_apply()
+    {
+        return $this->belongsTo(BusinessApply::class, 'business_apply_id','id');
+    }
+
+    public function userIdImg()
+    {
+        return $this->belongsTo(UserIdImg::class, 'business_apply_id','business_apply_id');
+    }
 
 }

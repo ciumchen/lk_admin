@@ -11,7 +11,7 @@ class AssetsType extends Model
 	use HasDateTimeFormatter;
     protected $table = 'assets_type';
 
-    const DEFAULT_ASSETS_NAME = 'iets';
+    const DEFAULT_ASSETS_NAME = 'usdt';
     const DEFAULT_ASSETS_ENCOURAGE = 'encourage';
 
 }

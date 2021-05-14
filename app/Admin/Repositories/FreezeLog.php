@@ -18,6 +18,7 @@ class FreezeLog extends EloquentRepository
      * 类型.
      */
     const OPERATE_TYPE_EXCHANGE_IETS = 'exchagne_iets';//兑换iets
+    const OPERATE_TYPE_IETS_TO_USDT = 'IETS兑换为USDT';//兑换iets
 
     /**
      * 类型文本.
@@ -26,5 +27,6 @@ class FreezeLog extends EloquentRepository
      */
     public static $operateTypeTexts = [
         self::OPERATE_TYPE_EXCHANGE_IETS => '兑换IETS',
+        self::OPERATE_TYPE_IETS_TO_USDT => 'IETS兑换为USDT',
     ];
 }

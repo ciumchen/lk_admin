@@ -101,7 +101,7 @@ class ManualWithdraw extends RowAction
             }
         } catch (\Exception $exception) {
             Cache::forget('withdraw_log_key_'.$this->getKey());
-            return $this->response()->error('转账失败！');
+            return $this->response()->error('转账失败！失败原因：' . $exception->getMessage());
         }
 
         Cache::forget('withdraw_log_key_'.$this->getKey());

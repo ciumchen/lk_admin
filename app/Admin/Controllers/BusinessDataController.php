@@ -28,14 +28,14 @@ class BusinessDataController extends AdminController
             $grid->column('id')->sortable();
             $grid->column('uid');
 //            $grid->column('user.username','用户名');
-            $grid->column('user.phone','用户手机号');
+            $grid->column('user.phone','商户手机号');
 
 
             $grid->column('business_apply.img','营业执照')->image(env('OSS_URL'),50,50);
             $grid->column('business_apply.img2','门头照')->image(env('OSS_URL'),50,50);
 
-            $grid->column('contact_number');
-            $grid->column('address');
+            $grid->column('contact_number')->editable(true);
+            $grid->column('address')->editable(true);
             $grid->column('province.name',"省份");
             $grid->column('city.name',"城市");
             $grid->column('district.name',"地区");
@@ -45,9 +45,9 @@ class BusinessDataController extends AdminController
             $grid->column('status', '状态')->display(function ($v){
                 return BusinessData::$statusLabel[$v];
             });
-            $grid->column('run_time');
-            $grid->column('content');
-            $grid->column('name');
+            $grid->column('run_time')->editable(true);
+//            $grid->column('content');
+            $grid->column('name')->editable(true);
             $grid->column('limit_price', '单日录单限额');
             $grid->column('is_recommend')->switch('', true);
             $grid->column('sort')->editable(true);
@@ -55,7 +55,7 @@ class BusinessDataController extends AdminController
             $grid->column('updated_at')->sortable();
 
             $grid->disableCreateButton();
-            $grid->disableEditButton();
+//            $grid->disableEditButton();
 //            $grid->disableViewButton();
             $grid->addTableClass(['table-text-center']);
             $grid->withBorder();
@@ -73,7 +73,7 @@ class BusinessDataController extends AdminController
                 $filter->equal('id');
                 $filter->equal('uid');
 //                $filter->equal('user.username','用户名');
-                $filter->equal('user.phone','用户手机号');
+                $filter->equal('user.phone','商户手机号');
                 $filter->equal('contact_number');
                 $filter->equal('limit_price', '单日录单限额');
                 $filter->equal('is_recommend', '推荐商家')->select(function () {
@@ -92,11 +92,17 @@ class BusinessDataController extends AdminController
      */
     protected function form()
     {
-        return Form::make(new BusinessData(['user','cate','province','city','district','business_apply']), function (Form $form) {
+        return Form::make(new BusinessData(['user','cate','province','city','district','business_apply','userIdImg']), function (Form $form) {
             $form->display('id');
             $form->display('uid');
             $form->display('name');
             $form->display('is_recommend');
+
+            $form->display('contact_number');
+            $form->display('address');
+            $form->display('run_time');
+            $form->display('name');
+            $form->display('sort');
 
 //            $form->display('business_apply.img','营业执照');
 
@@ -125,7 +131,7 @@ class BusinessDataController extends AdminController
             $show->field('id');
             $show->field('uid');
             $show->field('user.username','用户名');
-            $show->field('user.phone','用户手机号');
+            $show->field('user.phone','商户手机号');
             $show->field('name');
             $show->field('content');
 

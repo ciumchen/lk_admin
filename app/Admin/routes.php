@@ -20,6 +20,7 @@ Route::group([
     $router->any('update_order_ddyc', 'TestController@update_order_ddyc');
     $router->any('uploadImg', 'TestController@uploadImg');
     $router->any('updateImg', 'TestController@updateImg');
+    $router->any('delApply', 'TestController@delApply');
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
 

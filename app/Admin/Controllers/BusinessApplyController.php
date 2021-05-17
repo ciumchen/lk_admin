@@ -36,7 +36,7 @@ class BusinessApplyController extends AdminController
             $grid->column('phone');
             $grid->column('name');
 //            $grid->column('work');
-            $grid->column('remark');
+            $grid->column('remark')->editable(true);
 //            $grid->column('status')->display(function ($v){
 //                return BusinessApply::$statusLabel[$v];
 //            });

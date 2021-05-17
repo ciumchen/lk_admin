@@ -88,7 +88,7 @@ class OrderController extends AdminController
                 $filter->equal('pay_status')->select(function () {
                     return Order::$pay_status;
                 });
-
+                $filter->between('updated_at')->datetime();
             });
 
             //审核订单按钮

@@ -114,7 +114,12 @@ class BusinessDataController extends AdminController
                     DB::table('users')->where('id',$re->uid)->update($data);
                 }
                 BusinessApply::where('uid',$re->uid)->where('status',2)->delete();
-
+                $form->image('img')->retainable();
+                $form->image('img2')->retainable();
+                $form->image('img_details1')->retainable();
+                $form->image('img_details1')->retainable();
+                $form->image('img_details1')->retainable();
+                $form->image('img_details1')->retainable();
             }
 
 //            $form->display('business_apply.img','营业执照');

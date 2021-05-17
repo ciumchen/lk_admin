@@ -101,6 +101,17 @@ class BusinessApplyController extends AdminController
             $form->number("sort")->default(0);
             $form->display('created_at');
             $form->display('updated_at');
+
+
+
+            if ($form->isDeleting()) {
+                $form->image('img')->retainable();
+                $form->image('img2')->retainable();
+                $form->image('img_details1')->retainable();
+                $form->image('img_details1')->retainable();
+                $form->image('img_details1')->retainable();
+                $form->image('img_details1')->retainable();
+            }
         });
     }
 

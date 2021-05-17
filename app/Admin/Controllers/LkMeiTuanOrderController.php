@@ -68,7 +68,12 @@ class LkMeiTuanOrderController extends AdminController
 
 //            $grid->column('timeout_action_time');
             $grid->column('pay_time')->display(function (){
-                return date('Y-m-d H:i:s',$this->pay_time);
+                if ($this->status=='succeeded'){
+                    return date('Y-m-d H:i:s',strtotime($this->pay_time));
+                }else{
+                    return date('Y-m-d H:i:s',$this->pay_time);
+                }
+
             });
 //            $grid->column('end_time');
             $grid->column('modified_time');

@@ -55,7 +55,7 @@ class BusinessDataController extends AdminController
             $grid->column('updated_at')->sortable();
 
             $grid->disableCreateButton();
-            $grid->disableEditButton();
+//            $grid->disableEditButton();
 //            $grid->disableViewButton();
             $grid->addTableClass(['table-text-center']);
             $grid->withBorder();
@@ -103,6 +103,17 @@ class BusinessDataController extends AdminController
             $form->display('run_time');
             $form->display('name');
             $form->display('sort');
+
+            if ($form->isDeleting()) {
+                $id = $form->getKey();
+                $re = DB::table('business_data')->where('id',$id)->first();
+                $data['role'] = 1;
+                $role = DB::table('users')->where('id',$re->uid)->value('role');
+                if($role==2){
+                    DB::table('users')->where('id',$re->uid)->update($data);
+                }
+
+            }
 
 //            $form->display('business_apply.img','营业执照');
 

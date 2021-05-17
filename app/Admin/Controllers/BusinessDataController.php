@@ -146,44 +146,46 @@ class BusinessDataController extends AdminController
     protected function detail($id)
     {
         return Show::make($id, new BusinessData(['user','cate','province','city','district','business_apply','userIdImg']), function (Show $show) {
-            $show->field('id');
-            $show->field('uid');
-            $show->field('user.username','用户名');
-            $show->field('user.phone','商户手机号');
-            $show->field('name');
-            $show->field('content');
+            $show->row(function (Show\Row $show) {
+                $show->width(4)->field('id');
+                $show->width(4)->field('uid');
+                $show->width(4)->field('user.username','用户名');
+                $show->width(4)->field('user.phone','商户手机号');
+                $show->width(4)->field('name');
+//                $show->width(4)->field('content');
 
-            $show->field('cate.name','商家类型');
-            $show->field('contact_number');
-            $show->field('address');
-            $show->field('province.name',"省份");
-            $show->field('city.name',"城市");
-            $show->field('district.name',"地区");
-            $show->field('lt','经度');
-            $show->field('lg','纬度');
+                $show->width(4)->field('cate.name','商家类型');
+                $show->width(4)->field('contact_number');
+                $show->width(4)->field('address');
+                $show->width(4)->field('province.name',"省份");
+                $show->width(4)->field('city.name',"城市");
+                $show->width(4)->field('district.name',"地区");
+                $show->width(4)->field('lt','经度');
+                $show->width(4)->field('lg','纬度');
 
-            $show->field('status', '状态')->using([1 => '正常', 2 => '休息',3=>'已关店',4=>'店铺已被封禁']);//1正常，2休息，3已关店,4店铺已被封禁
-            $show->field('run_time');
+                $show->width(4)->field('status', '状态')->using([1 => '正常', 2 => '休息',3=>'已关店',4=>'店铺已被封禁']);//1正常，2休息，3已关店,4店铺已被封禁
+                $show->width(4)->field('run_time');
 
-            $show->field('limit_price', '单日录单限额');
-            $show->field('is_recommend');
-            $show->field('sort');
+                $show->width(4)->field('limit_price', '单日录单限额');
+                $show->width(4)->field('is_recommend')->using([0 => '不推荐(非星级商家)', 1 => '推荐商家(星级商家)']);//是否推荐，0不推荐，1推荐',
+                $show->width(4)->field('sort');
+            });
+            $show->row(function (Show\Row $show) {
+                $show->width(3)->field('business_apply.img','营业执照')->image(env('OSS_URL'),50,50);
+                $show->width(3)->field('business_apply.img2','商家头图')->image(env('OSS_URL'),50,50);
+                $show->width(3)->field('user_id_img.img_just','身份证正面照')->image(env('OSS_URL'),50,50);
+                $show->width(3)->field('user_id_img.img_back','身份证反面照')->image(env('OSS_URL'),50,50);
+                $show->width(3)->field('user_id_img.img_hold','身份证手持照')->image(env('OSS_URL'),50,50);
 
-            $show->field('business_apply.img','营业执照')->image(env('OSS_URL'),50,50);
-            $show->field('business_apply.img2','商家头图')->image(env('OSS_URL'),50,50);
-            $show->field('user_id_img.img_just','身份证正面照')->image(env('OSS_URL'),50,50);
-            $show->field('user_id_img.img_back','身份证反面照')->image(env('OSS_URL'),50,50);
-            $show->field('user_id_img.img_hold','身份证手持照')->image(env('OSS_URL'),50,50);
-
-            $show->field('business_apply.img_details1','店铺详情照1')->image(env('OSS_URL'),50,50);
-            $show->field('business_apply.img_details2','店铺详情照2')->image(env('OSS_URL'),50,50);
-            $show->field('business_apply.img_details3','店铺详情照3')->image(env('OSS_URL'),50,50);
-
-
-            $show->field('created_at');
-            $show->field('updated_at');
+                $show->width(3)->field('business_apply.img_details1','店铺详情照1')->image(env('OSS_URL'),50,50);
+                $show->width(3)->field('business_apply.img_details2','店铺详情照2')->image(env('OSS_URL'),50,50);
+                $show->width(3)->field('business_apply.img_details3','店铺详情照3')->image(env('OSS_URL'),50,50);
 
 
+                $show->width(4)->field('created_at');
+                $show->width(4)->field('updated_at');
+
+            });
             $show->disableDeleteButton();
         });
     }

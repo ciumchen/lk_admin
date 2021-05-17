@@ -7,6 +7,7 @@ use App\Admin\Actions\Grid\EnableBusiness;
 
 use App\Admin\Actions\Grid\LimitPriceBusiness;
 use App\Admin\Repositories\BusinessData;
+use App\Models\BusinessApply;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Controllers\AdminController;
@@ -112,6 +113,7 @@ class BusinessDataController extends AdminController
                 if($role==2){
                     DB::table('users')->where('id',$re->uid)->update($data);
                 }
+                BusinessApply::where('uid',$re->uid)->where('status',2)->delete();
 
             }
 

@@ -329,7 +329,7 @@
 
                     $.each(validatorNames, function (i, el) {
                         // Set up the 'override' message
-                        var message = $this.data("validation" + el + "Message");
+                        var message = $this.data("validation" + el + "SysMessage");
                         var hasOverrideMessage = !!message;
                         var foundValidator = false;
                         if (!message) {
@@ -673,8 +673,8 @@
                     };
 
                     var message = "Not valid";
-                    if ($this.data("validation" + name + "Message")) {
-                        message = $this.data("validation" + name + "Message");
+                    if ($this.data("validation" + name + "SysMessage")) {
+                        message = $this.data("validation" + name + "SysMessage");
                     }
                     result.message = message;
 
@@ -705,7 +705,7 @@
                                     }
                                     rrjqbvValidator.lastFinished = true;
                                     rrjqbvThis.data(
-                                        "validation" + rrjqbvValidator.validatorName + "Message",
+                                        "validation" + rrjqbvValidator.validatorName + "SysMessage",
                                         rrjqbvValidator.message
                                     );
 
@@ -757,7 +757,7 @@
                                         validator.message = data.message;
                                     }
                                     validator.lastFinished = true;
-                                    $this.data("validation" + validator.validatorName + "Message", validator.message);
+                                    $this.data("validation" + validator.validatorName + "SysMessage", validator.message);
                                     // Timeout is set to avoid problems with the events being considered 'already fired'
                                     setTimeout(function () {
                                         $this.trigger("revalidate.validation");
@@ -768,7 +768,7 @@
                                 validator.lastValid = true;
                                 validator.message = "ajax call failed";
                                 validator.lastFinished = true;
-                                $this.data("validation" + validator.validatorName + "Message", validator.message);
+                                $this.data("validation" + validator.validatorName + "SysMessage", validator.message);
                                 // Timeout is set to avoid problems with the events being considered 'already fired'
                                 setTimeout(function () {
                                     $this.trigger("revalidate.validation");
@@ -792,8 +792,8 @@
                     }
 
                     var message = "Not in the expected format";
-                    if ($this.data("validation" + name + "Message")) {
-                        message = $this.data("validation" + name + "Message");
+                    if ($this.data("validation" + name + "SysMessage")) {
+                        message = $this.data("validation" + name + "SysMessage");
                     }
 
                     result.message = message;
@@ -813,8 +813,8 @@
                     result.regex = regexFromString('[a-zA-Z0-9.!#$%&\u2019*+/=?^_`{|}~-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}');
 
                     var message = "Not a valid email address";
-                    if ($this.data("validation" + name + "Message")) {
-                        message = $this.data("validation" + name + "Message");
+                    if ($this.data("validation" + name + "SysMessage")) {
+                        message = $this.data("validation" + name + "SysMessage");
                     }
 
                     result.message = message;
@@ -831,8 +831,8 @@
                 name: "required",
                 init: function ($this, name) {
                     var message = "This is required";
-                    if ($this.data("validation" + name + "Message")) {
-                        message = $this.data("validation" + name + "Message");
+                    if ($this.data("validation" + name + "SysMessage")) {
+                        message = $this.data("validation" + name + "SysMessage");
                     }
 
                     return {message: message, includeEmpty: true};
@@ -869,8 +869,8 @@
                         message += " '" + $label.first().text() + "'";
                     }
 
-                    if ($this.data("validation" + name + "Message")) {
-                        message = $this.data("validation" + name + "Message");
+                    if ($this.data("validation" + name + "SysMessage")) {
+                        message = $this.data("validation" + name + "SysMessage");
                     }
 
                     result.message = message;
@@ -892,8 +892,8 @@
                     result.max = $this.data("validation" + name + "Max");
 
                     result.message = "Too high: Maximum of '" + result.max + "'";
-                    if ($this.data("validation" + name + "Message")) {
-                        result.message = $this.data("validation" + name + "Message");
+                    if ($this.data("validation" + name + "SysMessage")) {
+                        result.message = $this.data("validation" + name + "SysMessage");
                     }
 
                     return result;
@@ -911,8 +911,8 @@
                     result.min = $this.data("validation" + name + "Min");
 
                     result.message = "Too low: Minimum of '" + result.min + "'";
-                    if ($this.data("validation" + name + "Message")) {
-                        result.message = $this.data("validation" + name + "Message");
+                    if ($this.data("validation" + name + "SysMessage")) {
+                        result.message = $this.data("validation" + name + "SysMessage");
                     }
 
                     return result;
@@ -930,8 +930,8 @@
                     result.maxlength = $this.data("validation" + name + "Maxlength");
 
                     result.message = "Too long: Maximum of '" + result.maxlength + "' characters";
-                    if ($this.data("validation" + name + "Message")) {
-                        result.message = $this.data("validation" + name + "Message");
+                    if ($this.data("validation" + name + "SysMessage")) {
+                        result.message = $this.data("validation" + name + "SysMessage");
                     }
 
                     return result;
@@ -949,8 +949,8 @@
                     result.minlength = $this.data("validation" + name + "Minlength");
 
                     result.message = "Too short: Minimum of '" + result.minlength + "' characters";
-                    if ($this.data("validation" + name + "Message")) {
-                        result.message = $this.data("validation" + name + "Message");
+                    if ($this.data("validation" + name + "SysMessage")) {
+                        result.message = $this.data("validation" + name + "SysMessage");
                     }
 
                     return result;
@@ -974,8 +974,8 @@
                     result.maxchecked = $this.data("validation" + name + "Maxchecked");
 
                     var message = "Too many: Max '" + result.maxchecked + "' checked";
-                    if ($this.data("validation" + name + "Message")) {
-                        message = $this.data("validation" + name + "Message");
+                    if ($this.data("validation" + name + "SysMessage")) {
+                        message = $this.data("validation" + name + "SysMessage");
                     }
                     result.message = message;
 
@@ -1001,8 +1001,8 @@
                     result.minchecked = $this.data("validation" + name + "Minchecked");
 
                     var message = "Too few: Min '" + result.minchecked + "' checked";
-                    if ($this.data("validation" + name + "Message")) {
-                        message = $this.data("validation" + name + "Message");
+                    if ($this.data("validation" + name + "SysMessage")) {
+                        message = $this.data("validation" + name + "SysMessage");
                     }
                     result.message = message;
 
@@ -1040,7 +1040,7 @@
                     result.regex = regexFromString("([+-]?\\d+(\\" + result.decimal + "\\d+)?)?");
 
                     result.message = "Must be a number";
-                    var dataMessage = $this.data("validation" + name + "Message");
+                    var dataMessage = $this.data("validation" + name + "SysMessage");
                     if (dataMessage) {
                         result.message = dataMessage;
                     }

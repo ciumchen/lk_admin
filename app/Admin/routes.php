@@ -51,6 +51,9 @@ Route::group([
     //上传图标
     $router->any('file/upload-img', 'FileController@handle');
 
+    //系统消息
+    $router->resource('add-msg', 'MessageController');
+    $router->resource('save', 'MessageController');
 });
 Route::group([
     'prefix'        => config('admin.route.prefix'),

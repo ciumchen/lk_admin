@@ -64,7 +64,14 @@ class MessageController extends Controller
             if ($form->type == 1)
             {
                 $usersList = [];
-                $uids = explode(',', $form->user_id);
+                if(strstr($form->user_id, ','))
+                {
+                    $uids = explode(',', $form->user_id);
+                } else
+                {
+                    $uids = explode('，', $form->user_id);
+                }
+
                 foreach ($uids as $key => $uid)
                 {
                     $usersList[$key]['id'] = $uid;

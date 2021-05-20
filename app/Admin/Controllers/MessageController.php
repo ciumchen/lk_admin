@@ -31,7 +31,7 @@ class MessageController extends Controller
             //设置字段宽度
             $form->width(6, 2);
             $form->select('type','接收者')
-                ->options([1 => '单个用户', 2 => '所有用户', 3 => '所有商家', 4 => '所有盟主'])
+                ->options([1 => '单个用户', 2 => '所有用户', 3 => '所有商家', 4 => '所有盟主', 5 => '所有站长'])
                 ->required()
                 ->when(1, function (Form $form) {
                     $form->text('user_id', '用户ID');
@@ -89,6 +89,17 @@ class MessageController extends Controller
             {
                 $usersList = (new User())::where(['status' => 1, 'member_head' => 2])->get(['id'])->toArray();
                 $this->save($usersList, $mid);
+            } elseif ($form->type == 5)
+            {
+                $cityList =  (new User())
+                    ->join('city_node', function($join){
+                        $join->on('users.id', 'city_node.uid');
+                    })
+                    ->where(['users.status' => 1])
+                    ->distinct('users.id')
+                    ->get(['users.id'])
+                    ->toArray();
+                $this->save($cityList, $mid);
             }
         })->store();
     }

@@ -83,7 +83,7 @@ class MessageController extends Controller
                 $this->save($usersList, $mid);
             } elseif ($form->type == 3)
             {
-                $businessList = (new BusinessData())::where()->get(['id'])->toArray();
+                $businessList = (new User())::where(['role' => 2, 'status' => 1])->get(['id'])->toArray();
                 $this->save($businessList, $mid);
             } elseif ($form->type == 4)
             {

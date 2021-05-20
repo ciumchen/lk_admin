@@ -31,7 +31,7 @@ class MessageController extends Controller
             //设置字段宽度
             $form->width(6, 2);
             $form->select('type','接收者')
-                ->options([1 => '单个用户', 2 => '所有用户', 3 => '所有商家', 4 => '所有盟主', 5 => '所有站长'])
+                ->options([1 => '单个用户', 2 => '所有用户', 3 => '所有商家', 4 => '所有盟主'])
                 ->required()
                 ->when(1, function (Form $form) {
                     $form->text('user_id', '用户ID');

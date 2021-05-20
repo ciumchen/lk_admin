@@ -20,6 +20,7 @@ class AssetsLogController extends AdminController
     {
         return Grid::make(new AssetsLog(), function (Grid $grid) {
             $grid->model()->orderBy('id','desc');
+            $grid->model()->where('remark','邀请商家，获得盈利返佣');
             $grid->model()->with(['user']);
             $grid->column('id')->sortable();
             $grid->column('assets_type_id');

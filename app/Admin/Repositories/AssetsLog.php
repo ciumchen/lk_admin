@@ -53,4 +53,5 @@ class AssetsLog extends EloquentRepository
         self::OPERATE_TYPE_EXCHANGE_IETS_SUB_ENCOURATGE => '兑换扣除',
         self::OPERATE_TYPE_IETS_TO_USDT => 'IETS兑换为USDT',
     ];
+
 }

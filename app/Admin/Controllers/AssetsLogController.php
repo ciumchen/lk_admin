@@ -20,7 +20,7 @@ class AssetsLogController extends AdminController
     {
         return Grid::make(new AssetsLog(), function (Grid $grid) {
             $grid->model()->orderBy('id','desc');
-            $grid->model()->where('remark','邀请商家，获得盈利返佣');
+            //$grid->model()->where('remark','邀请商家，获得盈利返佣');
             $grid->model()->with(['user']);
             $grid->column('id')->sortable();
             $grid->column('assets_type_id');
@@ -52,6 +52,27 @@ class AssetsLogController extends AdminController
                 $filter->equal('ip');
                 $filter->equal('operate_type')->select(function () {
                     return AssetsLog::$operateTypeTexts;
+                });
+                $filter->equal('remark')->select(function () {
+                    return array(
+                        '公益捐赠' => '公益捐赠',
+                        '商家返佣' => '商家返佣',
+                        '用户返佣' => '用户返佣',
+                        '兑换IETS' => '兑换IETS',
+                        '下级消费返佣' => '下级消费返佣',
+                        '下级消费返佣（上级账号被封禁或不存在）' => '下级消费返佣（上级账号被封禁或不存在）',
+                        '让利兑换扣除' => '让利兑换扣除',
+                        '来客平台维护费' => '来客平台维护费',
+                        '直推人账户被封禁，分配到平台账户' => '直推人账户被封禁，分配到平台账户',
+                        '邀请商家，获得盈利返佣' => '邀请商家，获得盈利返佣',
+                        '市节点运营返佣' => '市节点运营返佣',
+                        '区级节点运营返佣' => '区级节点运营返佣',
+                        '市级节点暂无，分配到来客平台' => '市级节点暂无，分配到来客平台',
+                        '区级节点暂无，分配到来客平台' => '区级节点暂无，分配到来客平台',
+                        '没有盟主，分配到平台账户' => '没有盟主，分配到平台账户',
+                        '没有同级盟主，分配到平台账户' => '没有同级盟主，分配到平台账户',
+
+                    );
                 });
 
             });

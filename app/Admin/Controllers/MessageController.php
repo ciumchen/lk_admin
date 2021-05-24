@@ -6,11 +6,12 @@ use App\Models\BusinessData;
 use App\Models\SysMessage;
 use App\Models\UserMessage;
 use App\Models\User;
+use Dcat\Admin\Controllers\AdminController;
 use Dcat\Admin\Form;
 use App\Http\Controllers\Controller;
 use Dcat\Admin\Layout\Content;
 
-class MessageController extends Controller
+class MessageController extends AdminController
 {
 
     public function index(Content $content)

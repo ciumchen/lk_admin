@@ -75,7 +75,10 @@ class BusinessDataController extends AdminController
                 $filter->equal('uid');
 //                $filter->equal('user.username','用户名');
                 $filter->equal('user.phone','商户手机号');
+                $filter->equal('name');
                 $filter->equal('contact_number');
+                $filter->equal('city.name',"城市");
+                $filter->equal('district.name',"地区");
                 $filter->equal('limit_price', '单日录单限额');
                 $filter->equal('is_recommend', '推荐商家')->select(function () {
                     return BusinessData::$IS_RECOMMEND;

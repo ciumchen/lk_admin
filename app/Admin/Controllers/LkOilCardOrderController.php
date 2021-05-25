@@ -139,7 +139,11 @@ class LkOilCardOrderController extends AdminController
                         $row['order_from']="其他支付";
                     }//订单来源
 
-                    $row['pay_time']=date('Y-m-d H:i:s',$row['pay_time']);
+                    if(strstr($row['pay_time'],'-')==false){
+                        $row['pay_time']=date('Y-m-d H:i:s',$row['pay_time']);
+                    }else{
+                        $row['pay_time'];
+                    }
 
                 }
                 return $rows;

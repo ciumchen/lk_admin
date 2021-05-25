@@ -56,7 +56,7 @@ class BusinessDataController extends AdminController
             $grid->column('updated_at')->sortable();
 
             $grid->disableCreateButton();
-//            $grid->disableEditButton();
+            $grid->disableEditButton();
 //            $grid->disableViewButton();
             $grid->addTableClass(['table-text-center']);
             $grid->withBorder();

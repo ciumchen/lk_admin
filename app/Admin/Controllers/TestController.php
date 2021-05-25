@@ -4,12 +4,14 @@ namespace App\Admin\Controllers;
 
 use App\Admin\Repositories\Test;
 use App\Exceptions\LogicException;
+use App\Models\BusinessApply;
 use App\Models\BusinessCategory;
 use App\Services\OssService;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Controllers\AdminController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class TestController extends AdminController
@@ -161,6 +163,19 @@ class TestController extends AdminController
 
     }
 
+    //删除申请商家
+    public function delApply(Request $request){
+//http://localhost:8080/admin/delApply?uid=9577
+        $uid = $request->input('uid');
+        $re = BusinessApply::where('uid',$uid)->delete();
+
+        if ($re){
+            echo '删除成功';
+        }else{
+            echo '删除失败';
+        }
+
+    }
 
 
 }

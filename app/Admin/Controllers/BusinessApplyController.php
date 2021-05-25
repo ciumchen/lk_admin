@@ -36,7 +36,7 @@ class BusinessApplyController extends AdminController
             $grid->column('phone');
             $grid->column('name');
 //            $grid->column('work');
-            $grid->column('remark');
+            $grid->column('remark')->editable(true);
 //            $grid->column('status')->display(function ($v){
 //                return BusinessApply::$statusLabel[$v];
 //            });
@@ -101,6 +101,17 @@ class BusinessApplyController extends AdminController
             $form->number("sort")->default(0);
             $form->display('created_at');
             $form->display('updated_at');
+
+
+
+            if ($form->isDeleting()) {
+                $form->image('img')->retainable();
+                $form->image('img2')->retainable();
+                $form->image('img_details1')->retainable();
+                $form->image('img_details1')->retainable();
+                $form->image('img_details1')->retainable();
+                $form->image('img_details1')->retainable();
+            }
         });
     }
 

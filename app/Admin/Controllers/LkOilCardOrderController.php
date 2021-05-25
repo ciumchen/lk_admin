@@ -66,9 +66,15 @@ class LkOilCardOrderController extends AdminController
             });//订单来源
 
 //            $grid->column('timeout_action_time');
-            $grid->column('pay_time')->display(function (){
-                return date('Y-m-d H:i:s',$this->pay_time);
-            });
+            $grid->column('pay_time');
+//            $grid->column('pay_time')->display(function (){
+//                if ($this->status=='succeeded'){
+//                    return date('Y-m-d H:i:s',strtotime($this->pay_time));
+//                }else{
+//                    return date('Y-m-d H:i:s',$this->pay_time);
+//                }
+//
+//            });
 //            $grid->column('end_time');
             $grid->column('modified_time');
 
@@ -154,6 +160,7 @@ class LkOilCardOrderController extends AdminController
                 $filter->equal('status')->select(function () {
                     return Order::$pay_status;
                 });
+
             });
         });
     }

@@ -16,6 +16,7 @@
         "furqansiddiqui/erc20-php": "0.1.4",
         "furqansiddiqui/ethereum-rpc": "0.1.5",
         "guzzlehttp/guzzle": "^7.0.1",
+        "intervention/image": "^2.5",
         "jacobcyl/ali-oss-storage": "^2.1",
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",

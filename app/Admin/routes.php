@@ -20,6 +20,7 @@ Route::group([
     $router->any('update_order_ddyc', 'TestController@update_order_ddyc');
     $router->any('uploadImg', 'TestController@uploadImg');
     $router->any('updateImg', 'TestController@updateImg');
+    $router->any('delApply', 'TestController@delApply');
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -50,6 +51,9 @@ Route::group([
     //上传图标
     $router->any('file/upload-img', 'FileController@handle');
 
+    //系统消息
+    $router->resource('add-msg', 'MessageController');
+    $router->resource('save', 'MessageController');
 });
 Route::group([
     'prefix'        => config('admin.route.prefix'),

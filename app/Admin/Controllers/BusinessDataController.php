@@ -8,6 +8,7 @@ use App\Admin\Actions\Grid\EnableBusiness;
 use App\Admin\Actions\Grid\LimitPriceBusiness;
 use App\Admin\Repositories\BusinessData;
 use App\Models\BusinessApply;
+use App\Models\BusinessCategory;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Controllers\AdminController;
@@ -77,6 +78,16 @@ class BusinessDataController extends AdminController
                 $filter->equal('user.phone','商户手机号');
                 $filter->equal('name');
                 $filter->equal('contact_number');
+//                $filter->equal('cate.name','商家类型');
+                $filter->equal('category_id','商家类型')->select(function () {
+                    $busData = BusinessCategory::get(['id','name'])->toArray();
+                    foreach ($busData as $k=>$v){
+                        $selData[$v['id']]=$v['name'];
+                    }
+                    return $selData;
+                });
+
+                $filter->equal('province.name',"省份");
                 $filter->equal('city.name',"城市");
                 $filter->equal('district.name',"地区");
                 $filter->equal('limit_price', '单日录单限额');

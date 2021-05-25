@@ -57,7 +57,7 @@ class BusinessDataController extends AdminController
             $grid->column('updated_at')->sortable();
 
             $grid->disableCreateButton();
-            $grid->disableEditButton();
+//            $grid->disableEditButton();
 //            $grid->disableViewButton();
             $grid->addTableClass(['table-text-center']);
             $grid->withBorder();
@@ -129,30 +129,31 @@ class BusinessDataController extends AdminController
             $form->display('uid');
             $form->display('name');
 
-            $form->image('business_apply.img','营业执照')->removable(false)->uniqueName()->accept('jpg,png,gif,jpeg', 'image/*')->disk('oss')->move('/business/category')->autoUpload();
+            $form->image('business_apply.img','营业执照')->uniqueName()->retainable()->disableRemove()->accept('jpg,png,gif,jpeg', 'image/*')->disk('oss')->move('/business')->autoUpload();
+                $form->image('user_id_img.img_back','身份证反面')->uniqueName()->retainable()->disableRemove()->accept('jpg,png,gif,jpeg', 'image/*')->disk('oss')->move('/business')->autoUpload();
+                $form->image('business_apply.img_details3','商家详情照3')->uniqueName()->retainable()->disableRemove()->accept('jpg,png,gif,jpeg', 'image/*')->disk('oss')->move('/business')->autoUpload();
+
 
             });
             $form->column(4, function (Form $form) {
                 $form->display('is_recommend');
                 $form->display('contact_number');
                 $form->display('address');
+
+                $form->image('business_apply.img2','商家门头照')->uniqueName()->retainable()->disableRemove()->accept('jpg,png,gif,jpeg', 'image/*')->disk('oss')->move('/business')->autoUpload();
+                $form->image('business_apply.img_details1','商家详情照1')->uniqueName()->retainable()->disableRemove()->accept('jpg,png,gif,jpeg', 'image/*')->disk('oss')->move('/business')->autoUpload();
+
+
             });
             $form->column(4, function (Form $form) {
                 $form->display('run_time');
                 $form->display('name');
                 $form->display('sort');
-//            $form->display('business_apply.img','营业执照');
 
-            //            $form->image('business_apply.img2','商家门头照')->uniqueName()->accept('jpg,png,gif,jpeg', 'image/*')->disk('oss')->move('/business/category')->autoUpload();
-//            $form->image('userIdImg.img_just','身份证正面')->uniqueName()->accept('jpg,png,gif,jpeg', 'image/*')->disk('oss')->move('/business/category')->autoUpload();
-//            $form->image('userIdImg.img_back','身份证反面')->uniqueName()->accept('jpg,png,gif,jpeg', 'image/*')->disk('oss')->move('/business/category')->autoUpload();
-//            $form->image('userIdImg.img_hold','身份证手持')->uniqueName()->accept('jpg,png,gif,jpeg', 'image/*')->disk('oss')->move('/business/category')->autoUpload();
-//            $form->image('business_apply.img_details1','商家详情照1')->uniqueName()->accept('jpg,png,gif,jpeg', 'image/*')->disk('oss')->move('/business/category')->autoUpload();
-//            $form->image('business_apply.img_details2','商家详情照2')->uniqueName()->accept('jpg,png,gif,jpeg', 'image/*')->disk('oss')->move('/business/category')->autoUpload();
-//            $form->image('business_apply.img_details3','商家详情照3')->uniqueName()->accept('jpg,png,gif,jpeg', 'image/*')->disk('oss')->move('/business/category')->autoUpload();
+                $form->image('user_id_img.img_just','身份证正面')->uniqueName()->retainable()->disableRemove()->accept('jpg,png,gif,jpeg', 'image/*')->disk('oss')->move('/business')->autoUpload();
 
-            $form->display('created_at');
-            $form->display('updated_at');
+                $form->image('business_apply.img_details2','商家详情照2')->uniqueName()->retainable()->disableRemove()->accept('jpg,png,gif,jpeg', 'image/*')->disk('oss')->move('/business')->autoUpload();
+
             });
 
         });

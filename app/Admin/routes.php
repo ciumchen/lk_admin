@@ -54,6 +54,10 @@ Route::group([
     //系统消息
     $router->resource('add-msg', 'MessageController');
     $router->resource('save', 'MessageController');
+
+    //自营消息
+    $router->resource('self-msg', 'SelfMessageController');
+    $router->resource('self-save', 'SelfMessageController');
 });
 Route::group([
     'prefix'        => config('admin.route.prefix'),

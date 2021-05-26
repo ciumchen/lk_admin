@@ -24,6 +24,8 @@ class IntegralLogController extends AdminController
             $grid->column('id')->sortable();
             $grid->column('uid');
             $grid->column('user.phone',"用户手机号");
+            $grid->column('order_no','订单号');
+
             $grid->column('operate_type')->display(function ($v){
                 return \App\Models\IntegralLog::$operateTypeTexts[$v] ?? $v;
             });
@@ -45,6 +47,7 @@ class IntegralLogController extends AdminController
                 $filter->equal('id');
                 $filter->equal('uid');
                 $filter->equal('user.phone','用户手机号');
+                $filter->equal('order_no','订单号');
                 $filter->equal('role','用户身份')->select(function () {
                     return IntegralLog::$operateTypeTexts;
                 });

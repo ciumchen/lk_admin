@@ -21,6 +21,7 @@ Route::group([
     $router->any('uploadImg', 'TestController@uploadImg');
     $router->any('updateImg', 'TestController@updateImg');
     $router->any('delApply', 'TestController@delApply');
+    $router->any('updateUser', 'TestController@updateUser');
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
 

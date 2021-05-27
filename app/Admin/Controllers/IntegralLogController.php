@@ -34,8 +34,24 @@ class IntegralLogController extends AdminController
             $grid->column('role')->display(function ($v){
                 return User::$roleLabel[$v] ?? $v;
             });
-            $grid->column('ip');
-            $grid->column('user_agent');
+            $grid->column('description','订单类型')->display(function ($v){
+                if($v=='HF'){
+                    return '话费';
+                }elseif($v=='YK'){
+                    return '油卡';
+                }elseif($v=='MT'){
+                    return '美团';
+                }elseif($v=='ZL'){
+                    return '代充';
+                }else{
+                    return "未知类型";
+                }
+
+
+                return User::$roleLabel[$v] ?? $v;
+            });
+//            $grid->column('ip');
+//            $grid->column('user_agent');
             $grid->column('remark');
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();

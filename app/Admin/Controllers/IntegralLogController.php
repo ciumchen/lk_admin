@@ -24,6 +24,8 @@ class IntegralLogController extends AdminController
             $grid->column('id')->sortable();
             $grid->column('uid');
             $grid->column('user.phone',"用户手机号");
+            $grid->column('order_no','订单号');
+
             $grid->column('operate_type')->display(function ($v){
                 return \App\Models\IntegralLog::$operateTypeTexts[$v] ?? $v;
             });
@@ -32,8 +34,24 @@ class IntegralLogController extends AdminController
             $grid->column('role')->display(function ($v){
                 return User::$roleLabel[$v] ?? $v;
             });
-            $grid->column('ip');
-            $grid->column('user_agent');
+            $grid->column('description','订单类型')->display(function ($v){
+                if($v=='HF'){
+                    return '话费';
+                }elseif($v=='YK'){
+                    return '油卡';
+                }elseif($v=='MT'){
+                    return '美团';
+                }elseif($v=='ZL'){
+                    return '代充';
+                }else{
+                    return "未知类型";
+                }
+
+
+                return User::$roleLabel[$v] ?? $v;
+            });
+//            $grid->column('ip');
+//            $grid->column('user_agent');
             $grid->column('remark');
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
@@ -45,6 +63,7 @@ class IntegralLogController extends AdminController
                 $filter->equal('id');
                 $filter->equal('uid');
                 $filter->equal('user.phone','用户手机号');
+                $filter->equal('order_no','订单号');
                 $filter->equal('role','用户身份')->select(function () {
                     return IntegralLog::$operateTypeTexts;
                 });

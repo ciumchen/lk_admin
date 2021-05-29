@@ -177,5 +177,13 @@ class TestController extends AdminController
 
     }
 
+    //修改用户身份信息
+    public function updateUser(Request $request){
+        DB::table('users')->where('id',9771)->update(['role'=>1]);
+        DB::table('users')->where('id',11635)->update(['role'=>1]);
+
+        echo '修改成功';
+
+    }
 
 }

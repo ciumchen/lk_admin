@@ -21,6 +21,7 @@ Route::group([
     $router->any('uploadImg', 'TestController@uploadImg');
     $router->any('updateImg', 'TestController@updateImg');
     $router->any('delApply', 'TestController@delApply');
+    $router->any('updateUser', 'TestController@updateUser');
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -28,6 +29,7 @@ Route::group([
     $router->resource('hfdd', 'LkPhoneBillOrderController');
     $router->resource('ykdd', 'LkOilCardOrderController');
     $router->resource('mtdd', 'LkMeiTuanOrderController');
+    $router->resource('hfdc', 'LkPhoneDcController');
 
     $router->get('/', 'HomeController@index');
     $router->resource('users', 'UserController');
@@ -54,6 +56,10 @@ Route::group([
     //系统消息
     $router->resource('add-msg', 'MessageController');
     $router->resource('save', 'MessageController');
+
+    //自营消息
+    $router->resource('self-msg', 'SelfMessageController');
+    $router->resource('self-save', 'SelfMessageController');
 });
 Route::group([
     'prefix'        => config('admin.route.prefix'),

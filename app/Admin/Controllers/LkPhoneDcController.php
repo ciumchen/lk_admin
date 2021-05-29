@@ -3,26 +3,26 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Repositories\LkPhoneBillOrder;
+use App\Admin\Repositories\LkPhoneDc;
 use App\Admin\Repositories\Order;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
-use App\Models\User;
 use Dcat\Admin\Controllers\AdminController;
 
-class LkPhoneBillOrderController extends AdminController
+class LkPhoneDcController extends AdminController
 {
     /**
      * Make a grid builder.
-     *话费充值订单
+     *话费代充充值订单
      * @return Grid
      */
     protected function grid()
     {
         return Grid::make(new LkPhoneBillOrder(), function (Grid $grid) {
             $grid->model()->orderBy('id','desc');
-            $grid->model()->where('description','=',"HF");
+            $grid->model()->where('description','=',"ZL");
             $grid->model()->with(['user']);
             $grid->column('id')->sortable();
 
@@ -100,7 +100,7 @@ class LkPhoneBillOrderController extends AdminController
                 'integral' => '获得积分',
                 'user.id' => '消费者UID',
 
-                'numeric' => '充值手机号',
+                'numeric' => '代充手机号',
                 'telecom' => '运营商',
                 'price' => '商品价格',
 
@@ -158,7 +158,7 @@ class LkPhoneBillOrderController extends AdminController
 //                $filter->equal('shop_id');
 
                 $filter->equal('order_no');
-                $filter->equal('numeric','充值手机号');
+                $filter->equal('numeric','代充手机号');
 
 
                 //支付状态

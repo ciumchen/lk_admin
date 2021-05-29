@@ -1,7 +1,7 @@
 <?php
 return [
     'labels' => [
-        'LkPhoneDc' => 'LkPhoneDc',
+        'LkPhoneDc' => '代充话费订单列表',
     ],
     'fields' => [
         'cat_id' => '类目ID',

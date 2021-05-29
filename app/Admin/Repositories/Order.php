@@ -29,6 +29,7 @@ class Order extends EloquentRepository
     const LD_ORDER_SELECT3 = '油卡';
     const LD_ORDER_SELECT4 = '美团';
     const LD_ORDER_SELECT5 = '滴滴';
+    const LD_ORDER_SELECT6 = '代充';
     /**
      * 状态
      * @var array
@@ -53,5 +54,6 @@ class Order extends EloquentRepository
         self::LD_ORDER_SELECT3 => "油卡",
         self::LD_ORDER_SELECT4 => "美团",
         self::LD_ORDER_SELECT5 => "滴滴",
+        self::LD_ORDER_SELECT6 => "代充",
     );
 }

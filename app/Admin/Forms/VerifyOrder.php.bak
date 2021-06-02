@@ -57,32 +57,30 @@ class VerifyOrder extends Form
 
             if($status == Order::STATUS_SUCCESS)
             {
-//                //通过，给用户加积分、更新LK
-//                $customer = User::lockForUpdate()->find($order->uid);
-//                //按比例计算实际获得积分
-//                $customerIntegral = bcmul($order->price, bcdiv($rebateScale[(int)$order->profit_ratio],100, 4), 2);
-//                $amountBeforeChange =  $customer->integral;
-//                $customer->integral = bcadd($customer->integral, $customerIntegral,2);
-//
-//                $lkPer = Setting::getSetting('lk_per')??300;
-//                //更新LK
-//                $customer->lk = bcdiv($customer->integral, $lkPer,0);
-//                $customer->save();
-//                IntegralLog::addLog($customer->id, $customerIntegral, IntegralLog::TYPE_SPEND, $amountBeforeChange, 1, '消费者完成订单');
-//                //给商家加积分，更新LK
-//                $business = User::lockForUpdate()->find($order->business_uid);
-//                $amountBeforeChange = $business->business_integral;
-//                $business->business_integral = bcadd($business->business_integral, $order->profit_price,2);
-//
-//                $businessLkPer = Setting::getSetting('business_Lk_per')??60;
-//                //更新LK
-//                $business->business_lk = bcdiv($business->business_integral, $businessLkPer,0);
-//                $business->save();
-//
-//                IntegralLog::addLog($business->id, $order->profit_price, IntegralLog::TYPE_SPEND, $amountBeforeChange, 2, '商家完成订单');
+                //通过，给用户加积分、更新LK
+                $customer = User::lockForUpdate()->find($order->uid);
+                //按比例计算实际获得积分
+                $customerIntegral = bcmul($order->price, bcdiv($rebateScale[(int)$order->profit_ratio],100, 4), 2);
+                $amountBeforeChange =  $customer->integral;
+                $customer->integral = bcadd($customer->integral, $customerIntegral,2);
+
+                $lkPer = Setting::getSetting('lk_per')??300;
+                //更新LK
+                $customer->lk = bcdiv($customer->integral, $lkPer,0);
+                $customer->save();
+                IntegralLog::addLog($customer->id, $customerIntegral, IntegralLog::TYPE_SPEND, $amountBeforeChange, 1, '消费者完成订单');
+                //给商家加积分，更新LK
+                $business = User::lockForUpdate()->find($order->business_uid);
+                $amountBeforeChange = $business->business_integral;
+                $business->business_integral = bcadd($business->business_integral, $order->profit_price,2);
+
+                $businessLkPer = Setting::getSetting('business_Lk_per')??60;
+                //更新LK
+                $business->business_lk = bcdiv($business->business_integral, $businessLkPer,0);
+                $business->save();
+
+                IntegralLog::addLog($business->id, $order->profit_price, IntegralLog::TYPE_SPEND, $amountBeforeChange, 2, '商家完成订单');
                 //返佣
-                $customer = User::find($order->uid);
-                $business = User::find($order->business_uid);
                 $this->encourage($order, $customer, $business);
 
             }else{

@@ -61,6 +61,10 @@ Route::group([
     //自营消息
     $router->resource('self-msg', 'SelfMessageController');
     $router->resource('self-save', 'SelfMessageController');
+
+    //机票退订
+    $router->resource('air-refund', 'AirRefundController');
+    $router->resource('air-send', 'AirRefundController');
 });
 Route::group([
     'prefix'        => config('admin.route.prefix'),

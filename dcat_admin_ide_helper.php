@@ -114,6 +114,41 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection price
      * @property Grid\Column|Collection profit_price
      * @property Grid\Column|Collection pay_status
+     * @property Grid\Column|Collection to_be_added_integral
+     * @property Grid\Column|Collection to_status
+     * @property Grid\Column|Collection line_up
+     * @property Grid\Column|Collection trade_no
+     * @property Grid\Column|Collection total_face_price
+     * @property Grid\Column|Collection total_other_fee
+     * @property Grid\Column|Collection total_pay_cash
+     * @property Grid\Column|Collection order_type
+     * @property Grid\Column|Collection order_state
+     * @property Grid\Column|Collection bill_state
+     * @property Grid\Column|Collection item_id
+     * @property Grid\Column|Collection passenger_name
+     * @property Grid\Column|Collection passenger_tel
+     * @property Grid\Column|Collection idcard_type
+     * @property Grid\Column|Collection idcard_no
+     * @property Grid\Column|Collection ticket_no
+     * @property Grid\Column|Collection pay_cash
+     * @property Grid\Column|Collection other_fee
+     * @property Grid\Column|Collection refund_fee
+     * @property Grid\Column|Collection seat_type
+     * @property Grid\Column|Collection legs
+     * @property Grid\Column|Collection contact_name
+     * @property Grid\Column|Collection contact_tel
+     * @property Grid\Column|Collection start_time
+     * @property Grid\Column|Collection start_station
+     * @property Grid\Column|Collection recevie_station
+     * @property Grid\Column|Collection train_no
+     * @property Grid\Column|Collection bill_time
+     * @property Grid\Column|Collection etime
+     * @property Grid\Column|Collection ctime
+     * @property Grid\Column|Collection utime
+     * @property Grid\Column|Collection day
+     * @property Grid\Column|Collection switch
+     * @property Grid\Column|Collection count_lk
+     * @property Grid\Column|Collection count_profit_price
      * @property Grid\Column|Collection pid
      * @property Grid\Column|Collection pay_channel
      * @property Grid\Column|Collection pay_amt
@@ -126,7 +161,6 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection token
      * @property Grid\Column|Collection abilities
      * @property Grid\Column|Collection last_used_at
-     * @property Grid\Column|Collection day
      * @property Grid\Column|Collection consumer
      * @property Grid\Column|Collection business
      * @property Grid\Column|Collection welfare
@@ -301,6 +335,41 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection price(string $label = null)
      * @method Grid\Column|Collection profit_price(string $label = null)
      * @method Grid\Column|Collection pay_status(string $label = null)
+     * @method Grid\Column|Collection to_be_added_integral(string $label = null)
+     * @method Grid\Column|Collection to_status(string $label = null)
+     * @method Grid\Column|Collection line_up(string $label = null)
+     * @method Grid\Column|Collection trade_no(string $label = null)
+     * @method Grid\Column|Collection total_face_price(string $label = null)
+     * @method Grid\Column|Collection total_other_fee(string $label = null)
+     * @method Grid\Column|Collection total_pay_cash(string $label = null)
+     * @method Grid\Column|Collection order_type(string $label = null)
+     * @method Grid\Column|Collection order_state(string $label = null)
+     * @method Grid\Column|Collection bill_state(string $label = null)
+     * @method Grid\Column|Collection item_id(string $label = null)
+     * @method Grid\Column|Collection passenger_name(string $label = null)
+     * @method Grid\Column|Collection passenger_tel(string $label = null)
+     * @method Grid\Column|Collection idcard_type(string $label = null)
+     * @method Grid\Column|Collection idcard_no(string $label = null)
+     * @method Grid\Column|Collection ticket_no(string $label = null)
+     * @method Grid\Column|Collection pay_cash(string $label = null)
+     * @method Grid\Column|Collection other_fee(string $label = null)
+     * @method Grid\Column|Collection refund_fee(string $label = null)
+     * @method Grid\Column|Collection seat_type(string $label = null)
+     * @method Grid\Column|Collection legs(string $label = null)
+     * @method Grid\Column|Collection contact_name(string $label = null)
+     * @method Grid\Column|Collection contact_tel(string $label = null)
+     * @method Grid\Column|Collection start_time(string $label = null)
+     * @method Grid\Column|Collection start_station(string $label = null)
+     * @method Grid\Column|Collection recevie_station(string $label = null)
+     * @method Grid\Column|Collection train_no(string $label = null)
+     * @method Grid\Column|Collection bill_time(string $label = null)
+     * @method Grid\Column|Collection etime(string $label = null)
+     * @method Grid\Column|Collection ctime(string $label = null)
+     * @method Grid\Column|Collection utime(string $label = null)
+     * @method Grid\Column|Collection day(string $label = null)
+     * @method Grid\Column|Collection switch(string $label = null)
+     * @method Grid\Column|Collection count_lk(string $label = null)
+     * @method Grid\Column|Collection count_profit_price(string $label = null)
      * @method Grid\Column|Collection pid(string $label = null)
      * @method Grid\Column|Collection pay_channel(string $label = null)
      * @method Grid\Column|Collection pay_amt(string $label = null)
@@ -313,7 +382,6 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection token(string $label = null)
      * @method Grid\Column|Collection abilities(string $label = null)
      * @method Grid\Column|Collection last_used_at(string $label = null)
-     * @method Grid\Column|Collection day(string $label = null)
      * @method Grid\Column|Collection consumer(string $label = null)
      * @method Grid\Column|Collection business(string $label = null)
      * @method Grid\Column|Collection welfare(string $label = null)
@@ -493,6 +561,41 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection price
      * @property Show\Field|Collection profit_price
      * @property Show\Field|Collection pay_status
+     * @property Show\Field|Collection to_be_added_integral
+     * @property Show\Field|Collection to_status
+     * @property Show\Field|Collection line_up
+     * @property Show\Field|Collection trade_no
+     * @property Show\Field|Collection total_face_price
+     * @property Show\Field|Collection total_other_fee
+     * @property Show\Field|Collection total_pay_cash
+     * @property Show\Field|Collection order_type
+     * @property Show\Field|Collection order_state
+     * @property Show\Field|Collection bill_state
+     * @property Show\Field|Collection item_id
+     * @property Show\Field|Collection passenger_name
+     * @property Show\Field|Collection passenger_tel
+     * @property Show\Field|Collection idcard_type
+     * @property Show\Field|Collection idcard_no
+     * @property Show\Field|Collection ticket_no
+     * @property Show\Field|Collection pay_cash
+     * @property Show\Field|Collection other_fee
+     * @property Show\Field|Collection refund_fee
+     * @property Show\Field|Collection seat_type
+     * @property Show\Field|Collection legs
+     * @property Show\Field|Collection contact_name
+     * @property Show\Field|Collection contact_tel
+     * @property Show\Field|Collection start_time
+     * @property Show\Field|Collection start_station
+     * @property Show\Field|Collection recevie_station
+     * @property Show\Field|Collection train_no
+     * @property Show\Field|Collection bill_time
+     * @property Show\Field|Collection etime
+     * @property Show\Field|Collection ctime
+     * @property Show\Field|Collection utime
+     * @property Show\Field|Collection day
+     * @property Show\Field|Collection switch
+     * @property Show\Field|Collection count_lk
+     * @property Show\Field|Collection count_profit_price
      * @property Show\Field|Collection pid
      * @property Show\Field|Collection pay_channel
      * @property Show\Field|Collection pay_amt
@@ -505,7 +608,6 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection token
      * @property Show\Field|Collection abilities
      * @property Show\Field|Collection last_used_at
-     * @property Show\Field|Collection day
      * @property Show\Field|Collection consumer
      * @property Show\Field|Collection business
      * @property Show\Field|Collection welfare
@@ -680,6 +782,41 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection price(string $label = null)
      * @method Show\Field|Collection profit_price(string $label = null)
      * @method Show\Field|Collection pay_status(string $label = null)
+     * @method Show\Field|Collection to_be_added_integral(string $label = null)
+     * @method Show\Field|Collection to_status(string $label = null)
+     * @method Show\Field|Collection line_up(string $label = null)
+     * @method Show\Field|Collection trade_no(string $label = null)
+     * @method Show\Field|Collection total_face_price(string $label = null)
+     * @method Show\Field|Collection total_other_fee(string $label = null)
+     * @method Show\Field|Collection total_pay_cash(string $label = null)
+     * @method Show\Field|Collection order_type(string $label = null)
+     * @method Show\Field|Collection order_state(string $label = null)
+     * @method Show\Field|Collection bill_state(string $label = null)
+     * @method Show\Field|Collection item_id(string $label = null)
+     * @method Show\Field|Collection passenger_name(string $label = null)
+     * @method Show\Field|Collection passenger_tel(string $label = null)
+     * @method Show\Field|Collection idcard_type(string $label = null)
+     * @method Show\Field|Collection idcard_no(string $label = null)
+     * @method Show\Field|Collection ticket_no(string $label = null)
+     * @method Show\Field|Collection pay_cash(string $label = null)
+     * @method Show\Field|Collection other_fee(string $label = null)
+     * @method Show\Field|Collection refund_fee(string $label = null)
+     * @method Show\Field|Collection seat_type(string $label = null)
+     * @method Show\Field|Collection legs(string $label = null)
+     * @method Show\Field|Collection contact_name(string $label = null)
+     * @method Show\Field|Collection contact_tel(string $label = null)
+     * @method Show\Field|Collection start_time(string $label = null)
+     * @method Show\Field|Collection start_station(string $label = null)
+     * @method Show\Field|Collection recevie_station(string $label = null)
+     * @method Show\Field|Collection train_no(string $label = null)
+     * @method Show\Field|Collection bill_time(string $label = null)
+     * @method Show\Field|Collection etime(string $label = null)
+     * @method Show\Field|Collection ctime(string $label = null)
+     * @method Show\Field|Collection utime(string $label = null)
+     * @method Show\Field|Collection day(string $label = null)
+     * @method Show\Field|Collection switch(string $label = null)
+     * @method Show\Field|Collection count_lk(string $label = null)
+     * @method Show\Field|Collection count_profit_price(string $label = null)
      * @method Show\Field|Collection pid(string $label = null)
      * @method Show\Field|Collection pay_channel(string $label = null)
      * @method Show\Field|Collection pay_amt(string $label = null)
@@ -692,7 +829,6 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection token(string $label = null)
      * @method Show\Field|Collection abilities(string $label = null)
      * @method Show\Field|Collection last_used_at(string $label = null)
-     * @method Show\Field|Collection day(string $label = null)
      * @method Show\Field|Collection consumer(string $label = null)
      * @method Show\Field|Collection business(string $label = null)
      * @method Show\Field|Collection welfare(string $label = null)

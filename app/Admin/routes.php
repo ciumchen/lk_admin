@@ -30,6 +30,7 @@ Route::group([
     $router->resource('ykdd', 'LkOilCardOrderController');
     $router->resource('mtdd', 'LkMeiTuanOrderController');
     $router->resource('hfdc', 'LkPhoneDcController');
+    $router->resource('addjf', 'ToBeAddedIntegralController');
 
     $router->get('/', 'HomeController@index');
     $router->resource('users', 'UserController');

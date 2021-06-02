@@ -55,7 +55,7 @@ class OrderController extends AdminController
 
 
             $grid->column('name');
-            $grid->column('remark');
+//            $grid->column('remark');
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
 

@@ -51,27 +51,18 @@ class AirRefundController extends AdminController
     public function store()
     {
         return $this->form()->saved(function (Form $form) {
-            if(strstr($form->order_nos, ','))
+            if(strstr($form->order_nos, '，'))
             {
-                $orderList = explode(',', $form->order_nos);
-            } else
-            {
-                $orderList = explode('，', $form->order_nos);
+                $form->order_nos = str_ireplace('，', ',', $form->order_nos);
             }
-
-            $orderNos = '';
-            foreach ($orderList as $val)
-            {
-                $orderNos .= '"' . $val . '"' . ',';
-            }
-
+            
             $http = new GuzzleHttp\Client;
             //调用话费url
             $response = $http->get(self::URL, [
                 'query' => [
                     'tradeNo'    => $form->trade_no,
-                    'returnType'    => $form->return_type,
-                    'orderNos'    => htmlentities($form->order_nos ,ENT_QUOTES,"UTF-8")
+                    'returnType' => $form->return_type,
+                    'orderNos'   => $form->order_nos
                 ],
             ]);
 

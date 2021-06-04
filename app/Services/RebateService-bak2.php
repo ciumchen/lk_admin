@@ -41,20 +41,12 @@ class RebateService
             echo "昨日数据已分红 \n";
             return false;
         }
-        //判断控单是否开启
-        $setValue = Setting::where('key','consumer_integral')->value('value');
-        if($setValue==1) {
-            //获取昨日总让利金额
-            $totalProfit = Order::where("status", \App\Admin\Repositories\Order::STATUS_SUCCESS)
-                    ->whereBetween("updated_at", [now()->yesterday()->startOfDay(), now()->yesterday()->endOfDay()])
-                    ->where('line_up', 0)
-                    ->sum("profit_price") ?? 0;
-        }else{
-            //获取昨日总让利金额
-            $totalProfit = Order::where("status", \App\Admin\Repositories\Order::STATUS_SUCCESS)
-                    ->whereBetween("updated_at", [now()->yesterday()->startOfDay(), now()->yesterday()->endOfDay()])
-                    ->sum("profit_price") ?? 0;
-        }
+
+        //获取昨日总让利金额
+        $totalProfit = Order::where("status", \App\Admin\Repositories\Order::STATUS_SUCCESS)
+                ->whereBetween("updated_at", [now()->yesterday()->startOfDay(), now()->yesterday()->endOfDay()])
+                ->where('line_up',0)
+                ->sum("profit_price") ?? 0;
 
         if(bccomp($totalProfit,0 , 2) > 0)
         {
@@ -81,34 +73,17 @@ class RebateService
                     $rebateData->business = 0;//商家返佣
                     $rebateData->consumer = 0;//消费者返佣
                     $rebateData->status = 2;//改为已分配
-
-                    //判断控单是否开启
-                    $setValue = Setting::where('key','consumer_integral')->value('value');
-                    if($setValue==1) {
-                        //消费人数
-                        $rebateData->people = Order::where("status", \App\Admin\Repositories\Order::STATUS_SUCCESS)
-                                ->whereBetween("updated_at", [now()->yesterday()->startOfDay(), now()->yesterday()->endOfDay()])
-                                ->groupBy("uid")
-                                ->where('line_up',0)
-                                ->count() ?? 0;
-                        //总消费金额
-                        $rebateData->total_consumption = Order::where("status", \App\Admin\Repositories\Order::STATUS_SUCCESS)
-                                ->whereBetween("updated_at", [now()->yesterday()->startOfDay(), now()->yesterday()->endOfDay()])
-                                ->where('line_up',0)
-                                ->sum("price") ?? 0;
-                    }else{
-                        //消费人数
-                        $rebateData->people = Order::where("status", \App\Admin\Repositories\Order::STATUS_SUCCESS)
-                                ->whereBetween("updated_at", [now()->yesterday()->startOfDay(), now()->yesterday()->endOfDay()])
-                                ->groupBy("uid")
-                                ->count() ?? 0;
-                        //总消费金额
-                        $rebateData->total_consumption = Order::where("status", \App\Admin\Repositories\Order::STATUS_SUCCESS)
-                                ->whereBetween("updated_at", [now()->yesterday()->startOfDay(), now()->yesterday()->endOfDay()])
-                                ->sum("price") ?? 0;
-                    }
-
-
+                    //消费人数
+                    $rebateData->people = Order::where("status", \App\Admin\Repositories\Order::STATUS_SUCCESS)
+                            ->whereBetween("updated_at", [now()->yesterday()->startOfDay(), now()->yesterday()->endOfDay()])
+                            ->groupBy("uid")
+                            ->where('line_up',0)
+                            ->count() ?? 0;
+                    //总消费金额
+                    $rebateData->total_consumption = Order::where("status", \App\Admin\Repositories\Order::STATUS_SUCCESS)
+                            ->whereBetween("updated_at", [now()->yesterday()->startOfDay(), now()->yesterday()->endOfDay()])
+                            ->where('line_up',0)
+                            ->sum("price") ?? 0;
                     //新增商家
                     $rebateData->new_business = BusinessData::whereBetween("created_at", [now()->yesterday()->startOfDay(), now()->yesterday()->endOfDay()])->count();
 

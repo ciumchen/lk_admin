@@ -1,7 +1,7 @@
 <?php
 return [
     'labels' => [
-        'ToBeAddedIntegral' => '待添加积分列表',
+        'ToBeAddedIntegral' => '积分排队列表',
     ],
 
 

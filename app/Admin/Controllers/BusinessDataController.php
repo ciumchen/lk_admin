@@ -193,7 +193,7 @@ class BusinessDataController extends AdminController
                 $show->width(3)->field('business_apply.img2','商家头图')->image(env('OSS_URL'),50,50);
                 $show->width(3)->field('user_id_img.img_just','身份证正面照')->image(env('OSS_URL'),50,50);
                 $show->width(3)->field('user_id_img.img_back','身份证反面照')->image(env('OSS_URL'),50,50);
-                $show->width(3)->field('user_id_img.img_hold','身份证手持照')->image(env('OSS_URL'),50,50);
+//                $show->width(3)->field('user_id_img.img_hold','身份证手持照')->image(env('OSS_URL'),50,50);
 
                 $show->width(3)->field('business_apply.img_details1','店铺详情照1')->image(env('OSS_URL'),50,50);
                 $show->width(3)->field('business_apply.img_details2','店铺详情照2')->image(env('OSS_URL'),50,50);

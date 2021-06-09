@@ -54,6 +54,7 @@ class UserController extends AdminController
             $grid->column('return_business_integral');
             $grid->column('return_lk');
             $grid->column('ban_reason');
+            $grid->column('market_business')->switch('', true);
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
             // 禁用创建按钮
@@ -101,4 +102,13 @@ class UserController extends AdminController
             });
         });
     }
+
+    protected function form()
+    {
+        return Form::make(new User(), function (Form $form) {
+            $form->display('market_business');
+
+        });
+    }
+
 }

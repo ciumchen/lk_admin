@@ -14,6 +14,7 @@ return [
         'ip' => 'ip',
         'user_agent' => 'ua',
         'remark' => '备注',
+        'order_no' => '订单号',
     ],
     'options' => [
     ],

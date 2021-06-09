@@ -72,7 +72,7 @@ class AssetsService
      * @return int
      * @throws exception
      */
-    public static function BalancesChange(int $uid, int $assets_id, string $assets_name,$amount, string $operate_type, $remark = null,$tx_hash = null,$trade_type=null)
+    public static function BalancesChange($orderNo,int $uid, int $assets_id, string $assets_name,$amount, string $operate_type, $remark = null,$tx_hash = null,$trade_type=null)
     {
         $info = self::changeWithoutLog($uid, $assets_id, $amount,$trade_type);
         //写入日志
@@ -87,6 +87,7 @@ class AssetsService
         $balancesLogs->ip = request()->server('HTTP_ALI_CDN_REAL_IP', request()->ip());
         $balancesLogs->user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? mb_substr($_SERVER['HTTP_USER_AGENT'],0,255,'utf-8') : '';
         $balancesLogs->remark = $remark;
+        $balancesLogs->order_no = $orderNo;
         $balancesLogs->save();
         return $balancesLogs->id;
     }

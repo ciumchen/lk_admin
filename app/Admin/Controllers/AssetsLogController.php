@@ -34,9 +34,10 @@ class AssetsLogController extends AdminController
             $grid->column('amount_before_change');
             $grid->column('tx_hash');
             $grid->column('ip');
-            $grid->column('user_agent');
+            $grid->column('order_no');
+//            $grid->column('user_agent');
             $grid->column('remark');
-            $grid->column('created_at');
+//            $grid->column('created_at');
             $grid->column('updated_at')->sortable();
 
             $grid->disableCreateButton();
@@ -50,6 +51,7 @@ class AssetsLogController extends AdminController
                 $filter->equal('uid');
                 $filter->equal('tx_hash');
                 $filter->equal('ip');
+                $filter->equal('order_no');
                 $filter->equal('operate_type')->select(function () {
                     return AssetsLog::$operateTypeTexts;
                 });
@@ -90,6 +92,7 @@ class AssetsLogController extends AdminController
                 'amount_before_change' => '变动前数量',
                 'tx_hash' => '交易Hash',
                 'ip' => 'IP',
+                'order_no' => '订单号',
                 'user_agent' => 'Ua',
                 'remark' => '备注',
                 'created_at' => '创建时间',

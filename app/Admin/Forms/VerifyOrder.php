@@ -9,6 +9,7 @@ use App\Models\CityNode;
 use App\Models\IntegralLog;
 use App\Models\RebateData;
 use App\Models\Setting;
+use App\Models\TradeOrder;
 use App\Models\User;
 use App\Services\AssetsService;
 use Dcat\Admin\Traits\LazyWidget;
@@ -94,8 +95,10 @@ class VerifyOrder extends Form
                     IntegralLog::addLog($business->id, $order->profit_price, IntegralLog::TYPE_SPEND, $amountBeforeChange, 2, '商家完成订单');
                 }
 
+                $orderDataInfo = TradeOrder::where('oid',$order->id)->first()->toArray();
+//                dd($orderDataInfo['order_no']);
                 //返佣
-                $this->encourage($order, $customer, $business);
+                $this->encourage($order, $customer, $business,$orderDataInfo['order_no']);
 
             }else{
                 $order->remark = $remark;
@@ -143,7 +146,7 @@ class VerifyOrder extends Form
      * @param $business
      * @throws Exception
      */
-    private function encourage($order, $user, $business){
+    private function encourage($order, $user, $business,$orderNo){
 
         //获取资产类型
         $assets = AssetsType::where("assets_name", AssetsType::DEFAULT_ASSETS_ENCOURAGE)->first();
@@ -155,6 +158,7 @@ class VerifyOrder extends Form
             $welfareAmount = bcmul($order->profit_price, bcdiv($welfare, 100, 6), 2);
 
             AssetsService::BalancesChange(
+                $orderNo,
                 $welfareUid,
                 $assets->id,
                 $assets->assets_name,
@@ -171,6 +175,7 @@ class VerifyOrder extends Form
             $platformAmount = bcmul($order->profit_price, bcdiv($platform, 100, 6), 2);
 
             AssetsService::BalancesChange(
+                $orderNo,
                 $platformUid,
                 $assets->id,
                 $assets->assets_name,
@@ -195,6 +200,7 @@ class VerifyOrder extends Form
         $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 2);
 
         AssetsService::BalancesChange(
+            $orderNo,
             $uid,
             $assets->id,
             $assets->assets_name,
@@ -223,6 +229,7 @@ class VerifyOrder extends Form
             $cityAmount = bcmul($order->profit_price, bcdiv($cityNodeRebate, 100, 6), 8);
 
             AssetsService::BalancesChange(
+                $orderNo,
                 $uid,
                 $assets->id,
                 $assets->assets_name,
@@ -250,6 +257,7 @@ class VerifyOrder extends Form
             $districtAmount = bcmul($order->profit_price, bcdiv($districtNodeRebate, 100, 6), 8);
 
             AssetsService::BalancesChange(
+                $orderNo,
                 $uid,
                 $assets->id,
                 $assets->assets_name,
@@ -298,31 +306,31 @@ class VerifyOrder extends Form
                 $inviteAmount = bcadd($headAmount, $ordinaryAmount, 8);
 
                 //同级盟主奖励
-                $tes = $this->leaderRebate($memberHead->invite_uid, $sameAmount, $assets, '同级别盟主奖励',AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, 1);
+                $tes = $this->leaderRebate($orderNo,$memberHead->invite_uid, $sameAmount, $assets, '同级别盟主奖励',AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, 1);
 
                 if($tes == false)
                     $isSamePlat = true;
 
             }else{
                 //往上找2级 是否盟主
-                $res = $this->leaderRebate($memberHead->invite_uid, $headAmount, $assets, '邀请商家盟主分红',AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, 2);
+                $res = $this->leaderRebate($orderNo,$memberHead->invite_uid, $headAmount, $assets, '邀请商家盟主分红',AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, 2);
 
                 if($res == false){
                     if($headAmount>0)
-                        AssetsService::BalancesChange($platformUid, $assets->id, $assets->assets_name, $headAmount, AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, '没有盟主，分配到平台账户');
+                        AssetsService::BalancesChange($orderNo,$platformUid, $assets->id, $assets->assets_name, $headAmount, AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, '没有盟主，分配到平台账户');
                     $isSamePlat = true;
                 }else{
                     //同级盟主奖励
-                    $res = $this->leaderRebate($res->invite_uid, $sameAmount, $assets, '同级别盟主奖励',AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, 1);
+                    $res = $this->leaderRebate($orderNo,$res->invite_uid, $sameAmount, $assets, '同级别盟主奖励',AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, 1);
                     if($res == false)
                         $isSamePlat = true;
                 }
             }
         }
         if($sameAmount>0 && $isSamePlat == true)
-            AssetsService::BalancesChange($platformUid, $assets->id, $assets->assets_name, $sameAmount, AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, '没有同级盟主，分配到平台账户');
+            AssetsService::BalancesChange($orderNo,$platformUid, $assets->id, $assets->assets_name, $sameAmount, AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, '没有同级盟主，分配到平台账户');
         if($inviteAmount > 0)
-            AssetsService::BalancesChange($uid, $assets->id, $assets->assets_name, $inviteAmount, AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, $remark);
+            AssetsService::BalancesChange($orderNo,$uid, $assets->id, $assets->assets_name, $inviteAmount, AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, $remark);
 
         $market = bcadd($districtAmount, bcadd($cityAmount, bcadd(bcadd($sameAmount, $headAmount, 8), $ordinaryAmount, 8), 8), 8);
 
@@ -339,7 +347,7 @@ class VerifyOrder extends Form
      * @return bool
      * @throws Exception
      */
-    public function leaderRebate($invite_uid, $amount, $assets, $msg, $type, $level = 2){
+    public function leaderRebate($orderNo,$invite_uid, $amount, $assets, $msg, $type, $level = 2){
 
         if($level <= 0)
             return false;
@@ -350,13 +358,13 @@ class VerifyOrder extends Form
         if($user && $user->member_head == 2 && $user->status == \App\Admin\Repositories\User::STATUS_NORMAL){
 
             if($amount>0)
-                AssetsService::BalancesChange($user->id, $assets->id, $assets->assets_name, $amount, $type, $msg);
+                AssetsService::BalancesChange($orderNo,$user->id, $assets->id, $assets->assets_name, $amount, $type, $msg);
 
             return $user;
         }elseif($user){
 
             $level--;
-            return $this->leaderRebate($user->invite_uid, $amount, $assets, $msg, $type, $level);
+            return $this->leaderRebate($orderNo,$user->invite_uid, $amount, $assets, $msg, $type, $level);
 
         }else{
             return false;

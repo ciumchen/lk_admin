@@ -72,7 +72,7 @@ class AssetsService
      * @return int
      * @throws exception
      */
-    public static function BalancesChange($orderNo,int $uid, int $assets_id, string $assets_name,$amount, string $operate_type, $remark = null,$tx_hash = null,$trade_type=null)
+    public static function BalancesChange(int $uid, int $assets_id, string $assets_name,$amount, string $operate_type, $remark = null,$tx_hash = null,$trade_type=null,$orderNo='')
     {
         $info = self::changeWithoutLog($uid, $assets_id, $amount,$trade_type);
         //写入日志

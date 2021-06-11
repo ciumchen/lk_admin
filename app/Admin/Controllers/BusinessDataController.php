@@ -50,6 +50,7 @@ class BusinessDataController extends AdminController
             $grid->column('run_time')->editable(true);
 //            $grid->column('content');
             $grid->column('name')->editable(true);
+            $grid->column('state')->switch('', true);
             $grid->column('limit_price', '单日录单限额');
             $grid->column('is_recommend')->switch('', true);
             $grid->column('sort')->editable(true);
@@ -128,6 +129,7 @@ class BusinessDataController extends AdminController
             $form->display('id');
             $form->display('uid');
             $form->display('name');
+            $form->display('state');
 
             $form->image('business_apply.img','营业执照')->uniqueName()->retainable()->disableRemove()->accept('jpg,png,gif,jpeg', 'image/*')->disk('oss')->move('/business')->autoUpload();
                 $form->image('user_id_img.img_back','身份证反面')->uniqueName()->retainable()->disableRemove()->accept('jpg,png,gif,jpeg', 'image/*')->disk('oss')->move('/business')->autoUpload();

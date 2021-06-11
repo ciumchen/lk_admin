@@ -157,14 +157,13 @@ class VerifyOrder extends Form
             $welfare = Setting::getSetting('welfare');
             $welfareAmount = bcmul($order->profit_price, bcdiv($welfare, 100, 6), 2);
 
-            AssetsService::BalancesChange(
-                $orderNo,
+            AssetsService::BalancesChange2(
                 $welfareUid,
                 $assets->id,
                 $assets->assets_name,
                 $welfareAmount,
                 AssetsLog::OPERATE_TYPE_CHARITY_REBATE,
-                "公益捐赠"
+                "公益捐赠",$orderNo
             );
         }
         //来客平台
@@ -174,14 +173,13 @@ class VerifyOrder extends Form
             $platform = Setting::getSetting('platform');
             $platformAmount = bcmul($order->profit_price, bcdiv($platform, 100, 6), 2);
 
-            AssetsService::BalancesChange(
-                $orderNo,
+            AssetsService::BalancesChange2(
                 $platformUid,
                 $assets->id,
                 $assets->assets_name,
                 $platformAmount,
                 AssetsLog::OPERATE_TYPE_PLATFORM_REBATE,
-                "来客平台维护费"
+                "来客平台维护费",$orderNo
             );
         }
 
@@ -199,14 +197,13 @@ class VerifyOrder extends Form
         $shareScale = Setting::getSetting('share_scale');
         $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 2);
 
-        AssetsService::BalancesChange(
-            $orderNo,
+        AssetsService::BalancesChange2(
             $uid,
             $assets->id,
             $assets->assets_name,
             $shareAmount,
             AssetsLog::OPERATE_TYPE_INVITE_REBATE,
-            $remark
+            $remark,$orderNo
         );
 
         //市节点返佣
@@ -228,14 +225,13 @@ class VerifyOrder extends Form
             //市长分配比列0.25%
             $cityAmount = bcmul($order->profit_price, bcdiv($cityNodeRebate, 100, 6), 8);
 
-            AssetsService::BalancesChange(
-                $orderNo,
+            AssetsService::BalancesChange2(
                 $uid,
                 $assets->id,
                 $assets->assets_name,
                 $cityAmount,
                 AssetsLog::OPERATE_TYPE_CITY_REBATE,
-                $remark
+                $remark,$orderNo
             );
         }
         //区节点返佣
@@ -256,14 +252,13 @@ class VerifyOrder extends Form
             //区长分配0.45%
             $districtAmount = bcmul($order->profit_price, bcdiv($districtNodeRebate, 100, 6), 8);
 
-            AssetsService::BalancesChange(
-                $orderNo,
+            AssetsService::BalancesChange2(
                 $uid,
                 $assets->id,
                 $assets->assets_name,
                 $districtAmount,
                 AssetsLog::OPERATE_TYPE_DISTRICT_REBATE,
-                $remark
+                $remark,$orderNo
             );
         }
 
@@ -317,7 +312,7 @@ class VerifyOrder extends Form
 
                 if($res == false){
                     if($headAmount>0)
-                        AssetsService::BalancesChange($orderNo,$platformUid, $assets->id, $assets->assets_name, $headAmount, AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, '没有盟主，分配到平台账户');
+                        AssetsService::BalancesChange2($platformUid, $assets->id, $assets->assets_name, $headAmount, AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, '没有盟主，分配到平台账户',$orderNo);
                     $isSamePlat = true;
                 }else{
                     //同级盟主奖励
@@ -328,9 +323,9 @@ class VerifyOrder extends Form
             }
         }
         if($sameAmount>0 && $isSamePlat == true)
-            AssetsService::BalancesChange($orderNo,$platformUid, $assets->id, $assets->assets_name, $sameAmount, AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, '没有同级盟主，分配到平台账户');
+            AssetsService::BalancesChange2($platformUid, $assets->id, $assets->assets_name, $sameAmount, AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, '没有同级盟主，分配到平台账户',$orderNo);
         if($inviteAmount > 0)
-            AssetsService::BalancesChange($orderNo,$uid, $assets->id, $assets->assets_name, $inviteAmount, AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, $remark);
+            AssetsService::BalancesChange2($uid, $assets->id, $assets->assets_name, $inviteAmount, AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, $remark,$orderNo);
 
         $market = bcadd($districtAmount, bcadd($cityAmount, bcadd(bcadd($sameAmount, $headAmount, 8), $ordinaryAmount, 8), 8), 8);
 
@@ -358,7 +353,7 @@ class VerifyOrder extends Form
         if($user && $user->member_head == 2 && $user->status == \App\Admin\Repositories\User::STATUS_NORMAL){
 
             if($amount>0)
-                AssetsService::BalancesChange($orderNo,$user->id, $assets->id, $assets->assets_name, $amount, $type, $msg);
+                AssetsService::BalancesChange2($user->id, $assets->id, $assets->assets_name, $amount, $type, $msg,$orderNo);
 
             return $user;
         }elseif($user){

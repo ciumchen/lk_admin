@@ -28,8 +28,13 @@ class ToBeAddedIntegralController extends AdminController
                 $count_profit_price = \App\Models\Order::where('status',2)->where('line_up',1)->sum('profit_price');
                 $buttoncss = 'background: #5c6bc6;font-size: 130%;font-weight: 600;color: #fff;margin-bottom: 4px;display: inline;
 padding: .24em .6em .34em;line-height: 1;text-align: center;white-space: nowrap;vertical-align: baseline;border-radius: .25em;cursor: pointer;box-sizing: border-box;';
-                return "<div style='margin: 10px;text-align: center'>
+//                return "<div style='margin: 10px;text-align: center'>
 //                        <span style='$buttoncss'>消费者LK实时统计：".$count_lk."元</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+//                        <span style='$buttoncss'>消费金额统计：".$count_price."元</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+//                        <span style='$buttoncss'>实际让利金额统计：".$count_profit_price."元</span>
+//                        </div>";
+
+                return "<div style='margin: 10px;text-align: center'>
                         <span style='$buttoncss'>消费金额统计：".$count_price."元</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <span style='$buttoncss'>实际让利金额统计：".$count_profit_price."元</span>
                         </div>";

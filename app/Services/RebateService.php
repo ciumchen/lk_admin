@@ -15,9 +15,11 @@ use App\Models\AssetsType;
 use App\Models\BusinessData;
 use App\Models\IntegralLog;
 use App\Models\Order;
+use App\Models\OrderIntegralLkDistribution;
 use App\Models\RebateData;
 use App\Models\Setting;
 use App\Models\User;
+use App\Models\Users;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -138,6 +140,11 @@ class RebateService
                     }
 
                     $rebateData->save();
+
+                    $today = strtotime(date('Y-m-d',time()));
+                    $todayData = OrderIntegralLkDistribution::where('day',$today)->first();
+                    $todayData->count_lk = Users::sum('lk');
+                    $todayData->save();
 
                 });
             } catch (\Exception $e) {

@@ -22,16 +22,25 @@ class ToBeAddedIntegralController extends AdminController
     {
         return Grid::make(new ToBeAddedIntegral(), function (Grid $grid) {
             $grid->header(function ($collection) {
+                $data = array(
+                    'count_lk'=>0,
+                    'count_profit_price'=>0,
+                );
                 $today = strtotime(date('Y-m-d',time()));
                 $orderIntegralData = DB::table('order_integral_lk_distribution')->where('day',$today)->first();
+                if ($orderIntegralData){
+                    $data['count_lk'] = $orderIntegralData->count_lk;
+                    $data['count_profit_price'] = $orderIntegralData->count_profit_price;
+                }
+
                 $count_price = \App\Models\Order::where('status',2)->where('line_up',1)->sum('price');
                 $count_profit_price = \App\Models\Order::where('status',2)->where('line_up',1)->sum('profit_price');
                 $buttoncss = 'background: #5c6bc6;font-size: 120%;font-weight: 600;color: #fff;margin-bottom: 4px;display: inline;
 padding: .24em .6em .34em;line-height: 1;text-align: center;white-space: nowrap;vertical-align: baseline;border-radius: .25em;cursor: pointer;box-sizing: border-box;';
 
                 return "<div style='margin: 10px;text-align: center'>
-                        <span style='$buttoncss'>今日导入排队订单消费者LK分配统计：".$orderIntegralData->count_lk."个</span>&nbsp;&nbsp;&nbsp;
-                        <span style='$buttoncss'>今日导入排队订单实际让利金额统计：".$orderIntegralData->count_profit_price."元</span>&nbsp;&nbsp;&nbsp;
+                        <span style='$buttoncss'>今日导入排队订单消费者LK分配统计：".$data['count_lk']."个</span>&nbsp;&nbsp;&nbsp;
+                        <span style='$buttoncss'>今日导入排队订单实际让利金额统计：".$data['count_lk']."元</span>&nbsp;&nbsp;&nbsp;
                         <span style='$buttoncss'>剩余排队订单消费金额统计：".$count_price."元</span>&nbsp;&nbsp;&nbsp;
                         <span style='$buttoncss'>剩余排队订单实际让利金额统计：".$count_profit_price."元</span>
                         </div>";

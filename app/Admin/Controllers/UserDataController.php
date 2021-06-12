@@ -44,6 +44,7 @@ class UserDataController extends AdminController
             $grid->disableViewButton();
             //禁用编辑按钮
             $grid->disableEditButton();
+            $grid->disableBatchDelete();
 
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');

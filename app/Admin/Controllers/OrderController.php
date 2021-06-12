@@ -67,6 +67,7 @@ class OrderController extends AdminController
             $grid->disableDeleteButton();
             // 禁用显示按钮
             $grid->disableViewButton();
+            $grid->disableBatchDelete();
             $grid->perPages([20, 50, 100, 200, 500]);
 
 

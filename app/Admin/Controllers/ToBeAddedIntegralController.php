@@ -20,6 +20,17 @@ class ToBeAddedIntegralController extends AdminController
     protected function grid()
     {
         return Grid::make(new ToBeAddedIntegral(), function (Grid $grid) {
+            $grid->header(function ($collection) {
+                $count_price = \App\Models\Order::where('status',2)->where('line_up',1)->sum('price');
+                $count_profit_price = \App\Models\Order::where('status',2)->where('line_up',1)->sum('profit_price');
+                $buttoncss = 'background: #5c6bc6;font-size: 130%;font-weight: 600;color: #fff;margin-bottom: 4px;display: inline;
+padding: .24em .6em .34em;line-height: 1;text-align: center;white-space: nowrap;vertical-align: baseline;border-radius: .25em;cursor: pointer;box-sizing: border-box;';
+                return "<div style='margin: 10px;text-align: center'>
+                        <span style='$buttoncss'>消费金额统计：".$count_price."元</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span style='$buttoncss'>实际让利金额统计：".$count_profit_price."元</span>
+                        </div>";
+            });
+
             $grid->model()->where('line_up',1);
             $grid->model()->orderBy('id','asc');
             $grid->model()->with(['user','business','select_trade_order']);
@@ -73,6 +84,7 @@ class ToBeAddedIntegralController extends AdminController
             $grid->disableDeleteButton();
             // 禁用显示按钮
             $grid->disableViewButton();
+            $grid->disableBatchDelete();
             $grid->perPages([20, 50, 100, 200, 500]);
 
 

@@ -56,6 +56,7 @@ class WithdrawLogController extends AdminController
             $grid->disableDeleteButton();
             // 禁用显示按钮
             $grid->disableViewButton();
+            $grid->disableBatchDelete();
 
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');

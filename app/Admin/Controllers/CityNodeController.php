@@ -53,6 +53,7 @@ class CityNodeController extends AdminController
                 $filter->equal('user.nickname', '用户名');
                 $filter->like('name', '站点名');
             });
+            $grid->disableBatchDelete();
         });
     }
 

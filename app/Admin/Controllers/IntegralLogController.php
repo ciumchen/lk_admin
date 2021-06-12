@@ -61,6 +61,7 @@ class IntegralLogController extends AdminController
 
             $grid->disableCreateButton();
             $grid->disableActions();
+            $grid->disableBatchDelete();
 
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');

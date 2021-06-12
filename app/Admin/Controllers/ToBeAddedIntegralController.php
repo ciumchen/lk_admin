@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Admin\Repositories\Order;
 use App\Admin\Repositories\ToBeAddedIntegral;
+use App\Models\OrderIntegralLkDistribution;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
@@ -28,7 +29,7 @@ class ToBeAddedIntegralController extends AdminController
                     'count_profit_price'=>0,
                 );
                 $today = strtotime(date('Y-m-d',time()));
-                $count_profit_price = DB::table('order_integral_lk_distribution')->where('day',$today)->value('count_profit_price');
+                $count_profit_price = OrderIntegralLkDistribution::where('day',$today)->value('count_profit_price');
                 if ($count_profit_price){
                     $data['count_profit_price'] = $count_profit_price;
                 }

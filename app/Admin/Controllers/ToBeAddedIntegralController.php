@@ -30,7 +30,7 @@ class ToBeAddedIntegralController extends AdminController
 padding: .24em .6em .34em;line-height: 1;text-align: center;white-space: nowrap;vertical-align: baseline;border-radius: .25em;cursor: pointer;box-sizing: border-box;';
 
                 return "<div style='margin: 10px;text-align: center'>
-                        <span style='$buttoncss'>今日导入排队订单消费者LK分配统计：".$orderIntegralData->count_lk."元</span>&nbsp;&nbsp;&nbsp;
+                        <span style='$buttoncss'>今日导入排队订单消费者LK分配统计：".$orderIntegralData->count_lk."个</span>&nbsp;&nbsp;&nbsp;
                         <span style='$buttoncss'>今日导入排队订单实际让利金额统计：".$orderIntegralData->count_profit_price."元</span>&nbsp;&nbsp;&nbsp;
                         <span style='$buttoncss'>剩余排队订单消费金额统计：".$count_price."元</span>&nbsp;&nbsp;&nbsp;
                         <span style='$buttoncss'>剩余排队订单实际让利金额统计：".$count_profit_price."元</span>

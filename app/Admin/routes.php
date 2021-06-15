@@ -31,6 +31,7 @@ Route::group([
     $router->resource('mtdd', 'LkMeiTuanOrderController');
     $router->resource('hfdc', 'LkPhoneDcController');
     $router->resource('addjf', 'ToBeAddedIntegralController');
+    $router->resource('drddtj', 'DailyImportOrderStatisticController');//导入订单统计
 
     $router->get('/', 'HomeController@index');
     $router->resource('users', 'UserController');

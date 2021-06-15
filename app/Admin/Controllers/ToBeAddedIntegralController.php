@@ -102,6 +102,7 @@ padding: .24em .6em .34em;line-height: 1;text-align: center;white-space: nowrap;
             // 禁用显示按钮
             $grid->disableViewButton();
             $grid->disableBatchDelete();
+            $grid->disableActions();
             $grid->perPages([20, 50, 100, 200, 500]);
 
 

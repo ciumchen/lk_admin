@@ -24,7 +24,7 @@ class DailyImportOrderStatisticController extends AdminController
             $grid->column('day')->display(function () {
                 return (date('Y-m-d',$this->day));
             });
-            $grid->column('count_lk');
+//            $grid->column('count_lk');
             $grid->column('count_profit_price');
             $grid->column('price_5');
             $grid->column('price_10');

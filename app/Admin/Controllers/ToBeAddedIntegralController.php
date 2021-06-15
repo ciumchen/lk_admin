@@ -36,14 +36,14 @@ class ToBeAddedIntegralController extends AdminController
 
                 $count_price = \App\Models\Order::where('status',2)->where('line_up',1)->sum('price');
                 $count_profit_price = \App\Models\Order::where('status',2)->where('line_up',1)->sum('profit_price');
-                $buttoncss = 'background: #5c6bc6;font-size: 120%;font-weight: 600;color: #fff;margin-bottom: 4px;display: inline;
+                $buttoncss = 'background: #5c6bc6;font-weight: 600;color: #fff;margin-bottom: 4px;display: inline;
 padding: .24em .6em .34em;line-height: 1;text-align: center;white-space: nowrap;vertical-align: baseline;border-radius: .25em;cursor: pointer;box-sizing: border-box;';
-
+                $spanCss = 'font-size: 120%';
                 return "<div style='margin: 10px;text-align: center'>
-                        <span style='$buttoncss'>(消费者LK)总数实时统计：".$data['count_lk']."个</span>&nbsp;&nbsp;&nbsp;
-                        <span style='$buttoncss'>今日导入排队订单-(实际让利金额)统计：".$data['count_profit_price']."元</span>&nbsp;&nbsp;&nbsp;
-                        <span style='$buttoncss'>剩余排队订单-(消费金额)统计：".$count_price."元</span>&nbsp;&nbsp;&nbsp;
-                        <span style='$buttoncss'>剩余排队订单-(实际让利金额)统计：".$count_profit_price."元</span>
+                        <span style='$buttoncss'>(消费者LK)总数实时统计：<span style='".$spanCss."'>".$data['count_lk']."</span>个</span>&nbsp;&nbsp;&nbsp;
+                        <span style='$buttoncss'>今日导入排队订单-(实际让利金额)统计：<span style='".$spanCss."'>".$data['count_profit_price']."</span>元</span>&nbsp;&nbsp;&nbsp;
+                        <span style='$buttoncss'>剩余排队订单-(消费金额)统计：<span style='".$spanCss."'>".$count_price."</span>元</span>&nbsp;&nbsp;&nbsp;
+                        <span style='$buttoncss'>剩余排队订单-(实际让利金额)统计：<span style='".$spanCss."'>".$count_profit_price."</span>元</span>
                         </div>";
 
             });

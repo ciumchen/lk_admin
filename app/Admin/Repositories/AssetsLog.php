@@ -18,6 +18,7 @@ class AssetsLog extends EloquentRepository
      * 类型.
      */
     const OPERATE_TYPE_WITHDRAW_TO_WALLET = 'withdraw_to_wallet';
+    const OPERATE_TYPE_MARKET_BUSINESS = 'give_market_business';
     const OPERATE_TYPE_WITHDRAW_TO_WALLET_FEE = 'withdraw_to_wallet_fee';
     const OPERATE_TYPE_REFUSE_WITHDRAW = 'refuse_withdraw';
     const OPERATE_TYPE_CHARITY_REBATE = 'charity_rebate';//公益捐赠分红
@@ -39,6 +40,7 @@ class AssetsLog extends EloquentRepository
      */
     public static $operateTypeTexts = [
         self::OPERATE_TYPE_WITHDRAW_TO_WALLET => '提现到钱包',
+        self::OPERATE_TYPE_MARKET_BUSINESS => '赠送给市商',
         self::OPERATE_TYPE_WITHDRAW_TO_WALLET_FEE => '提现到钱包手续费',
         self::OPERATE_TYPE_REFUSE_WITHDRAW => '拒绝提现',
         self::OPERATE_TYPE_CHARITY_REBATE => '公益捐赠分红',

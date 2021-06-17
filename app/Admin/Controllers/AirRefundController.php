@@ -10,7 +10,8 @@ use GuzzleHttp;
 
 class AirRefundController extends AdminController
 {
-    const URL = 'http://lkapi.com/api/air-refund';
+    //const URL = 'http://lk.catspawvideo.com/api/air-refund';
+    const URL = 'http://ceshi.catspawvideo.com/api/air-refund';
 
     public function index(Content $content)
     {
@@ -55,7 +56,7 @@ class AirRefundController extends AdminController
             {
                 $form->order_nos = str_ireplace('，', ',', $form->order_nos);
             }
-            
+
             $http = new GuzzleHttp\Client;
             //调用话费url
             $response = $http->get(self::URL, [

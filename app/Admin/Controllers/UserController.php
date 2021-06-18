@@ -12,7 +12,7 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Controllers\AdminController;
-
+use Dcat\Admin\Admin;
 class UserController extends AdminController
 {
     /**
@@ -54,7 +54,10 @@ class UserController extends AdminController
             $grid->column('return_business_integral');
             $grid->column('return_lk');
             $grid->column('ban_reason');
-            $grid->column('market_business')->switch('', true);
+            if (Admin::user()->id==1||Admin::user()->id==2){
+                $grid->column('market_business')->switch('', true);
+            }
+
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
             // 禁用创建按钮

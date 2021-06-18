@@ -11,7 +11,8 @@ use GuzzleHttp;
 class AirRefundController extends AdminController
 {
     //const URL = 'http://lk.catspawvideo.com/api/air-refund';
-    const URL = 'http://ceshi.catspawvideo.com/api/air-refund';
+    //const URL = 'http://ceshi.catspawvideo.com/api/air-refund';
+    const URL = 'http://lkapi.com/api/air-refund';
 
     public function index(Content $content)
     {

@@ -24,4 +24,9 @@ class BusinessData extends EloquentRepository
         0=>'否',
         1=>'是',
     ];
+
+    public static $IS_STATE = [
+        0=>'关闭',
+        1=>'开启',
+    ];
 }

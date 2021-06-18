@@ -91,6 +91,9 @@ class BusinessDataController extends AdminController
                 $filter->equal('province.name',"省份");
                 $filter->equal('city.name',"城市");
                 $filter->equal('district.name',"地区");
+                $filter->equal('state', '限额开关')->select(function () {
+                    return BusinessData::$IS_STATE;
+                });
                 $filter->equal('limit_price', '单日录单限额');
                 $filter->equal('is_recommend', '推荐商家')->select(function () {
                     return BusinessData::$IS_RECOMMEND;

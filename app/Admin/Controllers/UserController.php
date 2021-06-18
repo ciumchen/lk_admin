@@ -81,6 +81,12 @@ class UserController extends AdminController
                     return User::$memberHeadLabel;
                 });
 
+                $filter->equal('market_business', '市商')->select(function () {
+                    return User::$market_business;
+                });
+
+
+
 
             });
             $grid->actions(function (Grid\Displayers\Actions $actions) {

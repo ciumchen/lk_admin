@@ -21,6 +21,11 @@ class User extends EloquentRepository
     const ROLE_BUSINESS = 2;//商家
     const NO_IS_AUTH = 1;//未实名
     const YES_IS_AUTH = 2;//已实名
+
+    const MARKET_BUSINESS_0 = 0;
+    const MARKET_BUSINESS_1 = 1;
+
+
     /**
      * 状态label
      * @var string[]
@@ -55,5 +60,10 @@ class User extends EloquentRepository
     public static $roleLabel = [
         self::ROLE_NORMAL => "普通用户",
         self::ROLE_BUSINESS => "商家",
+    ];
+
+    public static $market_business = [
+        self::MARKET_BUSINESS_0 => "不是市商",
+        self::MARKET_BUSINESS_1 => "是市商",
     ];
 }

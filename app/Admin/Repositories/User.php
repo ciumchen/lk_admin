@@ -63,7 +63,7 @@ class User extends EloquentRepository
     ];
 
     public static $market_business = [
-        self::MARKET_BUSINESS_0 => "不是市商",
-        self::MARKET_BUSINESS_1 => "是市商",
+        self::MARKET_BUSINESS_0 => "非市商",
+        self::MARKET_BUSINESS_1 => "市商",
     ];
 }

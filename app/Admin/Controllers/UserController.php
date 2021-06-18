@@ -56,6 +56,14 @@ class UserController extends AdminController
             $grid->column('ban_reason');
             if (Admin::user()->id==1||Admin::user()->id==2){
                 $grid->column('market_business')->switch('', true);
+            }else{
+                $grid->column('market_business')->display(function($v){
+                    if($v==1){
+                        return "<span style='color: green;font-weight:bold;'>市商</span>";
+                    }else{
+                        return "<span style='color: red;font-weight:bold;'>非市商</span>";
+                    }
+                });
             }
 
             $grid->column('created_at');

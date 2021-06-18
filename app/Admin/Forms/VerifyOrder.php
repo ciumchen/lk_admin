@@ -95,7 +95,13 @@ class VerifyOrder extends Form
                     IntegralLog::addLog($business->id, $order->profit_price, IntegralLog::TYPE_SPEND, $amountBeforeChange, 2, '商家完成订单');
                 }
 
-                $orderDataInfo = TradeOrder::where('oid',$order->id)->first()->toArray();
+                if ($order->order_no)
+                {
+                    $orderDataInfo['order_no'] = $order->order_no;
+                } else
+                {
+                    $orderDataInfo = TradeOrder::where('oid',$order->id)->first()->toArray();
+                }
 //                dd($orderDataInfo['order_no']);
                 //返佣
                 $this->encourage($order, $customer, $business,$orderDataInfo['order_no']);

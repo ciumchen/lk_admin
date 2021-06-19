@@ -12,7 +12,7 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Controllers\AdminController;
-
+use Dcat\Admin\Admin;
 class UserController extends AdminController
 {
     /**
@@ -54,6 +54,18 @@ class UserController extends AdminController
             $grid->column('return_business_integral');
             $grid->column('return_lk');
             $grid->column('ban_reason');
+            if (Admin::user()->id==1||Admin::user()->id==2){
+                $grid->column('market_business')->switch('', true);
+            }else{
+                $grid->column('market_business')->display(function($v){
+                    if($v==1){
+                        return "<span style='color: green;font-weight:bold;'>市商</span>";
+                    }else{
+                        return "<span style='color: red;font-weight:bold;'>非市商</span>";
+                    }
+                });
+            }
+
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
             // 禁用创建按钮
@@ -64,6 +76,7 @@ class UserController extends AdminController
             $grid->disableEditButton();
             // 禁用显示按钮
             $grid->disableViewButton();
+            $grid->disableBatchDelete();
 
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
@@ -78,6 +91,12 @@ class UserController extends AdminController
                 $filter->equal('member_head', '盟主类型')->select(function () {
                     return User::$memberHeadLabel;
                 });
+
+                $filter->equal('market_business', '市商')->select(function () {
+                    return User::$market_business;
+                });
+
+
 
 
             });
@@ -101,4 +120,13 @@ class UserController extends AdminController
             });
         });
     }
+
+    protected function form()
+    {
+        return Form::make(new User(), function (Form $form) {
+            $form->display('market_business');
+
+        });
+    }
+
 }

@@ -12,6 +12,7 @@ return [
         'ip' => '操作ip地址',
         'user_agent' => '用户代理',
         'remark' => '备注',
+        'consumer_uid' => '积分贡献者UID',
     ],
     'options' => [
     ],

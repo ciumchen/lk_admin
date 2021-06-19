@@ -19,6 +19,7 @@ return [
         'return_business_integral' => '已返还商家积分',
         'ban_reason' => '封禁原因',
         'return_lk' => '已返LK积分',
+        'market_business' => '市商',
     ],
     'options' => [
     ],

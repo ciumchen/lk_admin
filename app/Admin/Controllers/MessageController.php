@@ -127,6 +127,11 @@ class MessageController extends AdminController
             ];
         }
 
-        (new UserMessage())::insert($umsgData);
+        $chunkRes = array_chunk($umsgData, 1000);
+
+        foreach ($chunkRes as $newList)
+        {
+            (new UserMessage())::insert($newList);
+        }
     }
 }

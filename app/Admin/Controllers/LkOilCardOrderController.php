@@ -86,6 +86,7 @@ class LkOilCardOrderController extends AdminController
             $grid->disableViewButton();
             //禁用编辑按钮
             $grid->disableEditButton();
+            $grid->disableBatchDelete();
 
             $titles = [
                 'id' => 'ID',

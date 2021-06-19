@@ -36,6 +36,7 @@ class AssetsTypeController extends AdminController
                 $filter->equal('id');
 
             });
+            $grid->disableBatchDelete();
         });
     }
 

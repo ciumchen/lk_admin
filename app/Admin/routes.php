@@ -30,6 +30,8 @@ Route::group([
     $router->resource('ykdd', 'LkOilCardOrderController');
     $router->resource('mtdd', 'LkMeiTuanOrderController');
     $router->resource('hfdc', 'LkPhoneDcController');
+    $router->resource('addjf', 'ToBeAddedIntegralController');
+    $router->resource('drddtj', 'DailyImportOrderStatisticController');//导入订单统计
 
     $router->get('/', 'HomeController@index');
     $router->resource('users', 'UserController');
@@ -60,6 +62,10 @@ Route::group([
     //自营消息
     $router->resource('self-msg', 'SelfMessageController');
     $router->resource('self-save', 'SelfMessageController');
+
+    //机票退订
+    $router->resource('air-refund', 'AirRefundController');
+    $router->resource('air-send', 'AirRefundController');
 });
 Route::group([
     'prefix'        => config('admin.route.prefix'),

@@ -50,6 +50,7 @@ class BusinessDataController extends AdminController
             $grid->column('run_time')->editable(true);
 //            $grid->column('content');
             $grid->column('name')->editable(true);
+            $grid->column('state')->switch('', true);
             $grid->column('limit_price', '单日录单限额');
             $grid->column('is_recommend')->switch('', true);
             $grid->column('sort')->editable(true);
@@ -90,6 +91,9 @@ class BusinessDataController extends AdminController
                 $filter->equal('province.name',"省份");
                 $filter->equal('city.name',"城市");
                 $filter->equal('district.name',"地区");
+                $filter->equal('state', '限额开关')->select(function () {
+                    return BusinessData::$IS_STATE;
+                });
                 $filter->equal('limit_price', '单日录单限额');
                 $filter->equal('is_recommend', '推荐商家')->select(function () {
                     return BusinessData::$IS_RECOMMEND;
@@ -128,6 +132,7 @@ class BusinessDataController extends AdminController
             $form->display('id');
             $form->display('uid');
             $form->display('name');
+            $form->display('state');
 
             $form->image('business_apply.img','营业执照')->uniqueName()->retainable()->disableRemove()->accept('jpg,png,gif,jpeg', 'image/*')->disk('oss')->move('/business')->autoUpload();
                 $form->image('user_id_img.img_back','身份证反面')->uniqueName()->retainable()->disableRemove()->accept('jpg,png,gif,jpeg', 'image/*')->disk('oss')->move('/business')->autoUpload();
@@ -193,7 +198,7 @@ class BusinessDataController extends AdminController
                 $show->width(3)->field('business_apply.img2','商家头图')->image(env('OSS_URL'),50,50);
                 $show->width(3)->field('user_id_img.img_just','身份证正面照')->image(env('OSS_URL'),50,50);
                 $show->width(3)->field('user_id_img.img_back','身份证反面照')->image(env('OSS_URL'),50,50);
-                $show->width(3)->field('user_id_img.img_hold','身份证手持照')->image(env('OSS_URL'),50,50);
+//                $show->width(3)->field('user_id_img.img_hold','身份证手持照')->image(env('OSS_URL'),50,50);
 
                 $show->width(3)->field('business_apply.img_details1','店铺详情照1')->image(env('OSS_URL'),50,50);
                 $show->width(3)->field('business_apply.img_details2','店铺详情照2')->image(env('OSS_URL'),50,50);

@@ -39,6 +39,7 @@ class RebateDataController extends AdminController
 
             $grid->disableActions();
             $grid->disableCreateButton();
+            $grid->disableBatchDelete();
 
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');

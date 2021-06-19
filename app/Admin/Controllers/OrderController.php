@@ -28,7 +28,16 @@ class OrderController extends AdminController
 
             $grid->column('business_uid');
 
-            $grid->column('select_trade_order.order_no','订单号');
+            $grid->column('order_no','订单号')->display(function ($no){
+                if (!empty($no))
+                {
+                    return $no;
+                } else
+                {
+                    return $this->select_trade_order['order_no'];
+                }
+            });
+
 
             $grid->column('business.phone',"商家手机号");
             $grid->column('select_trade_order.numeric','录入消费者手机号');
@@ -55,7 +64,7 @@ class OrderController extends AdminController
 
 
             $grid->column('name');
-            $grid->column('remark');
+//            $grid->column('remark');
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
 
@@ -67,6 +76,7 @@ class OrderController extends AdminController
             $grid->disableDeleteButton();
             // 禁用显示按钮
             $grid->disableViewButton();
+            $grid->disableBatchDelete();
             $grid->perPages([20, 50, 100, 200, 500]);
 
 

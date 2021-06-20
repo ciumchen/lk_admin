@@ -6,6 +6,7 @@ use App\Admin\Repositories\Test;
 use App\Exceptions\LogicException;
 use App\Models\BusinessApply;
 use App\Models\BusinessCategory;
+use App\Models\ShopUser;
 use App\Services\OssService;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
@@ -183,6 +184,16 @@ class TestController extends AdminController
         DB::table('users')->where('id',11635)->update(['role'=>1]);
 
         echo '修改成功';
+
+    }
+
+    //获取商城用户信息
+    public function getShopUserInfo(){
+        $userData = ShopUser::limit(3)->get()->toArray();
+        dd($userData);
+
+
+
 
     }
 

@@ -43,6 +43,12 @@ class IntegralLogController extends AdminController
                     return '代充';
                 }elseif($v=='LR'){
                     return '录单';
+                }elseif($v=='VC'){
+                    return '视频会员';
+                }elseif($v=='AT'){
+                    return '飞机票';
+                }elseif($v=='UB'){
+                    return '生活缴费';
                 }else{
                     return "未知类型";
                 }

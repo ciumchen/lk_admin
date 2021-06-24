@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,22 +13,23 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|OrderVideo newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OrderVideo query()
  * @mixin \Eloquent
- * @property int $id
- * @property string $order_no 订单号
- * @property int $user_id 充值用户ID
- * @property string $account 充值账号
- * @property int $order_id 订单表ID
- * @property string $money 充值金额
- * @property string $trade_no 接口方返回单号
- * @property int $pay_status 平台订单付款状态:0未付款,1已付款
- * @property int $status 充值状态:0充值中,1成功,9撤销
- * @property string $goods_title 商品名称
- * @property string $item_id 会员充值 标准商品编号
- * @property int $create_type 订单类型:1优酷会员,2迅雷会员,3土豆会员,4爱奇艺会员,5乐视会员,6好莱坞会员,7芒果TV移动PC端会员,8芒果TV全屏会员,9搜狐会员,10腾讯会员,
- * @property \Illuminate\Support\Carbon|null $created_at 创建时间
- * @property \Illuminate\Support\Carbon|null $updated_at 更新时间
- * @property string $channel 下单渠道:bm斑马力方,ww万维易源
- * @property string|null $card_list 订单卡密信息
+ * @property int                             $id
+ * @property string                          $order_no    订单号
+ * @property int                             $user_id     充值用户ID
+ * @property string                          $account     充值账号
+ * @property int                             $order_id    订单表ID
+ * @property string                          $money       充值金额
+ * @property string                          $trade_no    接口方返回单号
+ * @property int                             $pay_status  平台订单付款状态:0未付款,1已付款
+ * @property int                             $status      充值状态:0充值中,1成功,9撤销
+ * @property string                          $goods_title 商品名称
+ * @property string                          $item_id     会员充值 标准商品编号
+ * @property int                             $create_type
+ *           订单类型:1优酷会员,2迅雷会员,3土豆会员,4爱奇艺会员,5乐视会员,6好莱坞会员,7芒果TV移动PC端会员,8芒果TV全屏会员,9搜狐会员,10腾讯会员,
+ * @property \Illuminate\Support\Carbon|null $created_at  创建时间
+ * @property \Illuminate\Support\Carbon|null $updated_at  更新时间
+ * @property string                          $channel     下单渠道:bm斑马力方,ww万维易源
+ * @property string|null                     $card_list   订单卡密信息
  * @method static \Illuminate\Database\Eloquent\Builder|OrderVideo whereAccount($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrderVideo whereCardList($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrderVideo whereChannel($value)
@@ -51,4 +53,33 @@ class OrderVideo extends Model
     use HasFactory;
     
     protected $table = 'order_video';
+    
+    public function orders()
+    {
+        return $this->belongsTo(Order::class, 'order_id', 'id');
+    }
+    
+    public function getCreatedAtAttribute($value)
+    {
+        if ($value) {
+            $value = Carbon::createFromFormat(
+                'Y-m-d\TH:i:s.vv\Z',
+                date('Y-m-d\TH:i:s.vv\Z', strtotime($value))
+            )
+                           ->format('Y-m-d H:i:s');
+        }
+        return $value;
+    }
+    
+    public function getUpdatedAtAttribute($value)
+    {
+        if ($value) {
+            $value = Carbon::createFromFormat(
+                'Y-m-d\TH:i:s.vv\Z',
+                date('Y-m-d\TH:i:s.vv\Z', strtotime($value))
+            )
+                           ->format('Y-m-d H:i:s');
+        }
+        return $value;
+    }
 }

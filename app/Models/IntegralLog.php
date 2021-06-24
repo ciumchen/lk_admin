@@ -6,6 +6,45 @@ use Dcat\Admin\Traits\HasDateTimeFormatter;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\IntegralLog
+ *
+ * @property int $id
+ * @property int $uid uid
+ * @property string $operate_type 操作类型
+ * @property string $amount 变动数量
+ * @property string $amount_before_change 变动前数量
+ * @property int $role 1普通用户，2商家
+ * @property string|null $ip ip
+ * @property string|null $user_agent ua
+ * @property string|null $remark 备注
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $order_no trade_order表 -- order_no
+ * @property int|null $activityState 积分活动状态,0表示关闭,1标识开启
+ * @property int|null $consumer_uid 贡献积分的消费者uid
+ * @property string|null $description 订单类型
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|IntegralLog newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|IntegralLog newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|IntegralLog query()
+ * @method static \Illuminate\Database\Eloquent\Builder|IntegralLog whereActivityState($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|IntegralLog whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|IntegralLog whereAmountBeforeChange($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|IntegralLog whereConsumerUid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|IntegralLog whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|IntegralLog whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|IntegralLog whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|IntegralLog whereIp($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|IntegralLog whereOperateType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|IntegralLog whereOrderNo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|IntegralLog whereRemark($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|IntegralLog whereRole($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|IntegralLog whereUid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|IntegralLog whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|IntegralLog whereUserAgent($value)
+ * @mixin \Eloquent
+ */
 class IntegralLog extends Model
 {
 	use HasDateTimeFormatter;

@@ -93,4 +93,107 @@ class Order extends Model
     {
         return $this->hasOne(OrderVideo::class, 'order_id', 'id');
     }
+
+    //******************************************************************************************************
+    //获取订单号
+    public function getOrderNo($orderId,$Order = null){
+        if (empty($Order)) {
+            $Order = Order::find($orderId);
+        }
+        try {
+            $orderNo = '';
+            $data = '';
+            if (empty($Order)) {
+                throw new Exception('订单数据为空');
+            }
+            if (!empty($data = $Order->trade)) { /* 兼容trade_order */
+                $description = $Order->trade->description;
+                $orderNo = $data->order_no;
+            }
+            if (!empty($data = $Order->video)) { /* 视频会员订单 */
+                $description = 'VC';
+                $orderNo = $data->order_no;
+            }
+            if (!empty($data = $Order->air)) { /* 机票订单 */
+                $description = 'AT';
+                $orderNo = $data->order_no;
+            }
+            if (!empty($data = $Order->utility)) { /* 生活缴费 */
+                $description = 'UB';
+                $orderNo = $data->order_no;
+            }
+            /* 判断 是否已经获取到对应类型的订单*/
+            return $orderNo;
+            if (empty($description)) {
+                return $description = 0;
+            }
+        } catch (Exception $e) {
+            throw $e;
+        }
+        return $description;
+    }
+
+
+
+     /*
+     * Description:TradeOrder表关联
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @author lidong<947714443@qq.com>
+     * @date   2021/6/11 0011
+     */
+    public function trade()
+    {
+        return $this->hasOne(TradeOrder::class, 'oid', 'id');
+    }
+
+    /**
+     * Description:视频会员订单关联模型
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @author lidong<947714443@qq.com>
+     * @date   2021/6/11 0011
+     */
+    public function video()
+    {
+        return $this->hasOne(OrderVideo::class, 'order_id', 'id');
+    }
+
+    /**
+     * Description:
+     * TODO:机票订单关联模型
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @author lidong<947714443@qq.com>
+     * @date   2021/6/11 0011
+     */
+    public function air()
+    {
+        return $this->hasOne(OrderAirTrade::class, 'oid', 'id');
+    }
+
+    /**
+     * Description:斑马手机充值
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @author lidong<947714443@qq.com>
+     * @date   2021/6/11 0011
+     */
+    public function mobile()
+    {
+        return $this->hasOne(OrderMobileRecharge::class, 'order_id', 'id');
+    }
+
+    /**
+     * Description:斑马生活缴费
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @author lidong<947714443@qq.com>
+     * @date   2021/6/15 0015
+     */
+    public function utility()
+    {
+        return $this->hasOne(OrderUtilityBill::class, 'order_id', 'id');
+    }
+
 }

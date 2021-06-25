@@ -12,6 +12,7 @@ use Dcat\Admin\Show;
 use Dcat\Admin\Controllers\AdminController;
 use Illuminate\Support\Facades\DB;
 use App\Models\Users;
+use App\Models\Order as OrderModel;
 
 class ToBeAddedIntegralController extends AdminController
 {
@@ -57,7 +58,14 @@ padding: .24em .6em .34em;line-height: 1;text-align: center;white-space: nowrap;
 
             $grid->column('business_uid');
 
-            $grid->column('select_trade_order.order_no','订单号');
+            $grid->column('ddh','订单号')->display(function (){
+                if($this->order_no){
+                    return $this->order_no;
+                }else{
+                    $orderMod = new OrderModel();
+                    return $orderMod->getOrderNo($this->id);
+                }
+            });
 
 //            $grid->column('business.phone',"商家手机号");
 //            $grid->column('select_trade_order.numeric','录入消费者手机号');

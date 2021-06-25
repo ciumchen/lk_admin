@@ -54,11 +54,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Order extends Model
 {
-    
+
     use HasDateTimeFormatter;
-    
+
     protected $table = 'order';
-    
+
     /**
      * 用户信息
      */
@@ -66,7 +66,7 @@ class Order extends Model
     {
         return $this->belongsTo(User::class, 'uid', 'id');
     }
-    
+
     /**
      * 商家信息
      */
@@ -74,12 +74,12 @@ class Order extends Model
     {
         return $this->belongsTo(User::class, 'business_uid', 'id');
     }
-    
+
     public function select_trade_order()
     {
         return $this->belongsTo(TradeOrder::class, 'id', 'oid');
     }
-    
+
     /**商家资料
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -87,11 +87,6 @@ class Order extends Model
     public function businessData()
     {
         return $this->belongsTo(BusinessData::class, 'business_uid', 'uid');
-    }
-    
-    public function video()
-    {
-        return $this->hasOne(OrderVideo::class, 'order_id', 'id');
     }
 
     //******************************************************************************************************

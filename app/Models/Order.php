@@ -89,6 +89,15 @@ class Order extends Model
         return $this->belongsTo(BusinessData::class, 'business_uid', 'uid');
     }
 
+    /**视频会员卡
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function order_video()
+    {
+        return $this->belongsTo(OrderVideo::class, 'id', 'order_id');
+    }
+
     //******************************************************************************************************
     //获取订单号
     public function getOrderNo($orderId,$Order = null){

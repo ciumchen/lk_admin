@@ -57,9 +57,18 @@ class VideoOrderController extends AdminController
             $grid->column('orders.pay_status', '支付状态')
                  ->using(Order::$pay_status)
                  ->label(Order::$payStatusLabelStyle);
+            $grid->column('status', '卡密状态')
+                 ->using(OrderVideo::$statusTexts)
+                 ->label(OrderVideo::$statusLabelStyle);
             $grid->column('channel')->using($Order::$channel_text);
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
+            /* 操作按钮 */
+            $grid->actions(function (Grid\Displayers\Actions $actions) {
+                if ($this->status == OrderVideo::STATUS_FAIL) {
+                    $actions->append('');
+                }
+            });
             /* 禁用创建按钮 */
             $grid->disableCreateButton();
             /* 禁用编辑按钮 */
@@ -78,6 +87,9 @@ class VideoOrderController extends AdminController
                 $filter->like('goods_title', '商品名称');
                 $filter->equal('orders.status', '审核状态')->select(function () {
                     return Order::$statusLabel;
+                });
+                $filter->equal('status', '卡密状态')->select(function () {
+                    return OrderVideo::$statusTexts;
                 });
                 //支付状态
                 $filter->equal('orders.pay_status', '支付状态')->select(function () {

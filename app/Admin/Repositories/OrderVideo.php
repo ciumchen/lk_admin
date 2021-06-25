@@ -59,6 +59,16 @@ class OrderVideo extends EloquentRepository
         self::STATUS_DEFAULT => '未获取',
         self::STATUS_SUCCESS => '获取成功',
         self::STATUS_FAIL    => '获取异常',
-        self::STATUS_CANCEL  => '撤销',
+        //        self::STATUS_CANCEL  => '撤销',
+    ];
+    
+    /**
+     * @var string[] 订单状态对应样式
+     */
+    public static $statusLabelStyle = [
+        self::STATUS_DEFAULT => 'primary',
+        self::STATUS_SUCCESS => 'success',
+        self::STATUS_FAIL    => 'danger',
+        //        self::STATUS_CANCEL  => 'dark',
     ];
 }

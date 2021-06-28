@@ -12,6 +12,7 @@ use App\Models\UserData;
 use App\Models\Setting;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use App\Models\ShopUserNoPhone;
 class addLkshopUser extends Command
 {
     /**
@@ -45,7 +46,7 @@ class addLkshopUser extends Command
      */
     public function handle()
     {
-        log::info('=================导入商城用户任务===================================');
+//        log::info('=================导入商城用户任务===================================');
         //查询记录
         $LkUserModel = new LkshopAddUserLog();
         $addLog = $LkUserModel::where('type','addLkShopuser')->first();
@@ -62,44 +63,55 @@ class addLkshopUser extends Command
             $userArr = $userData->toArray();
             $lkUserDataModel = new User();
             foreach ($userArr as $k=>$v){
-                $userInfo = User::where('phone',$v['binding'])->first();
-                if($userInfo==''){//注册用户
-                    try {
-                        DB::transaction(function () use ($v) {
-                            $pShareUid = Setting::getSetting('p_share_uid')??0;
-                            if($pShareUid <= 0)
-                                throw new LogicException('默认邀请人未配置');
-                            $inviter = $pShareUid;
-                            $user = User::create([
-                                'phone' => $v['binding'],
-                                'invite_uid' => $inviter,
-                                'register_ip' => request_ip(),
-                                'salt' => Str::random(6),
-                                'code_invite' => Str::random(6),
-                                'username' => $v['username'],
-                            ]);
-                            //创建密码
-                            $user->changePassword(md5(time().Str::random(10)));
-                            UserData::create([
-                                'uid' => $user->id,
-                            ]);
-
-                        });
-                    }catch (PDOException $e) {
-                        report($e);
-                        throw new LogicException('注册失败，请重试');
-                    } catch (Exception $e) {
-                        throw $e;
+                if ($v['binding']==''){
+                    $userNoPhoneModel = new ShopUserNoPhone();
+                    $userLog = $userNoPhoneModel::where('user_id',$v['id'])->first();
+                    if ($userLog==''){
+                        $userNoPhoneModel->user_id = $v['id'];
+                        $userNoPhoneModel->type = 'no_phone';
+                        $userNoPhoneModel->save();
                     }
+                }else{
+                    $userInfo = User::where('phone',$v['binding'])->first();
+                    if($userInfo==''){//注册用户
+                        try {
+                            DB::transaction(function () use ($v) {
+                                $pShareUid = Setting::getSetting('p_share_uid')??0;
+                                if($pShareUid <= 0)
+                                    throw new LogicException('默认邀请人未配置');
+                                $inviter = $pShareUid;
+                                $user = User::create([
+                                    'phone' => $v['binding'],
+                                    'invite_uid' => $inviter,
+                                    'register_ip' => request_ip(),
+                                    'salt' => Str::random(6),
+                                    'code_invite' => Str::random(6),
+                                    'username' => $v['username'],
+                                ]);
+                                //创建密码
+                                $user->changePassword(md5(time().Str::random(10)));
+                                UserData::create([
+                                    'uid' => $user->id,
+                                ]);
 
+                            });
+                        }catch (PDOException $e) {
+                            report($e);
+                            throw new LogicException('注册失败，请重试');
+                        } catch (Exception $e) {
+                            throw $e;
+                        }
+
+                    }
                 }
+
                 $addLog = LkshopAddUserLog::where('type','addLkShopuser')->first();
                 $addLog->user_id = $v['id'];
                 $addLog->save();
             }
             //dd($userArr);
         }else{
-            log::info('=================所有用户导入完成===================================');
+//            log::info('=================所有用户导入完成===================================');
             return '所有用户导入完成';
         }
 

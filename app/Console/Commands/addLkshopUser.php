@@ -86,10 +86,6 @@ class addLkshopUser extends Command
                                 'uid' => $user->id,
                             ]);
 
-                            $addLog = LkshopAddUserLog::where('type','addLkShopuser')->first();
-                            $addLog->user_id = $v['id'];
-                            $addLog->save();
-
                         });
                         log::info('=================注册成功===================================');
                     }catch (PDOException $e) {
@@ -102,6 +98,9 @@ class addLkshopUser extends Command
                     }
 
                 }
+                $addLog = LkshopAddUserLog::where('type','addLkShopuser')->first();
+                $addLog->user_id = $v['id'];
+                $addLog->save();
             }
             log::info('=================完成一次导入===================================');
             //dd($userArr);

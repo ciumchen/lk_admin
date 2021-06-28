@@ -63,9 +63,7 @@ class addLkshopUser extends Command
             $lkUserDataModel = new User();
             foreach ($userArr as $k=>$v){
                 $userInfo = User::where('phone',$v['binding'])->first();
-//                log::info('=================查询用户===================================');
                 if($userInfo==''){//注册用户
-//                    log::info('=================注册用户===================================');
                     try {
                         DB::transaction(function () use ($v) {
                             $pShareUid = Setting::getSetting('p_share_uid')??0;
@@ -87,14 +85,11 @@ class addLkshopUser extends Command
                             ]);
 
                         });
-//                        log::info('=================注册成功===================================');
                     }catch (PDOException $e) {
                         report($e);
                         throw new LogicException('注册失败，请重试');
-//                        log::info('=================注册失败1===================================');
                     } catch (Exception $e) {
                         throw $e;
-//                        log::info('=================注册失败2===================================');
                     }
 
                 }
@@ -102,7 +97,6 @@ class addLkshopUser extends Command
                 $addLog->user_id = $v['id'];
                 $addLog->save();
             }
-//            log::info('=================完成一次导入===================================');
             //dd($userArr);
         }else{
             return '所有用户导入完成';

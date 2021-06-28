@@ -63,6 +63,7 @@ class addLkshopUser extends Command
             $lkUserDataModel = new User();
             foreach ($userArr as $k=>$v){
                 $userInfo = User::where('phone',$v['binding'])->first();
+                log::info('=================查询用户===================================');
                 if($userInfo==''){//注册用户
                     log::info('=================注册用户===================================');
                     try {

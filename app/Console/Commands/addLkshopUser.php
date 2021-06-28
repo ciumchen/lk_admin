@@ -58,7 +58,7 @@ class addLkshopUser extends Command
 
         //查询用户
         $userData = ShopUser::where('id','>',$addLog->user_id)->limit(10)->get();
-        if($userData){
+        if($userData->first()!=''){
             $userArr = $userData->toArray();
             $lkUserDataModel = new User();
             foreach ($userArr as $k=>$v){
@@ -99,7 +99,7 @@ class addLkshopUser extends Command
             }
             //dd($userArr);
         }else{
-            log::debug('=================所有用户导入完成===================================');
+//            log::info('=================所有用户导入完成===================================');
             return '所有用户导入完成';
         }
 

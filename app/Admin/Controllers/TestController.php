@@ -187,14 +187,5 @@ class TestController extends AdminController
 
     }
 
-    //获取商城用户信息
-    public function getShopUserInfo(){
-        $userData = ShopUser::limit(3)->get()->toArray();
-        dd($userData);
-
-
-
-
-    }
 
 }

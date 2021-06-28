@@ -45,7 +45,7 @@ class addLkshopUser extends Command
      */
     public function handle()
     {
-//        log::info('=================导入商城用户任务===================================');
+        log::info('=================导入商城用户任务===================================');
         //查询记录
         $LkUserModel = new LkshopAddUserLog();
         $addLog = $LkUserModel::where('type','addLkShopuser')->first();
@@ -99,7 +99,7 @@ class addLkshopUser extends Command
             }
             //dd($userArr);
         }else{
-//            log::info('=================所有用户导入完成===================================');
+            log::info('=================所有用户导入完成===================================');
             return '所有用户导入完成';
         }
 

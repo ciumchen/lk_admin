@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\UserData;
 use App\Models\Setting;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 class addLkshopUser extends Command
 {
     /**
@@ -44,6 +45,7 @@ class addLkshopUser extends Command
      */
     public function handle()
     {
+        log::info('=================导入商城用户任务===================================');
         //查询记录
         $LkUserModel = new LkshopAddUserLog();
         $addLog = $LkUserModel::where('type','addLkShopuser')->first();
@@ -62,6 +64,7 @@ class addLkshopUser extends Command
             foreach ($userArr as $k=>$v){
                 $userInfo = User::where('phone',$v['binding'])->first();
                 if($userInfo==''){//注册用户
+                    log::info('=================注册用户===================================');
                     try {
                         DB::transaction(function () use ($v) {
                             $pShareUid = Setting::getSetting('p_share_uid')??0;
@@ -87,15 +90,19 @@ class addLkshopUser extends Command
                             $addLog->save();
 
                         });
+                        log::info('=================注册成功===================================');
                     }catch (PDOException $e) {
                         report($e);
                         throw new LogicException('注册失败，请重试');
+                        log::info('=================注册失败1===================================');
                     } catch (Exception $e) {
                         throw $e;
+                        log::info('=================注册失败2===================================');
                     }
 
                 }
             }
+            log::info('=================完成一次导入===================================');
             //dd($userArr);
         }else{
             return '所有用户导入完成';

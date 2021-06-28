@@ -99,14 +99,9 @@ class addLkshopUser extends Command
             }
             //dd($userArr);
         }else{
+            log::info('=================所有用户导入完成===================================');
             return '所有用户导入完成';
         }
-
-
-
-
-
-
 
 
     }

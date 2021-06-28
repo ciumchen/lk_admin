@@ -61,6 +61,9 @@ Route::group([
     //机票退订
     $router->resource('air-refund', 'AirRefundController');
     $router->resource('air-send', 'AirRefundController');
+
+    //价格设置
+    $router->resource('sys-price', 'SysPriceController');
 });
 Route::group([
     'prefix'    => config('admin.route.prefix'),

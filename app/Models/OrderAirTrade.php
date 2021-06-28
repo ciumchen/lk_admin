@@ -84,6 +84,8 @@ use App\Exceptions\LogicException;
  * @method static \Illuminate\Database\Eloquent\Builder|OrderAirTrade whereTrainNo($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrderAirTrade whereUtime($value)
  * @mixin \Eloquent
+ * @property int $oid order 表 -- id
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderAirTrade whereOid($value)
  */
 class OrderAirTrade extends Model
 {

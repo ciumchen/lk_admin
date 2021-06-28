@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Grid\ReGetCard;
 use App\Admin\Actions\Grid\VerifyOrder;
 use App\Admin\Repositories\Order;
 use App\Admin\Repositories\OrderVideo;
@@ -66,7 +67,7 @@ class VideoOrderController extends AdminController
             /* 操作按钮 */
             $grid->actions(function (Grid\Displayers\Actions $actions) {
                 if ($this->status == OrderVideo::STATUS_FAIL) {
-                    $actions->append('');
+                    $actions->append(new ReGetCard());
                 }
             });
             /* 禁用创建按钮 */

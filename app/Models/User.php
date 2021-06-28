@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Dcat\Admin\Traits\HasDateTimeFormatter;
-
 use Illuminate\Database\Eloquent\Model;
-
+use App\Exceptions\LogicException;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
+use Laravel\Sanctum\HasApiTokens;
 /**
  * App\Models\User
  *
@@ -71,9 +75,15 @@ class User extends Model
 	use HasDateTimeFormatter;
 
 	protected $fillable = [
+        'invite_uid',
+        'phone',
+        'username',
+        'salt',
+        'code_invite',
 	    'status',
         'ban_reason'
     ];
+
 
     /**
      * 用户信息
@@ -90,5 +100,16 @@ class User extends Model
     public function invite()
     {
         return $this->belongsTo(User::class, 'invite_uid','id');
+    }
+
+    //修改密码
+    public function changePassword(string $password)
+    {
+        $salt = Str::random(6);
+        //$password = '123456';
+        Password::create([
+            'password' => encrypt_password($this->phone, $password, $salt),
+        ]);
+        $this->update(['salt' => $salt]);
     }
 }

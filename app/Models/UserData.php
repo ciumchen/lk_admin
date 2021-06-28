@@ -42,6 +42,15 @@ class UserData extends Model
 	use HasDateTimeFormatter;
     protected $table = 'user_data';
 
+    protected $fillable = [
+        'uid',
+        'last_login',
+        'last_ip',
+        'change_address_time',
+        'change_password_ip',
+        'id_card',
+        'name',
+    ];
     /**
      * 用户信息
      */

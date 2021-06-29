@@ -83,6 +83,22 @@ class User extends Model
 	    'status',
         'ban_reason'
     ];
+    //正常用户状态
+    const STATUS_NORMAL = 1;
+
+    const STATUS_BANNED = 2;//已封禁
+
+    const ROLE_NORMAL   = 1;  //普通用户
+
+    const ROLE_BUSINESS = 2;//商家
+
+    const NO_IS_AUTH    = 1;   //未实名
+
+    const YES_IS_AUTH   = 2;  //已实名
+
+    const CUSTOMER      = 1;     //普通用户
+
+    const LEADER        = 2;       //盟主
 
 
     /**

@@ -11,6 +11,7 @@ namespace App\Services;
 use App\Models\Asset;
 
 use App\Models\AssetsLog;
+use App\Models\AssetsLogs;
 use App\Models\AssetsType;
 use App\Models\FreezeLog;
 use Exception;
@@ -56,6 +57,28 @@ class AssetsService
             }
         }
         return $data;
+    }
+
+    //商城返佣
+    public static function ShopBalancesChange($orderNo,int $uid, AssetsType $assetType, string $assets_name,$amount, string $operate_type, $remark = null,$tx_hash = null)
+    {
+//        dd($assetType->id);
+        $info = self::changeWithoutLog($uid, $assetType->id, $amount);
+        //写入日志
+        $balancesLogs = new AssetsLogs();
+        $balancesLogs->assets_type_id = $assetType->id;
+        $balancesLogs->assets_name = $assets_name;
+        $balancesLogs->uid = $uid;
+        $balancesLogs->operate_type = $operate_type;
+        $balancesLogs->amount = $amount;
+        $balancesLogs->amount_before_change = $info['amount_before_change'];
+        $balancesLogs->tx_hash = $tx_hash;
+        $balancesLogs->ip = request()->server('HTTP_ALI_CDN_REAL_IP', request()->ip());
+        $balancesLogs->user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? mb_substr($_SERVER['HTTP_USER_AGENT'],0,255,'utf-8') : '';
+        $balancesLogs->remark = $remark;
+        $balancesLogs->order_no = $orderNo;
+        $balancesLogs->save();
+        return $balancesLogs->id;
     }
 
     /**

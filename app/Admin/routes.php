@@ -27,7 +27,9 @@ Route::group([
     $router->resource('ykdd', 'LkOilCardOrderController');
     $router->resource('mtdd', 'LkMeiTuanOrderController');
     $router->resource('hfdc', 'LkPhoneDcController');
-    
+    $router->resource('lkscsh', 'LkShopMerchantOrderController');
+    $router->resource('lksczy', 'LkShopSelfSupportOrderController');
+
     $router->resource('sphy', 'VideoOrderController'); //视频会员订单
     $router->resource('addjf', 'ToBeAddedIntegralController');
     $router->resource('drddtj', 'DailyImportOrderStatisticController');//导入订单统计

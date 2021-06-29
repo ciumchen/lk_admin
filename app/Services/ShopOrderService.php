@@ -32,9 +32,9 @@ class ShopOrderService
     public function completeShopOrder($orderId,$consumer_uid,$orderNo,$description)
     {
 
-//        DB::beginTransaction();
-//        try {
-//
+        DB::beginTransaction();
+        try {
+
             $order = Order::lockForUpdate()
                 ->find($orderId);
             if ($order->status != Order::STATUS_DEFAULT) {
@@ -98,12 +98,12 @@ class ShopOrderService
             $order->save();
 
 
-//
-//            DB::commit();
-//        } catch (Exception $exception) {
-//            DB::rollBack();
-//            var_dump($exception->getMessage());
-//        }
+
+            DB::commit();
+        } catch (Exception $exception) {
+            DB::rollBack();
+            var_dump($exception->getMessage());
+        }
 
 
 

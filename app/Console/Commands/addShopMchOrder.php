@@ -82,7 +82,7 @@ class addShopMchOrder extends Command
             $orderModel->price = $orderArr['total_price'];
             $orderModel->profit_price = $orderArr['total_price']*$profit_ratio/100;
             $orderModel->status = 1;
-            $orderModel->name = '来客优选商户订单';
+            $orderModel->name = '商户订单';
             $orderModel->order_no = $orderArr['order_no'];
             $orderModel->created_at = date('Y-m-d H:i:s',$orderArr['addtime']);
             $orderModel->updated_at = date('Y-m-d H:i:s',$orderArr['confirm_time']);
@@ -94,7 +94,7 @@ class addShopMchOrder extends Command
             $LkshopOrderModel->price = $orderArr['total_price'];
             $LkshopOrderModel->profit_price = $orderArr['total_price']*$profit_ratio/100;
             $LkshopOrderModel->status = 2;
-            $LkshopOrderModel->name = '来客优选商户订单';
+            $LkshopOrderModel->name = '商户订单';
             $LkshopOrderModel->order_no = $orderArr['order_no'];
             $LkshopOrderModel->description = 'lkshop_sh';
             $LkshopOrderModel->shop_order_id = $orderArr['id'];
@@ -112,7 +112,8 @@ class addShopMchOrder extends Command
 
 //            dd($LkshopOrderModel->profit_ratio);
         }else{
-            dd("所有订单导入完成");
+//            dd("所有订单导入完成");
+            log::info('=================所有订单导入完成===================================');
             return "所有订单导入完成";
         }
 

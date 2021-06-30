@@ -21,11 +21,11 @@ class LkShopMerchantOrderController extends AdminController
     protected function grid()
     {
         return Grid::make(new LkShopMerchantOrder(), function (Grid $grid) {
-            $grid->model()->orderBy('id','desc');
-            $grid->model()->where('description','=',"lkshop_sh");
+            $grid->model()->where('description','=',"mch_order");
             $grid->model()->with(['order']);
-            $grid->column('order.id')->sortable();
+            $grid->model()->orderBy('id','desc');
 
+            $grid->column('order.id')->sortable();
             $grid->column('uid');
             $grid->column('business_uid');
             $grid->column('order_no');//订单号

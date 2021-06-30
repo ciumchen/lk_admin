@@ -20,3 +20,4 @@ _ide_helper_models.php
 nginx.htaccess
 .htaccess
 .phpstorm.meta.php
+.php-cs-fixer.cache

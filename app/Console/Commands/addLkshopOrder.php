@@ -53,7 +53,7 @@ class addLkshopOrder extends Command
      */
     public function handle()
     {
-//        log::info('=================导入商户订单开始===================================');
+        log::info('=================导入商户订单开始===================================');
         //查询记录
         $OrderLogModel = new LkshopOrderLog();
         $LogDataMch = $OrderLogModel::where('type', 'mch_order')->first();

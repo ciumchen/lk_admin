@@ -62,11 +62,11 @@ class addLkshopOrder extends Command
         $business_uid = '';
         $orderName = '商城订单';
         if ($LogDataMch == '') {
-            DB::table('lkshop_order_log')->insert(['order_id'=>1625027460,'type'=>'mch_order']);
+            DB::table('lkshop_order_log')->insert(['order_id'=>0,'type'=>'mch_order']);
             $LogDataMch = $OrderLogModel::where('type', 'mch_order')->first();
         }
         if ($LogData1688 == '') {
-            DB::table('lkshop_order_log')->insert(['order_id'=>1625027460,'type'=>'1688_order']);
+            DB::table('lkshop_order_log')->insert(['order_id'=>0,'type'=>'1688_order']);
             $LogData1688 = $OrderLogModel::where('type', '1688_order')->first();
         }
         $orderId = $OrderLogModel::where('type', 'mch_order')->value('order_id');

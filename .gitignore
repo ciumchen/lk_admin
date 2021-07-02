@@ -21,3 +21,4 @@ nginx.htaccess
 .htaccess
 .phpstorm.meta.php
 .php-cs-fixer.cache
+psalm.xml

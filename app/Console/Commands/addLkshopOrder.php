@@ -53,7 +53,7 @@ class addLkshopOrder extends Command
      */
     public function handle()
     {
-        log::info('=================导入商户订单开始===================================');
+//        log::info('=================导入商户订单开始===================================');
         //查询记录
         $OrderLogModel = new LkshopOrderLog();
         $LogDataMch = $OrderLogModel::where('type', 'mch_order')->first();
@@ -76,7 +76,7 @@ class addLkshopOrder extends Command
 //        $shopOrderDatacount = ShopOrder::where('id', '>', $orderId)->where('is_confirm', 1)->orderBy('id', "asc")->count();
 //        dump($orderId,$shopOrderDatacount);
 //        dd($shopOrderData);
-        log::info('=================导入商户订单开始==================================='.$orderId);
+//        log::info('=================导入商户订单开始==================================='.$orderId);
         if ($shopOrderData != '') {
             $orderArr = $shopOrderData->toArray();
             if ($shopOrderData->mch_id != 0){
@@ -175,7 +175,7 @@ class addLkshopOrder extends Command
             }
         } else {
 //            dd("所有订单导入完成");
-            log::info('=================所有订单导入完成===================================');
+//            log::info('=================所有订单导入完成===================================');
             var_dump( "所有订单导入完成");
             return false;
         }

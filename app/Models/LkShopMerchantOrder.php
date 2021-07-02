@@ -82,4 +82,9 @@ class LkShopMerchantOrder extends Model
         return $this->belongsTo(Order::class, 'oid','id');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(Users::class, 'uid','id');
+    }
+
 }

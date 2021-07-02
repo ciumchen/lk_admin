@@ -32,7 +32,7 @@ class LkMeiTuanOrderController extends AdminController
 //            $grid->column('goods_bn');
             $grid->column('title');
             $grid->column('price');
-            $grid->column('num');
+//            $grid->column('num');
 //            $grid->column('shop_id');//所属商家
             $grid->column('profit_ratio')->display(function () {
                 return ($this->profit_ratio*100).'%';

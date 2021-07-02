@@ -22,12 +22,13 @@ class LkShopMerchantOrderController extends AdminController
     {
         return Grid::make(new LkShopMerchantOrder(), function (Grid $grid) {
             $grid->model()->where('description','=',"mch_order");
-            $grid->model()->with(['order']);
+            $grid->model()->with(['order','user']);
             $grid->model()->orderBy('id','desc');
 
             $grid->column('order.id')->sortable();
             $grid->column('uid');
             $grid->column('business_uid');
+            $grid->column('user.phone','消费者手机号');
             $grid->column('order_no');//订单号
             $grid->column('profit_ratio')->display(function () {
                 return (floatval($this->profit_ratio)).'%';
@@ -59,6 +60,7 @@ class LkShopMerchantOrderController extends AdminController
                 'order.id' => 'ID',
                 'uid' => '消费者ID',
                 'business_uid' => '商户ID',
+                'user.phone' => '消费者手机号',
                 'order_no' => '订单号',
                 'profit_ratio' => '让利比列(%)',
                 'price' => '消费金额',
@@ -72,6 +74,7 @@ class LkShopMerchantOrderController extends AdminController
                 foreach ($rows as $index => &$row) {
                     // 这里假设role就是关联数据
                     $row['order.id'] = $row['order']['id'];
+                    $row['user.phone'] = $row['user']['phone'];
                     $row['order.pay_status'] = $row['order']['pay_status'];
                     if($row['status']==1){
                         $row['status']="审核中";
@@ -103,6 +106,7 @@ class LkShopMerchantOrderController extends AdminController
                 $filter->equal('order.id');
                 $filter->equal('uid','消费UID');
                 $filter->equal('business_uid','商户UID');
+                $filter->equal('user.phone','消费者手机号');
                 $filter->equal('order_no');
                 //审核状态
                 $filter->equal('status')->select(function () {

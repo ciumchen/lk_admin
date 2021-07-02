@@ -104,7 +104,7 @@ class addLkshopOrder extends Command
 //            dd($shopOrderData->confirm_time);exit;
 //            dd($ShopOrderData167->confirm_time);exit;
 
-            if ($shopOrderData->ali_order_no!='' && ($shopOrderData->confirm_time < 1625027460)){
+            if ($shopOrderData->ali_order_no!='' && ($shopOrderData->confirm_time <= 1625027460)){
                 //更新记录
                 $LogDataMch->order_id = $orderArr['confirm_time'];
                 $LogDataMch->save();

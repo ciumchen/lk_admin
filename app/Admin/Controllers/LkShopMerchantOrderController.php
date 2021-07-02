@@ -38,7 +38,8 @@ class LkShopMerchantOrderController extends AdminController
             $grid->column('name');
 
             $grid->column('status')->using(Order::$statusLabel)->label(Order::$statusLabelStyle);
-            $grid->column('order.pay_status','支付状态')->using(Order::$pay_status)->label(Order::$payStatusLabelStyle);
+            $grid->column('is_confirm','收货状态')->using([0=>'未收货',1=>'确认收货'])->label(Order::$SHOP_STATUS_SH);
+//            $grid->column('order.pay_status','支付状态')->using(Order::$pay_status)->label(Order::$payStatusLabelStyle);
 
 //            $grid->column('订单来源')->display(function($v){
 //                return '来客优选商户订单';

@@ -34,6 +34,7 @@ class LkShopMerchantOrderController extends AdminController
             });//让利比例
             $grid->column('price');
             $grid->column('profit_price');
+            $grid->column('name');
 
             $grid->column('status')->using(Order::$statusLabel)->label(Order::$statusLabelStyle);
             $grid->column('order.pay_status','支付状态')->using(Order::$pay_status)->label(Order::$payStatusLabelStyle);

@@ -98,6 +98,21 @@ class addLkshopOrder extends Command
             }
 //            dd($orderId,$orderType,$business_uid);
             $ShopOrderData = LkshopOrder::where('shop_order_id', $orderArr['id'])->first();
+
+            $ShopOrderData167 = ShopOrder::where('id', 167)->first();
+//            dd($shopOrderData->confirm_time);exit;
+//            dd($ShopOrderData167->confirm_time);exit;
+
+            if ($shopOrderData->ali_order_no!='' && ($shopOrderData->confirm_time < $ShopOrderData167->confirm_time)){
+                //更新记录
+                $LogDataMch->order_id = $orderArr['id'];
+                $LogDataMch->save();
+                $LogData1688->order_id = $orderArr['id'];
+                $LogData1688->save();
+                var_dump('该订单已导入');
+                return false;
+            }
+
             if ($ShopOrderData != '') {
                 //更新记录
                 $LogDataMch->order_id = $orderArr['id'];

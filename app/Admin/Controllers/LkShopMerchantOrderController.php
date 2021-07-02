@@ -61,7 +61,7 @@ class LkShopMerchantOrderController extends AdminController
                 'uid' => '消费者ID',
                 'business_uid' => '商户ID',
                 'user.phone' => '消费者手机号',
-                'order_no' => '订单号',
+                'order_no' => '商户订单号',
                 'profit_ratio' => '让利比列(%)',
                 'price' => '消费金额',
                 'profit_price' => '实际让利金额',

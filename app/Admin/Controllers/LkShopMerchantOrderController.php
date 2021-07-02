@@ -21,11 +21,11 @@ class LkShopMerchantOrderController extends AdminController
     protected function grid()
     {
         return Grid::make(new LkShopMerchantOrder(), function (Grid $grid) {
-            $grid->model()->orderBy('id','desc');
-            $grid->model()->where('description','=',"lkshop_sh");
+            $grid->model()->where('description','=',"mch_order");
             $grid->model()->with(['order']);
-            $grid->column('order.id')->sortable();
+            $grid->model()->orderBy('id','desc');
 
+            $grid->column('order.id')->sortable();
             $grid->column('uid');
             $grid->column('business_uid');
             $grid->column('order_no');//订单号
@@ -34,6 +34,7 @@ class LkShopMerchantOrderController extends AdminController
             });//让利比例
             $grid->column('price');
             $grid->column('profit_price');
+            $grid->column('name');
 
             $grid->column('status')->using(Order::$statusLabel)->label(Order::$statusLabelStyle);
             $grid->column('order.pay_status','支付状态')->using(Order::$pay_status)->label(Order::$payStatusLabelStyle);

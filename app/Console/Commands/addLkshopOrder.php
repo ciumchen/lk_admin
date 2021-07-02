@@ -62,17 +62,17 @@ class addLkshopOrder extends Command
         $business_uid = '';
         $orderName = '商城订单';
         if ($LogDataMch == '') {
-            DB::table('lkshop_order_log')->insert(['type'=>'mch_order']);
+            DB::table('lkshop_order_log')->insert(['order_id'=>1625027460,'type'=>'mch_order']);
             $LogDataMch = $OrderLogModel::where('type', 'mch_order')->first();
         }
         if ($LogData1688 == '') {
-            DB::table('lkshop_order_log')->insert(['type'=>'1688_order']);
+            DB::table('lkshop_order_log')->insert(['order_id'=>1625027460,'type'=>'1688_order']);
             $LogData1688 = $OrderLogModel::where('type', '1688_order')->first();
         }
         $orderId = $OrderLogModel::where('type', 'mch_order')->value('order_id');
 
         //查询订单
-        $shopOrderData = ShopOrder::where('id', '>', $orderId)->where('is_confirm', 1)->orderBy('id', "asc")->first();
+        $shopOrderData = ShopOrder::where('confirm_time', '>', $orderId)->where('is_confirm', 1)->orderBy('confirm_time', "asc")->first();
 //        $shopOrderDatacount = ShopOrder::where('id', '>', $orderId)->where('is_confirm', 1)->orderBy('id', "asc")->count();
 //        dump($orderId,$shopOrderDatacount);
 //        dd($shopOrderData);
@@ -90,35 +90,35 @@ class addLkshopOrder extends Command
                 $orderName = '自营订单';
             }else{
                 //更新记录
-                $LogDataMch->order_id = $orderArr['id'];
+                $LogDataMch->order_id = $orderArr['confirm_time'];
                 $LogDataMch->save();
-                $LogData1688->order_id = $orderArr['id'];
+                $LogData1688->order_id = $orderArr['confirm_time'];
                 $LogData1688->save();
                 var_dump('非商户订单和自营订单');
                 return false;
             }
 //            dd($orderId,$orderType,$business_uid);
-            $ShopOrderData = LkshopOrder::where('shop_order_id', $orderArr['id'])->first();
+            $inShopOrderData = LkshopOrder::where('shop_order_id', $orderArr['id'])->first();
 
-            $ShopOrderData167 = ShopOrder::where('id', 167)->first();
+//            $ShopOrderData167 = ShopOrder::where('id', 167)->first();
 //            dd($shopOrderData->confirm_time);exit;
 //            dd($ShopOrderData167->confirm_time);exit;
 
-            if ($shopOrderData->ali_order_no!='' && ($shopOrderData->confirm_time < $ShopOrderData167->confirm_time)){
+            if ($shopOrderData->ali_order_no!='' && ($shopOrderData->confirm_time < 1625027460)){
                 //更新记录
-                $LogDataMch->order_id = $orderArr['id'];
+                $LogDataMch->order_id = $orderArr['confirm_time'];
                 $LogDataMch->save();
-                $LogData1688->order_id = $orderArr['id'];
+                $LogData1688->order_id = $orderArr['confirm_time'];
                 $LogData1688->save();
                 var_dump('该订单已导入');
                 return false;
             }
 
-            if ($ShopOrderData != '') {
+            if ($inShopOrderData != '') {
                 //更新记录
-                $LogDataMch->order_id = $orderArr['id'];
+                $LogDataMch->order_id = $orderArr['confirm_time'];
                 $LogDataMch->save();
-                $LogData1688->order_id = $orderArr['id'];
+                $LogData1688->order_id = $orderArr['confirm_time'];
                 $LogData1688->save();
                 var_dump('该订单已导入');
                 return false;
@@ -161,9 +161,9 @@ class addLkshopOrder extends Command
                     (new ShopOrderService())->completeShopOrder($orderModel->id, $orderArr['user_id'], $orderArr['order_no'], 'lkshop_sh');
 
                     //更新记录
-                    $LogDataMch->order_id = $orderArr['id'];
+                    $LogDataMch->order_id = $orderArr['confirm_time'];
                     $LogDataMch->save();
-                    $LogData1688->order_id = $orderArr['id'];
+                    $LogData1688->order_id = $orderArr['confirm_time'];
                     $LogData1688->save();
                     var_dump('导入订单成功');
 

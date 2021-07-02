@@ -76,6 +76,7 @@ class addLkshopOrder extends Command
 //        $shopOrderDatacount = ShopOrder::where('id', '>', $orderId)->where('is_confirm', 1)->orderBy('id', "asc")->count();
 //        dump($orderId,$shopOrderDatacount);
 //        dd($shopOrderData);
+        log::info('=================导入商户订单开始==================================='.$orderId);
         if ($shopOrderData != '') {
             $orderArr = $shopOrderData->toArray();
             if ($shopOrderData->mch_id != 0){

@@ -7,6 +7,7 @@ use App\Models\LkshopOrderLog;
 use App\Models\Order;
 use App\Models\ShopMch;
 use App\Models\ShopOrder;
+use App\Models\Users;
 use App\Services\ShopOrderService;
 use Illuminate\Console\Command;
 
@@ -59,7 +60,6 @@ class addLkshopOrder extends Command
         $LogDataMch = $OrderLogModel::where('type', 'mch_order')->first();
         $LogData1688 = $OrderLogModel::where('type', '1688_order')->first();
         $orderType = '';
-        $business_uid = '';
         $orderName = '商城订单';
         if ($LogDataMch == '') {
             DB::table('lkshop_order_log')->insert(['order_id'=>0,'type'=>'mch_order']);
@@ -79,14 +79,19 @@ class addLkshopOrder extends Command
 //        log::info('=================导入商户订单开始==================================='.$orderId);
         if ($shopOrderData != '') {
             $orderArr = $shopOrderData->toArray();
+            $shopUserPhome = ShopUser::where('id',$orderArr['user_id'])->value('binding');
+            $lkUserId = Users::where('phone',$shopUserPhome)->value('id');//lk用户uid
+            $lkBusinessUid = '';//lk商户uid
             if ($shopOrderData->mch_id != 0){
                 $orderType = 'mch_order';
                 $orderName = '商户订单';
                 $ShopMchModel = new ShopMch();
-                $business_uid = $ShopMchModel->getMchUserId($shopOrderData->mch_id);
+                $mchUid = $ShopMchModel->getMchUserId($shopOrderData->mch_id);
+                $mchUserPhone = ShopUser::where('id',$mchUid)->value('binding');
+                $lkBusinessUid = Users::where('phone',$mchUserPhone)->value('id');//lk商户uid
             }elseif ($shopOrderData->ali_order_no != ''){
                 $orderType = '1688_order';
-                $business_uid = 2;
+                $lkBusinessUid = 2;//lk商户uid
                 $orderName = '自营订单';
             }else{
                 //更新记录
@@ -97,6 +102,8 @@ class addLkshopOrder extends Command
                 var_dump('非商户订单和自营订单');
                 return false;
             }
+
+            dump($lkUserId,$lkBusinessUid);
 //            dd($orderId,$orderType,$business_uid);
             $inShopOrderData = LkshopOrder::where('shop_order_id', $orderArr['id'])->first();
 
@@ -125,15 +132,18 @@ class addLkshopOrder extends Command
             } else {
                 DB::beginTransaction();
                 try {
-                    $profit_ratio = Setting::where('key', 'lkshop_profit_ratio')->value('value');
+//                    $profit_ratio = Setting::where('key', 'lkshop_profit_ratio')->value('value');
+                    $profit_ratio = 20;
+                    //实际付款
+                    $sjPay = $orderArr['pay_price'] - $orderArr['express_price'];
                     $LkshopOrderModel = new LkshopOrder();
                     $orderModel = new Order();
 //dd($orderType,$business_uid);
-                    $orderModel->uid = $orderArr['user_id'];
-                    $orderModel->business_uid = $business_uid;
+                    $orderModel->uid = $lkUserId;
+                    $orderModel->business_uid = $lkBusinessUid;
                     $orderModel->profit_ratio = $profit_ratio;
-                    $orderModel->price = $orderArr['total_price'];
-                    $orderModel->profit_price = $orderArr['total_price'] * $profit_ratio / 100;
+                    $orderModel->price = $sjPay;
+                    $orderModel->profit_price = $sjPay * $profit_ratio / 100;
                     $orderModel->status = 1;
                     $orderModel->name = $orderName;
                     $orderModel->order_no = $orderArr['order_no'];
@@ -141,11 +151,11 @@ class addLkshopOrder extends Command
                     $orderModel->updated_at = date('Y-m-d H:i:s', $orderArr['confirm_time']);
                     $orderModel->save();
 
-                    $LkshopOrderModel->uid = $orderArr['user_id'];
-                    $LkshopOrderModel->business_uid = $business_uid;
+                    $LkshopOrderModel->uid = $lkUserId;
+                    $LkshopOrderModel->business_uid = $lkBusinessUid;
                     $LkshopOrderModel->profit_ratio = $profit_ratio;
-                    $LkshopOrderModel->price = $orderArr['total_price'];
-                    $LkshopOrderModel->profit_price = $orderArr['total_price'] * $profit_ratio / 100;
+                    $LkshopOrderModel->price = $sjPay;
+                    $LkshopOrderModel->profit_price = $sjPay * $profit_ratio / 100;
                     $LkshopOrderModel->status = 2;
                     $LkshopOrderModel->name = $orderName;
                     $LkshopOrderModel->order_no = $orderArr['order_no'];
@@ -158,7 +168,7 @@ class addLkshopOrder extends Command
 
                     //添加积分
 //            completeOrderTable(int $id, int $consumer_uid, string $description, string $orderNo)
-                    (new ShopOrderService())->completeShopOrder($orderModel->id, $orderArr['user_id'], $orderArr['order_no'], 'lkshop_sh');
+                    (new ShopOrderService())->completeShopOrder($orderModel->id, $lkUserId, $orderArr['order_no'], $orderType);
 
                     //更新记录
                     $LogDataMch->order_id = $orderArr['confirm_time'];

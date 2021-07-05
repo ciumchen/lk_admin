@@ -57,6 +57,11 @@ class addLkshopOrderOne extends Command
     {
 
         $order_no = '20210619194322443811';
+        echo '关闭1';
+        return false;
+        exit;
+        dd('关闭2');
+
         $shopOrderData = ShopOrder::where('order_no',$order_no)->first();
         if ($shopOrderData){
             $shopOrderDataArr = $shopOrderData->toArray();

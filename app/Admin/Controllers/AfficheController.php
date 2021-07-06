@@ -63,7 +63,8 @@ class AfficheController extends AdminController {
      * @date   2021/6/30 0030
      */
     public function detail(int $id)
-    : Show {
+    : Show
+    {
         return Show::make(
             $id,
             $this->model,

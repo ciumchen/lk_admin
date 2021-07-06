@@ -68,6 +68,8 @@ Route::group(
         $router->resource('sys-price', 'SysPriceController');
         /* 系统公告 */
         $router->resource('aff-list', 'AfficheController');
+        /* 批量代充手机订单 */
+        $router->resource('many-mobile', 'ManyMobileController');
     }
 );
 Route::group(

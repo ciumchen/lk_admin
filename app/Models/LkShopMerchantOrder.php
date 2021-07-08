@@ -58,6 +58,17 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|LkMeiTuanOrder whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|LkMeiTuanOrder whereUserId($value)
  * @mixin \Eloquent
+ * @property int $uid 消费者UID
+ * @property int $business_uid 商户UID
+ * @property string|null $name 消费商品名
+ * @property string|null $remark 备注
+ * @property int $shop_order_id 商城订单id
+ * @property-read \App\Models\Order|null $order
+ * @method static \Illuminate\Database\Eloquent\Builder|LkShopMerchantOrder whereBusinessUid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LkShopMerchantOrder whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LkShopMerchantOrder whereRemark($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LkShopMerchantOrder whereShopOrderId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LkShopMerchantOrder whereUid($value)
  */
 class LkShopMerchantOrder extends Model
 {

@@ -33,6 +33,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|OrderIntegralLkDistribution whereSwitch($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrderIntegralLkDistribution whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int|null $dr_count 导入订单数量统计
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderIntegralLkDistribution whereDrCount($value)
  */
 class OrderIntegralLkDistribution extends Model
 {

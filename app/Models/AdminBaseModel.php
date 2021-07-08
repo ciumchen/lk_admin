@@ -6,6 +6,16 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\AdminBaseModel
+ *
+ * @property-read mixed $created_at
+ * @property-read mixed $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminBaseModel newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminBaseModel newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminBaseModel query()
+ * @mixin \Eloquent
+ */
 class AdminBaseModel extends Model
 {
     use HasFactory;

@@ -43,6 +43,25 @@ class OrderMobileRechargeDetails extends AdminBaseModel
     
     protected $table = 'order_mobile_recharge_details';
     
+    const STATUS_DEFAULT = 0;
+    
+    const STATUS_SUCCESS = 1;
+    
+    /**
+     * @var string[]
+     */
+    public static $statusLabel = [
+        self::STATUS_DEFAULT => '充值中',
+        self::STATUS_SUCCESS => '成功',
+    ];
+    /**
+     * @var array
+     */
+    public static $statusLabelStyle = [
+        self::STATUS_DEFAULT => 'primary',
+        self::STATUS_SUCCESS => 'success',
+    ];
+    
     /**
      * Description:
      *

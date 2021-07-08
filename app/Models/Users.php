@@ -63,6 +63,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Users whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Users whereUsername($value)
  * @mixin \Eloquent
+ * @property int $market_business 市商身份，0不是，1是
+ * @method static \Illuminate\Database\Eloquent\Builder|Users whereMarketBusiness($value)
  */
 class Users extends Model
 {

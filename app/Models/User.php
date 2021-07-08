@@ -69,6 +69,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUsername($value)
  * @mixin \Eloquent
+ * @property int $market_business 市商身份，0不是，1是
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereMarketBusiness($value)
  */
 class User extends Model
 {

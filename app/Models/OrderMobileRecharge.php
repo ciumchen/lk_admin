@@ -52,6 +52,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|OrderMobileRecharge whereNum($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\OrderMobileRechargeDetails[] $details
  * @property-read int|null                                                                          $details_count
+ * @property-read \App\Models\Order $orders
  */
 class OrderMobileRecharge extends AdminBaseModel
 {

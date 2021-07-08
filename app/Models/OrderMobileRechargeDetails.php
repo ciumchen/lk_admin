@@ -37,7 +37,7 @@ use Illuminate\Support\Facades\DB;
  * @method static Builder|OrderMobileRechargeDetails whereOrderNo($value)
  * @method static Builder|OrderMobileRechargeDetails whereTradeNo($value)
  */
-class OrderMobileRechargeDetails extends Model
+class OrderMobileRechargeDetails extends AdminBaseModel
 {
     use HasFactory;
     

@@ -53,7 +53,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\OrderMobileRechargeDetails[] $details
  * @property-read int|null                                                                          $details_count
  */
-class OrderMobileRecharge extends Model
+class OrderMobileRecharge extends AdminBaseModel
 {
     use HasFactory;
     

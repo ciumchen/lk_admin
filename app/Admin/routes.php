@@ -70,6 +70,8 @@ Route::group(
         $router->resource('aff-list', 'AfficheController');
         /* 批量代充手机订单 */
         $router->resource('many-mobile', 'ManyMobileController');
+        //兑换充值
+        $router->resource('convert', 'ConvertController');
     }
 );
 Route::group(

@@ -22,7 +22,7 @@ class OrderController extends AdminController
     {
         return Grid::make(new Order(), function (Grid $grid) {
             $grid->model()->orderBy('id', 'desc');
-            $grid->model()->with(['user', 'business', 'select_trade_order','order_video']);
+            $grid->model()->with(['user', 'business', 'select_trade_order','order_video', 'convert']);
             $grid->column('id')->sortable();
             $grid->column('uid');
             $grid->column('business_uid');
@@ -34,7 +34,13 @@ class OrderController extends AdminController
                 }
             });
             $grid->column('business.phone', "商家手机号");
-            $grid->column('select_trade_order.numeric', '录入消费者手机号');
+            $grid->column('select_trade_order.numeric', '录入消费者手机号')->display(function ($phone) {
+                if (!empty($phone)) {
+                    return $phone;
+                } else {
+                    return $this->convert[ 'phone' ] ?? '';
+                }
+            });
             $grid->column('profit_ratio');
             $grid->column('price');
             $grid->column('profit_price');

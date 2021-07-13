@@ -19,6 +19,7 @@ class DisableConvert extends RowAction
             'id' => $this->getKey(),
             'phone' => $this->row->phone,
             'user_name' => $this->row->user_name,
+            'price' => $this->row->price,
         ]);
 
         return Modal::make()

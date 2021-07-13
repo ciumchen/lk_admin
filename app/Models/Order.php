@@ -221,4 +221,16 @@ class Order extends Model
     {
         return $this->hasOne(OrderUtilityBill::class, 'order_id', 'id');
     }
+
+    /**
+     * Description:兑换充值
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @author
+     * @date
+     */
+    public function convert()
+    {
+        return $this->hasOne(ConvertLogs::class, 'oid', 'id');
+    }
 }

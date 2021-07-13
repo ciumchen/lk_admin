@@ -87,6 +87,7 @@ class addLkshopUser extends Command
                                     'salt' => Str::random(6),
                                     'code_invite' => Str::random(6),
                                     'username' => $v['username'],
+                                    'shop_uid' => $v['id'],
                                 ]);
                                 //创建密码
                                 $user->changePassword(md5(time().Str::random(10)));
@@ -102,6 +103,9 @@ class addLkshopUser extends Command
                             throw $e;
                         }
 
+                    }else{
+                        $userInfo->shop_uid = $v['id'];
+                        $userInfo->save();
                     }
                 }
 

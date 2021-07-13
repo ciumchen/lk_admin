@@ -13,7 +13,7 @@ use App\Admin\Actions\Grid\DisableConvert;
 class ConvertController extends AdminController
 {
     public $columns_name = [
-        'oid'                  => 'ID',
+        'oid'                  => '订单ID',
         'uid'                  => '消费者ID',
         'order_no'             => '订单号',
         'phone'                => '手机号',
@@ -38,7 +38,7 @@ class ConvertController extends AdminController
             $Order,
             function (Grid $grid) use ($Order) {
                 $grid->model()->orderBy('id', 'desc');
-                $grid->column('oid', 'ID')->sortable();
+                $grid->column('oid', '订单ID')->sortable();
                 $grid->column('uid', '消费者ID');
                 $grid->column('order_no', '订单号');
                 $grid->column('phone', '手机号');
@@ -93,7 +93,7 @@ class ConvertController extends AdminController
                 /* 筛选 */
                 $grid->filter(
                     function (Grid\Filter $filter) {
-                        $filter->equal('oid', 'ID');
+                        $filter->equal('oid', '订单ID');
                         $filter->equal('uid', '消费者ID');
                         $filter->equal('order_no', '订单号');
                         $filter->equal('type', '兑换类型')->select(
@@ -122,20 +122,6 @@ class ConvertController extends AdminController
                 );
                 
                 /* 导出 */
-                /* $titles = [
-                    'oid'           => 'ID',
-                    'uid'           => '用户ID',
-                    'order_no'      => '订单号',
-                    'name'          => '兑换类型',
-                    'profit_ratio'  => '商家让利',
-                    'profit_price'  => '让利金额',
-                    'price'         => '兑换金额',
-                    'orders.status' => '审核状态',
-                    'pay_status'    => '付款状态',
-                    'status'        => '兑换状态',
-    
-                ]; */
-                //$grid->export($titles);
                 $grid->export($this->columns_name)->rows(
                     function (array $rows) {
                         foreach ($rows as &$row) {

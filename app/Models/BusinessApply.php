@@ -49,4 +49,8 @@ class BusinessApply extends Model
 	use HasDateTimeFormatter;
     protected $table = 'business_apply';
 
+    //获取bussiness_data表的id
+    public function getBusinessInfoId($id){
+        return BusinessData::where('business_apply_id',$id)->value('id');
+    }
 }

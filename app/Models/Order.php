@@ -60,17 +60,17 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Order extends Model
 {
-    
+
     use HasDateTimeFormatter;
-    
+
     protected $table = 'order';
-    
+
     const STATUS_DEFAULT = 1;//审核中
-    
+
     const STATUS_SUCCEED = 2;//审核通过
-    
+
     const STATUS_FAILED  = 3;//审核不通过
-    
+
     /**
      * 类型文本.
      *
@@ -81,7 +81,7 @@ class Order extends Model
         self::STATUS_SUCCEED => '审核通过',
         self::STATUS_FAILED  => '审核不通过',
     ];
-    
+
     /**
      * 用户信息
      */
@@ -89,7 +89,7 @@ class Order extends Model
     {
         return $this->belongsTo(User::class, 'uid', 'id');
     }
-    
+
     /**
      * 商家信息
      */
@@ -97,12 +97,12 @@ class Order extends Model
     {
         return $this->belongsTo(User::class, 'business_uid', 'id');
     }
-    
+
     public function select_trade_order()
     {
         return $this->belongsTo(TradeOrder::class, 'id', 'oid');
     }
-    
+
     /**商家资料
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -111,7 +111,7 @@ class Order extends Model
     {
         return $this->belongsTo(BusinessData::class, 'business_uid', 'uid');
     }
-    
+
     /**视频会员卡
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -120,7 +120,12 @@ class Order extends Model
     {
         return $this->belongsTo(OrderVideo::class, 'id', 'order_id');
     }
-    
+
+    public function lkshop_order()
+    {
+        return $this->belongsTo(LkshopOrder::class, 'id', 'oid');
+    }
+
     //******************************************************************************************************
     //获取订单号
     public function getOrderNo($orderId, $Order = null)
@@ -160,7 +165,7 @@ class Order extends Model
         }
         return $description;
     }
-    
+
     /*
     * Description:TradeOrder表关联
     *
@@ -172,7 +177,7 @@ class Order extends Model
     {
         return $this->hasOne(TradeOrder::class, 'oid', 'id');
     }
-    
+
     /**
      * Description:视频会员订单关联模型
      *
@@ -184,7 +189,7 @@ class Order extends Model
     {
         return $this->hasOne(OrderVideo::class, 'order_id', 'id');
     }
-    
+
     /**
      * Description:
      * TODO:机票订单关联模型
@@ -197,7 +202,7 @@ class Order extends Model
     {
         return $this->hasOne(OrderAirTrade::class, 'oid', 'id');
     }
-    
+
     /**
      * Description:斑马手机充值
      *
@@ -209,7 +214,7 @@ class Order extends Model
     {
         return $this->hasOne(OrderMobileRecharge::class, 'order_id', 'id');
     }
-    
+
     /**
      * Description:斑马生活缴费
      *

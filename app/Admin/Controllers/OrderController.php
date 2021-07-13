@@ -22,7 +22,7 @@ class OrderController extends AdminController
     {
         return Grid::make(new Order(), function (Grid $grid) {
             $grid->model()->orderBy('id', 'desc');
-            $grid->model()->with(['user', 'business', 'select_trade_order','order_video']);
+            $grid->model()->with(['user', 'business', 'select_trade_order','order_video','lkshop_order']);
             $grid->column('id','录单ID')->sortable();
             $grid->column('uid');
             $grid->column('business_uid');
@@ -61,6 +61,7 @@ class OrderController extends AdminController
                 $filter->equal('business_uid');
                 $filter->equal('select_trade_order.order_no', '订单号');
                 $filter->equal('order_video.order_no', '视频卡订单号');
+                $filter->equal('lkshop_order.order_no', '来客优选订单号');
                 $filter->equal('select_trade_order.numeric', '录入消费者手机号');
                 $filter->equal('profit_price');
                 $filter->equal('name')->select(function () {

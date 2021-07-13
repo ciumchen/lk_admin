@@ -12,7 +12,7 @@ use Dcat\Admin\Controllers\AdminController;
 
 class VideoOrderController extends AdminController
 {
-    
+
     public $columns_name = [
         'order_id'             => 'ID',
         'user_id'              => '消费者ID',
@@ -26,7 +26,7 @@ class VideoOrderController extends AdminController
         'status'               => '审核状态',
         'pay_status'           => '支付状态',
     ];
-    
+
     /**
      * Description:
      *
@@ -41,7 +41,7 @@ class VideoOrderController extends AdminController
             $Order,
             function (Grid $grid) use ($Order) {
                 $grid->model()->orderBy('id', 'desc');
-                $grid->column('order_id')->sortable();
+                $grid->column('order_id','录单ID')->sortable();
                 $grid->column('user_id');
                 $grid->column('order_no');
                 $grid->column('name')
@@ -97,7 +97,7 @@ class VideoOrderController extends AdminController
                 /* 筛选 */
                 $grid->filter(
                     function (Grid\Filter $filter) {
-                        $filter->equal('order_id', 'ID');
+                        $filter->equal('order_id', '录单ID');
                         $filter->equal('user_id', '消费者ID');
                         $filter->equal('order_no', '订单号');
                         $filter->like('goods_title', '商品名称');
@@ -137,7 +137,7 @@ class VideoOrderController extends AdminController
             }
         );
     }
-    
+
     public function detail($id)
     {
         $Order = new OrderVideo(['orders']);
@@ -159,7 +159,7 @@ class VideoOrderController extends AdminController
             }
         );
     }
-    
+
     protected function form()
     {
         $Order = new OrderVideo(['orders']);

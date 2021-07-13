@@ -52,7 +52,12 @@ class ReviewBusinessApply extends Form implements LazyRenderable
                     $businessApply->status = 2;
                     $user->role = 2;
                     $user->save();
-                    $this->createBusiness($businessApply);
+//                    $this->createBusiness($businessApply);
+                    $businessDataInfo = (new BusinessData())->where('business_apply_id',$id)->first();
+                    if ($businessDataInfo){
+                        $businessDataInfo->is_status = 2;
+                        $businessDataInfo->save();
+                    }
 
                 //如果拒绝申请
                 }elseif($form['process'] == 2){

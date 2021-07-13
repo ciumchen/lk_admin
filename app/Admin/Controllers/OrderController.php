@@ -23,7 +23,7 @@ class OrderController extends AdminController
         return Grid::make(new Order(), function (Grid $grid) {
             $grid->model()->orderBy('id', 'desc');
             $grid->model()->with(['user', 'business', 'select_trade_order','order_video']);
-            $grid->column('id')->sortable();
+            $grid->column('id','录单ID')->sortable();
             $grid->column('uid');
             $grid->column('business_uid');
             $grid->column('order_no', '订单号')->display(function ($no) {
@@ -56,7 +56,7 @@ class OrderController extends AdminController
             $grid->perPages([20, 50, 100, 200, 500]);
             //筛选
             $grid->filter(function (Grid\Filter $filter) {
-                $filter->equal('id');
+                $filter->equal('id','录单ID');
                 $filter->equal('uid');
                 $filter->equal('business_uid');
                 $filter->equal('select_trade_order.order_no', '订单号');

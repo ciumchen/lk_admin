@@ -25,7 +25,7 @@ class LkMeiTuanOrderController extends AdminController
             $grid->model()->orderBy('id','desc');
             $grid->model()->where('description','=',"MT");
             $grid->model()->with(['user']);
-            $grid->column('id')->sortable();
+            $grid->column('oid','录单ID')->sortable();
 
 //            $grid->column('goods_id');
             $grid->column('order_no');//订单号
@@ -154,7 +154,7 @@ class LkMeiTuanOrderController extends AdminController
 
             //筛选
             $grid->filter(function (Grid\Filter $filter) {
-                $filter->equal('id');
+                $filter->equal('id','录单ID');
                 $filter->equal('user.id','消费UID');
 //                $filter->equal('goods_id');
 //                $filter->equal('shop_id');

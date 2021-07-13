@@ -26,6 +26,7 @@ class BusinessDataController extends AdminController
     {
         return Grid::make(new BusinessData(), function (Grid $grid) {
             $grid->model()->orderBy('id','desc');
+            $grid->model()->where('is_status',2);
             $grid->model()->with(['user','cate','province','city','district','business_apply']);
             $grid->column('id')->sortable();
             $grid->column('uid');

@@ -9,24 +9,94 @@ use App\Models\AssetsType;
 use App\Models\CityNode;
 use App\Models\IntegralLogs;
 use App\Models\Order;
-use App\Models\OrderMobileRecharge;
 use App\Models\RebateData;
 use App\Models\Setting;
 use App\Models\TradeOrder;
 use App\Models\User;
 use App\Services\AirOrderService;
-use App\Services\bmapi\MobileRechargeService;
 use App\Services\bmapi\UtilityBillRechargeService;
 use App\Services\bmapi\VideoCardService;
 use App\Services\ShowApi\VideoOrderService;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use App\Models\LkshopOrder;
 
 class OrderService
 {
-
+    
+    /**完成订单
+     *
+     * @param  string  $orderNo
+     *
+     * @return mixed
+     */
+    public function completeOrder1(string $orderNo)
+    {
+        $tradeOrderInfo = TradeOrder::where('status', 'succeeded')
+                                    ->where('order_no', $orderNo)
+                                    ->first();
+        $id = $tradeOrderInfo->oid;
+        DB::beginTransaction();
+        try {
+            $order = Order::lockForUpdate()
+                          ->find($id);
+            if ($order->status != Order::STATUS_DEFAULT) {
+                return false;
+            }
+            $order->status = Order::STATUS_SUCCEED;
+            $order->pay_status = 'succeeded';
+            //用户应返还几分比例
+            $userRebateScale = Setting::getManySetting('user_rebate_scale');
+            $businessRebateScale = Setting::getManySetting('business_rebate_scale');
+            $rebateScale = array_combine($businessRebateScale, $userRebateScale);
+            //通过，给用户加积分、更新LK
+            $customer = User::lockForUpdate()
+                            ->find($order->uid);
+            //按比例计算实际获得积分
+            $profit_ratio_offset = ($order->profit_ratio < 1) ? $order->profit_ratio * 100 : $order->profit_ratio;
+            $profit_ratio = bcdiv($rebateScale[ intval($profit_ratio_offset) ], 100, 4);
+            $customerIntegral = bcmul($order->price, $profit_ratio, 2);
+            $amountBeforeChange = $customer->integral;
+            $customer->integral = bcadd($customer->integral, $customerIntegral, 2);
+            $lkPer = Setting::getSetting('lk_per') ?? 300;
+            //更新LK
+            $customer->lk = bcdiv($customer->integral, $lkPer, 0);
+            $customer->save();
+            IntegralLogs::addLog(
+                $customer->id,
+                $customerIntegral,
+                IntegralLogs::TYPE_SPEND,
+                $amountBeforeChange,
+                1,
+                '消费者完成订单'
+            );
+            //给商家加积分，更新LK
+            $business = User::lockForUpdate()
+                            ->find($order->business_uid);
+            $amountBeforeChange = $business->business_integral;
+            $business->business_integral = bcadd($business->business_integral, $order->profit_price, 2);
+            $businessLkPer = Setting::getSetting('business_Lk_per') ?? 60;
+            //更新LK
+            $business->business_lk = bcdiv($business->business_integral, $businessLkPer, 0);
+            $business->save();
+            IntegralLogs::addLog(
+                $business->id,
+                $order->profit_price,
+                IntegralLogs::TYPE_SPEND,
+                $amountBeforeChange,
+                2,
+                '商家完成订单'
+            );
+            //返佣
+            $this->encourage($order, $customer, $business);
+            $order->save();
+            DB::commit();
+        } catch (Exception $exception) {
+            DB::rollBack();
+            var_dump($exception->getMessage());
+        }
+    }
+    
     /**完成订单
      *
      * @param  string  $orderNo
@@ -36,8 +106,8 @@ class OrderService
     public function completeOrder(string $orderNo)
     {
         $tradeOrderInfo = TradeOrder::where('status', 'succeeded')
-            ->where('order_no', $orderNo)
-            ->first();
+                                    ->where('order_no', $orderNo)
+                                    ->first();
 //        $tradeOrderInfo = TradeOrder::where('order_no', $orderNo)->first();
 //        dd($tradeOrderInfo);
         $id = $tradeOrderInfo->oid;
@@ -46,7 +116,7 @@ class OrderService
         DB::beginTransaction();
         try {
             $order = Order::lockForUpdate()
-                ->find($id);
+                          ->find($id);
             if ($order->status != Order::STATUS_DEFAULT) {
                 return false;
             }
@@ -59,7 +129,7 @@ class OrderService
             $rebateScale = array_combine($businessRebateScale, $userRebateScale);
             //判断控单是否开启
             $setValue = Setting::where('key', 'consumer_integral')
-                ->value('value');
+                               ->value('value');
             if ($setValue == 1) {
                 $order->line_up = 1;
                 $customer = User::find($order->uid);
@@ -70,7 +140,7 @@ class OrderService
             } else {
                 //通过，给用户加积分、更新LK
                 $customer = User::lockForUpdate()
-                    ->find($order->uid);
+                                ->find($order->uid);
                 //按比例计算实际获得积分
                 $profit_ratio_offset = ($order->profit_ratio < 1) ? $order->profit_ratio * 100 : $order->profit_ratio;
                 $profit_ratio = bcdiv($rebateScale[ intval($profit_ratio_offset) ], 100, 4);
@@ -112,7 +182,7 @@ class OrderService
             var_dump($exception->getMessage());
         }
     }
-
+    
     /**完成订单
      *
      * @param  string  $orderNo
@@ -123,8 +193,8 @@ class OrderService
     public function completeBmOrder(string $orderNo)
     {
         $airOrderInfo = Order::where('pay_status', 'await')
-            ->where('order_no', $orderNo)
-            ->first();
+                             ->where('order_no', $orderNo)
+                             ->first();
         $type = '';
         if (!$airOrderInfo) {
             throw new LogicException('订单信息不存在');
@@ -138,7 +208,7 @@ class OrderService
         DB::beginTransaction();
         try {
             $order = Order::lockForUpdate()
-                ->find($id);
+                          ->find($id);
             if ($order->status != Order::STATUS_DEFAULT) {
                 return false;
             }
@@ -151,7 +221,7 @@ class OrderService
             $rebateScale = array_combine($businessRebateScale, $userRebateScale);
             //判断控单是否开启
             $setValue = Setting::where('key', 'consumer_integral')
-                ->value('value');
+                               ->value('value');
             if ($setValue == 1) {
                 $order->line_up = 1;
                 $customer = User::find($order->uid);
@@ -162,7 +232,7 @@ class OrderService
             } else {
                 //通过，给用户加积分、更新LK
                 $customer = User::lockForUpdate()
-                    ->find($order->uid);
+                                ->find($order->uid);
                 //按比例计算实际获得积分
                 $profit_ratio_offset = ($order->profit_ratio < 1) ? $order->profit_ratio * 100 : $order->profit_ratio;
                 $profit_ratio = bcdiv($rebateScale[ intval($profit_ratio_offset) ], 100, 4);
@@ -203,7 +273,7 @@ class OrderService
             DB::rollBack();
         }
     }
-
+    
     /**返佣
      *
      * @param $order
@@ -216,7 +286,7 @@ class OrderService
     {
         //获取资产类型
         $assets = AssetsType::where("assets_name", AssetsType::DEFAULT_ASSETS_ENCOURAGE)
-            ->first();
+                            ->first();
         //公益捐赠
         $welfareUid = Setting::getSetting('welfare_uid');
         $welfareAmount = 0;
@@ -251,8 +321,8 @@ class OrderService
         }
         //分享佣金
         $invite = User::where('status', User::STATUS_NORMAL)
-            ->whereId($user->invite_uid)
-            ->first();
+                      ->whereId($user->invite_uid)
+                      ->first();
         if (!$invite) {
             $uid = $platformUid;
             $remark = '下级消费返佣（上级账号被封禁或不存在）';
@@ -278,11 +348,11 @@ class OrderService
             //判断商家是否在市节点
             $cityNode =
                 CityNode::where('status', 1)
-                    ->where('province', $order->business->province)
-                    ->whereNotNull('uid')
-                    ->where('city', $order->business->city)
-                    ->whereNull('district')
-                    ->first();
+                        ->where('province', $order->business->province)
+                        ->whereNotNull('uid')
+                        ->where('city', $order->business->city)
+                        ->whereNull('district')
+                        ->first();
             if (!$cityNode) {
                 $uid = $platformUid;
                 $remark = '市级节点暂无，分配到来客平台';
@@ -309,11 +379,11 @@ class OrderService
             //判断商家是否在区节点
             $districtNode =
                 CityNode::where('status', 1)
-                    ->where('province', $order->business->province)
-                    ->whereNotNull('uid')
-                    ->where('city', $order->business->city)
-                    ->where('district', $order->business->district)
-                    ->first();
+                        ->where('province', $order->business->province)
+                        ->whereNotNull('uid')
+                        ->where('city', $order->business->city)
+                        ->where('district', $order->business->district)
+                        ->first();
             if (!$districtNode) {
                 $uid = $platformUid;
                 $remark = '区级节点暂无，分配到来客平台';
@@ -348,7 +418,7 @@ class OrderService
             $headAmount = bcmul($order->profit_price, bcdiv($leaderShare, 100, 6), 8);
         }
         $memberHead = User::whereId($business->invite_uid)
-            ->first();
+                          ->first();
         //普通用户邀请商家返佣
         $userBRebate = Setting::getSetting('user_b_rebate') ?? 0;
         $ordinaryAmount = 0;
@@ -456,7 +526,7 @@ class OrderService
             );
         $this->updateRebateData($welfareAmount, $shareAmount, $market, $platformAmount, $order->price, $user);
     }
-
+    
     /**找盟主
      *
      * @param       $invite_uid
@@ -475,7 +545,7 @@ class OrderService
             return false;
         }
         $user = User::whereId($invite_uid)
-            ->first();
+                    ->first();
         //如果是盟主,奖励0.3直接给与他
         if ($user && $user->member_head == 2 && $user->status == User::STATUS_NORMAL) {
             if ($amount > 0) {
@@ -489,7 +559,7 @@ class OrderService
             return false;
         }
     }
-
+    
     /**更新返佣统计
      *
      * @param $welfare
@@ -507,13 +577,13 @@ class OrderService
         $rebateData->market = bcadd($rebateData->market, $market, 2);
         $rebateData->platform = bcadd($rebateData->platform, $platform, 2);
         $rebateData->people = Order::where("status", Order::STATUS_SUCCEED)
-                ->distinct("uid")
-                ->whereBetween('created_at', [now()->startOfDay(), now()->endOfDay()])
-                ->count() + 1;
+                                   ->distinct("uid")
+                                   ->whereBetween('created_at', [now()->startOfDay(), now()->endOfDay()])
+                                   ->count() + 1;
         $rebateData->total_consumption = bcadd($price, $rebateData->total_consumption, 8);
         $rebateData->save();
     }
-
+    
     //邀请补贴和邀请人积分添加
     //商户uid,实际让利比例，订单分类 HF YK MT,消费者uid
     public function addInvitePoints($order_business_uid, $order_profit_price, $description, $uid, $orderNo)
@@ -524,7 +594,6 @@ class OrderService
             'YK' => 'Invite_points_yk',
             'MT' => 'Invite_points_mt',
             'ZL' => 'Invite_points_zl',
-            'MZL' => 'Invite_points_mzl',
             'VC' => 'Invite_points_vc',
         ];
         $activityState = 0;
@@ -532,12 +601,12 @@ class OrderService
             $key = $InvitePointsArr[ $description ];
             //判断活动是否开启
             $setValue = Setting::where('key', $key)
-                ->value('value');
+                               ->value('value');
             if ($setValue != 0 && strstr($setValue, '|') != false) {
                 $dateArr = explode('|', $setValue);
                 if (strtotime($dateArr[ 0 ]) < time() && time() < strtotime($dateArr[ 1 ])) {
                     $invite_uid = User::where('id', $uid)
-                        ->value('invite_uid');//邀请人uid
+                                      ->value('invite_uid');//邀请人uid
                     $activityState = 1;
                 } else {
                     $invite_uid = $order_business_uid;
@@ -553,7 +622,7 @@ class OrderService
         }
         //给商家加积分，更新LK
         $business = User::lockForUpdate()
-            ->find($invite_uid);
+                        ->find($invite_uid);
         $amountBeforeChange = $business->business_integral;
         $business->business_integral = bcadd($business->business_integral, $order_profit_price, 2);
         $businessLkPer = Setting::getSetting('business_Lk_per') ?? 60;
@@ -573,7 +642,7 @@ class OrderService
             $description
         );
     }
-
+    
     /**
      * Description:
      *
@@ -592,7 +661,7 @@ class OrderService
         DB::beginTransaction();
         try {
             $order = Order::lockForUpdate()
-                ->find($id);
+                          ->find($id);
             if ($order->status != Order::STATUS_DEFAULT) {
                 return false;
             }
@@ -605,7 +674,7 @@ class OrderService
             $rebateScale = array_combine($businessRebateScale, $userRebateScale);
             //判断控单是否开启
             $setValue = Setting::where('key', 'consumer_integral')
-                ->value('value');
+                               ->value('value');
             if ($setValue == 1) {
                 $order->line_up = 1;
                 $customer = User::find($order->uid);
@@ -616,7 +685,7 @@ class OrderService
             } else {
                 //通过，给用户加积分、更新LK
                 $customer = User::lockForUpdate()
-                    ->find($order->uid);
+                                ->find($order->uid);
                 //按比例计算实际获得积分
                 $profit_ratio_offset = ($order->profit_ratio < 1) ? $order->profit_ratio * 100 : $order->profit_ratio;
                 $profit_ratio = bcdiv($rebateScale[ intval($profit_ratio_offset) ], 100, 4);
@@ -657,7 +726,7 @@ class OrderService
             DB::rollBack();
         }
     }
-
+    
     /**
      * Description:
      * TODO:判断订单类型
@@ -683,18 +752,6 @@ class OrderService
             if (!empty($Order->trade)) { /* 兼容trade_order */
                 $description = $Order->trade->description;
             }
-            if (!empty($Order->mobile)) {
-                switch ($Order->mobile->create_type) {
-                    case OrderMobileRecharge::CREATE_TYPE_ZL:
-                        $description = 'ZL';
-                        break;
-                    case OrderMobileRecharge::CREATE_TYPE_MZL:
-                        $description = 'MZL';
-                        break;
-                    default:;
-//                        $description = 'HF';
-                }
-            }
             if (!empty($Order->video)) { /* 视频会员订单 */
                 $description = 'VC';
             }
@@ -703,9 +760,6 @@ class OrderService
             }
             if (!empty($Order->utility)) { /* 生活缴费 */
                 $description = 'UB';
-            }
-            if (!empty($Order->lkshopOrder)) { /* 生活缴费 */
-                $description = 'SHOP';
             }
             /* 判断 是否已经获取到对应类型的订单*/
             if (empty($description)) {
@@ -716,7 +770,7 @@ class OrderService
         }
         return $description;
     }
-
+    
     /**
      * Description:更新对应子订单
      *
@@ -744,8 +798,6 @@ class OrderService
                     $orderInfo->video->status = 0;
                     $orderInfo->video->updated_at = $data[ 'pay_time' ];
                     $orderInfo->video->save();
-                    $VideoOrderService = new VideoOrderService();
-                    $VideoOrderService->updateRechargeLogs($data, $description);
                     break;
                 case 'AT': /* 机票订单处理 */
                     $orderInfo->air->money = $data[ 'amount' ];
@@ -759,13 +811,6 @@ class OrderService
                     $orderInfo->utility->updated_at = $data[ 'pay_time' ];
                     $orderInfo->utility->save();
                     break;
-                case 'ZL':
-                case 'MZL':
-                    $orderInfo->mobile->money = $data[ 'amount' ];
-                    $orderInfo->mobile->status = 0;
-                    $orderInfo->mobile->updated_at = $data[ 'pay_time' ];
-                    $orderInfo->mobile->save();
-                    break;
                 default:
                     throw new Exception('订单类型未知');
             }
@@ -773,7 +818,7 @@ class OrderService
             throw $e;
         }
     }
-
+    
     /**
      * Description:支付前更新子订单
      *
@@ -802,17 +847,6 @@ class OrderService
                     $Order->utility->order_no = $order_no;
                     $Order->utility->save();
                     break;
-                case 'HF':
-                case 'ZL':
-                case 'MZL':
-                    if ($description == 'HF' || $description == 'ZL') {
-                        $Order->trade->order_no = $order_no;
-                        $Order->trade->save();
-                    }
-                    // 批量充值订单更新
-                    $Order->mobile->order_no = $order_no;
-                    $Order->mobile->save();
-                    break;
                 default:
                     throw new Exception('子订单类型未知');
             }
@@ -820,7 +854,7 @@ class OrderService
             throw $e;
         }
     }
-
+    
     /**
      * Description:完成订单后的后续操作[充值等]
      *
@@ -861,18 +895,6 @@ class OrderService
                     break;
                 case 'AT': /* 机票充值 */
                     (new AirOrderService())->airOrder($order_id);
-                    break;
-                case 'HF':
-                case 'ZL':
-                case 'MZL':
-                    /* 手机充值订单*/
-                    $MobileService = new MobileRechargeService();
-                    if ($description == 'HF' || $description == 'ZL') {
-                        $MobileService->recharge($order_id, $Order->order_no);
-                    } else {
-                        /* TODO:多账号代充 */
-                        $MobileService->manyRecharge($order_id, $Order);
-                    }
                     break;
                 default:/* 订单无需处理 */
                     ;

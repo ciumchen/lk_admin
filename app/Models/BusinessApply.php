@@ -48,5 +48,5 @@ class BusinessApply extends Model
 {
 	use HasDateTimeFormatter;
     protected $table = 'business_apply';
-    
+
 }

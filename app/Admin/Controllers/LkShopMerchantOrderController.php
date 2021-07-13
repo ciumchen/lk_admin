@@ -25,7 +25,7 @@ class LkShopMerchantOrderController extends AdminController
             $grid->model()->with(['order','user']);
             $grid->model()->orderBy('id','desc');
 
-            $grid->column('order.id')->sortable();
+            $grid->column('oid','录单ID')->sortable();
             $grid->column('uid');
             $grid->column('business_uid');
             $grid->column('user.phone','消费者手机号');
@@ -104,7 +104,7 @@ class LkShopMerchantOrderController extends AdminController
 
             //筛选
             $grid->filter(function (Grid\Filter $filter) {
-                $filter->equal('order.id');
+                $filter->equal('order.id','录单ID');
                 $filter->equal('uid','消费UID');
                 $filter->equal('business_uid','商户UID');
                 $filter->equal('user.phone','消费者手机号');

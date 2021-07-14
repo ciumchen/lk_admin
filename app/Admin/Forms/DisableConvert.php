@@ -45,7 +45,7 @@ class DisableConvert extends Form implements LazyRenderable
      */
     public function form()
     {
-        $this->display('id', 'ID')->default($this->payload['id']);
+        $this->display('oid', '订单ID')->default($this->payload['oid']);
         $this->display('phone', '用户')->default($this->payload['phone']);
         $this->display('user_name', '姓名')->default($this->payload['user_name']);
         $this->display('price', '充值金额')->default($this->payload['price']);

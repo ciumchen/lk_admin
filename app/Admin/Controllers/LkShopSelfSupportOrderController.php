@@ -57,7 +57,7 @@ class LkShopSelfSupportOrderController extends AdminController
             $grid->disableBatchDelete();
             $grid->disableActions();
             $titles = [
-                'order.id' => 'ID',
+                'oid' => '录单ID',
                 'uid' => '消费者ID',
                 'business_uid' => '商户ID',
                 'user.phone' => '消费者手机号',
@@ -74,7 +74,7 @@ class LkShopSelfSupportOrderController extends AdminController
                 foreach ($rows as $index => &$row) {
                     // 这里假设role就是关联数据
                     $row['user.phone'] = $row['user']['phone'];
-                    $row['order.id'] = $row['order']['id'];
+//                    $row['order.id'] = $row['order']['id'];
                     $row['order.pay_status'] = $row['order']['pay_status'];
                     if($row['status']==1){
                         $row['status']="审核中";
@@ -103,7 +103,7 @@ class LkShopSelfSupportOrderController extends AdminController
 
             //筛选
             $grid->filter(function (Grid\Filter $filter) {
-                $filter->equal('order.id','录单ID');
+                $filter->equal('oid','录单ID');
                 $filter->equal('uid','消费UID');
                 $filter->equal('business_uid','商户UID');
                 $filter->equal('user.phone','消费者手机号');

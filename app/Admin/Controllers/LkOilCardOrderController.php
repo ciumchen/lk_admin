@@ -89,7 +89,7 @@ class LkOilCardOrderController extends AdminController
             $grid->disableBatchDelete();
 
             $titles = [
-                'id' => 'ID',
+                'oid' => '录单ID',
 //                'goods_id' => '商品ID',
                 'order_no' => '订单号',
 //                'goods_bn' => '明细商品的编码',
@@ -152,7 +152,7 @@ class LkOilCardOrderController extends AdminController
 
             //筛选
             $grid->filter(function (Grid\Filter $filter) {
-                $filter->equal('id','录单ID');
+                $filter->equal('oid','录单ID');
                 $filter->equal('user.id','消费UID');
 //                $filter->equal('goods_id');
 //                $filter->equal('shop_id');

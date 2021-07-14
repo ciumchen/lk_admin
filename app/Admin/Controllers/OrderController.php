@@ -85,7 +85,7 @@ class OrderController extends AdminController
                 }
             });
             $titles = [
-                'id'                          => 'ID',
+                'id'                          => '录单ID',
                 'uid'                         => '消费者UID',
                 'business_uid'                => '	商家UID',
                 'select_trade_order.order_no' => '订单号',

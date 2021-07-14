@@ -14,7 +14,7 @@ class VideoOrderController extends AdminController
 {
 
     public $columns_name = [
-        'order_id'             => 'ID',
+        'order_id'             => '录单ID',
         'user_id'              => '消费者ID',
         'order_no'             => '订单号',
         'name'                 => '消费商品',

@@ -55,6 +55,7 @@ class ReviewBusinessApply extends Form implements LazyRenderable
 //                    $this->createBusiness($businessApply);
                     $businessDataInfo = (new BusinessData())->where('business_apply_id',$id)->first();
                     if ($businessDataInfo){
+                        $businessDataInfo->status = 1;
                         $businessDataInfo->is_status = 2;
                         $businessDataInfo->save();
                     }

@@ -66,7 +66,7 @@ class EncourageService
                 $uid = $invite->id;
             }
             $shareScale = Setting::getSetting('share_scale_p1');
-            $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 2);
+            $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 3);
             AssetsService::BalancesChange2(
                 $uid,
                 $assets->id,
@@ -112,7 +112,7 @@ class EncourageService
                 $uid = $invite->id;
             }
             $shareScale = Setting::getSetting('share_scale_p2');
-            $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 2);
+            $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 3);
             AssetsService::BalancesChange2(
                 $uid,
                 $assets->id,
@@ -158,7 +158,7 @@ class EncourageService
                 $uid = $invite->id;
             }
             $shareScale = Setting::getSetting('share_scale_p3');
-            $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 2);
+            $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 3);
             AssetsService::BalancesChange2(
                 $uid,
                 $assets->id,

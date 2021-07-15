@@ -16,6 +16,7 @@ class DisableConvert extends RowAction
 
         // 实例化表单类并传递自定义参数
         $form = \App\Admin\Forms\DisableConvert::make()->payload([
+            'id' => $this->getKey(),
             'oid' => $this->row->oid,
             'phone' => $this->row->phone,
             'user_name' => $this->row->user_name,

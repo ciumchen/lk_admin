@@ -211,7 +211,7 @@ class OrderService
      *
      * @throws \App\Exceptions\LogicException
      */
-    private function encourage($order, $user, $business, $orderNo)
+    public function encourage($order, $user, $business, $orderNo)
     {
         //获取资产类型
         $assets = AssetsType::where("assets_name", AssetsType::DEFAULT_ASSETS_ENCOURAGE)

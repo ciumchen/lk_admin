@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Admin\Forms\VerifyOrder;
 use App\Exceptions\LogicException;
 use App\Models\AirTradeLogs;
 use App\Models\AssetsLogs;
@@ -92,7 +93,7 @@ class ShopOrderService
             }
             $business = User::find($order->business_uid);
             //返佣
-            (new OrderService())->encourage($order, $customer, $business, $orderNo);
+            (new VerifyOrder())->encourage($order, $customer, $business, $orderNo);
             $order->save();
             DB::commit();
         } catch (Exception $exception) {

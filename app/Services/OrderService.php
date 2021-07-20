@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Admin\Repositories\AssetsLog;
 use App\Exceptions\LogicException;
 use App\Models\AirTradeLogs;
 use App\Models\AssetsLogs;
@@ -208,28 +209,27 @@ class OrderService
      * @param $order
      * @param $user
      * @param $business
+     * @param $orderNo
      *
-     * @throws \App\Exceptions\LogicException
+     * @throws \Exception
      */
     public function encourage($order, $user, $business, $orderNo)
     {
         //获取资产类型
-        $assets = AssetsType::where("assets_name", AssetsType::DEFAULT_ASSETS_ENCOURAGE)
-                            ->first();
+        $assets = AssetsType::where("assets_name", AssetsType::DEFAULT_ASSETS_ENCOURAGE)->first();
         //公益捐赠
         $welfareUid = Setting::getSetting('welfare_uid');
         $welfareAmount = 0;
         if ($welfareUid) {
             $welfare = Setting::getSetting('welfare');
             $welfareAmount = bcmul($order->profit_price, bcdiv($welfare, 100, 6), 2);
-            AssetsService::BalancesChange(
-                $orderNo,
+            AssetsService::BalancesChange2(
                 $welfareUid,
-                $assets,
+                $assets->id,
                 $assets->assets_name,
                 $welfareAmount,
-                AssetsLogs::OPERATE_TYPE_CHARITY_REBATE,
-                "公益捐赠"
+                AssetsLog::OPERATE_TYPE_CHARITY_REBATE,
+                "公益捐赠", $orderNo
             );
         }
         //来客平台
@@ -238,14 +238,13 @@ class OrderService
         if ($platformUid) {
             $platform = Setting::getSetting('platform');
             $platformAmount = bcmul($order->profit_price, bcdiv($platform, 100, 6), 2);
-            AssetsService::BalancesChange(
-                $orderNo,
+            AssetsService::BalancesChange2(
                 $platformUid,
-                $assets,
+                $assets->id,
                 $assets->assets_name,
                 $platformAmount,
-                AssetsLogs::OPERATE_TYPE_PLATFORM_REBATE,
-                "来客平台维护费"
+                AssetsLog::OPERATE_TYPE_PLATFORM_REBATE,
+                "来客平台维护费", $orderNo
             );
         }
         //分享佣金
@@ -255,39 +254,38 @@ class OrderService
         // 分享佣金分成三级给予
         $EncourageService = new EncourageService();
         $EncourageService->inviteEncourage($order, $user, $assets, $orderNo, $platformUid);
-//        $invite = User::where('status', User::STATUS_NORMAL)
-//                      ->whereId($user->invite_uid)
-//                      ->first();
-//        if (!$invite) {
+//        $invite = User::where('status', \App\Admin\Repositories\User::STATUS_NORMAL)->whereId($user->invite_uid)->first();
+//
+//        if(!$invite){
 //            $uid = $platformUid;
 //            $remark = '下级消费返佣（上级账号被封禁或不存在）';
-//        } else {
+//        }else{
 //            $remark = '下级消费返佣';
 //            $uid = $invite->id;
 //        }
+//
 //        $shareScale = Setting::getSetting('share_scale');
 //        $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 2);
-//        AssetsService::BalancesChange(
-//            $orderNo,
+//
+//        AssetsService::BalancesChange2(
 //            $uid,
-//            $assets,
+//            $assets->id,
 //            $assets->assets_name,
 //            $shareAmount,
-//            AssetsLogs::OPERATE_TYPE_INVITE_REBATE,
-//            $remark
+//            AssetsLog::OPERATE_TYPE_INVITE_REBATE,
+//            $remark,$orderNo
 //        );
         //市节点返佣
         $cityNodeRebate = Setting::getSetting('city_node_rebate') ?? 0;
         $cityAmount = 0;
         if ($cityNodeRebate > 0) {
             //判断商家是否在市节点
-            $cityNode =
-                CityNode::where('status', 1)
-                        ->where('province', $order->business->province)
-                        ->whereNotNull('uid')
-                        ->where('city', $order->business->city)
-                        ->whereNull('district')
-                        ->first();
+            $cityNode = CityNode::where('status', 1)
+                                ->where('province', $order->businessData->province)
+                                ->whereNotNull('uid')
+                                ->where('city', $order->businessData->city)
+                                ->whereNull('district')
+                                ->first();
             if (!$cityNode) {
                 $uid = $platformUid;
                 $remark = '市级节点暂无，分配到来客平台';
@@ -297,14 +295,13 @@ class OrderService
             }
             //市长分配比列0.25%
             $cityAmount = bcmul($order->profit_price, bcdiv($cityNodeRebate, 100, 6), 8);
-            AssetsService::BalancesChange(
-                $orderNo,
+            AssetsService::BalancesChange2(
                 $uid,
-                $assets,
+                $assets->id,
                 $assets->assets_name,
                 $cityAmount,
-                AssetsLogs::OPERATE_TYPE_CITY_REBATE,
-                $remark
+                AssetsLog::OPERATE_TYPE_CITY_REBATE,
+                $remark, $orderNo
             );
         }
         //区节点返佣
@@ -312,13 +309,12 @@ class OrderService
         $districtAmount = 0;
         if ($districtNodeRebate > 0) {
             //判断商家是否在区节点
-            $districtNode =
-                CityNode::where('status', 1)
-                        ->where('province', $order->business->province)
-                        ->whereNotNull('uid')
-                        ->where('city', $order->business->city)
-                        ->where('district', $order->business->district)
-                        ->first();
+            $districtNode = CityNode::where('status', 1)
+                                    ->where('province', $order->businessData->province)
+                                    ->whereNotNull('uid')
+                                    ->where('city', $order->businessData->city)
+                                    ->where('district', $order->businessData->district)
+                                    ->first();
             if (!$districtNode) {
                 $uid = $platformUid;
                 $remark = '区级节点暂无，分配到来客平台';
@@ -328,14 +324,13 @@ class OrderService
             }
             //区长分配0.45%
             $districtAmount = bcmul($order->profit_price, bcdiv($districtNodeRebate, 100, 6), 8);
-            AssetsService::BalancesChange(
-                $orderNo,
+            AssetsService::BalancesChange2(
                 $uid,
-                $assets,
+                $assets->id,
                 $assets->assets_name,
                 $districtAmount,
-                AssetsLogs::OPERATE_TYPE_DISTRICT_REBATE,
-                $remark
+                AssetsLog::OPERATE_TYPE_DISTRICT_REBATE,
+                $remark, $orderNo
             );
         }
         //同级返佣
@@ -352,8 +347,7 @@ class OrderService
         if ($leaderShare > 0) {
             $headAmount = bcmul($order->profit_price, bcdiv($leaderShare, 100, 6), 8);
         }
-        $memberHead = User::whereId($business->invite_uid)
-                          ->first();
+        $memberHead = User::whereId($business->invite_uid)->first();
         //普通用户邀请商家返佣
         $userBRebate = Setting::getSetting('user_b_rebate') ?? 0;
         $ordinaryAmount = 0;
@@ -362,7 +356,7 @@ class OrderService
         }
         //同级奖励是否给平台
         $isSamePlat = false;
-        if ($memberHead->status != User::STATUS_NORMAL) {
+        if ($memberHead->status != \App\Admin\Repositories\User::STATUS_NORMAL) {
             $uid = $platformUid;
             $remark = '直推人账户被封禁，分配到平台账户';
             $inviteAmount = bcadd($headAmount, $ordinaryAmount, 8);
@@ -375,56 +369,26 @@ class OrderService
                 //直接拿0.7%奖励
                 $inviteAmount = bcadd($headAmount, $ordinaryAmount, 8);
                 //同级盟主奖励
-                $tes =
-                    $this->leaderRebate(
-                        $orderNo,
-                        $memberHead->invite_uid,
-                        $sameAmount,
-                        $assets,
-                        '同级别盟主奖励',
-                        AssetsLogs::OPERATE_TYPE_SHARE_B_REBATE,
-                        1
-                    );
+                $tes = $this->leaderRebate($orderNo, $memberHead->invite_uid, $sameAmount, $assets, '同级别盟主奖励',
+                                           AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, 1);
                 if ($tes == false) {
                     $isSamePlat = true;
                 }
             } else {
                 //往上找2级 是否盟主
-                $res =
-                    $this->leaderRebate(
-                        $orderNo,
-                        $memberHead->invite_uid,
-                        $headAmount,
-                        $assets,
-                        '邀请商家盟主分红',
-                        AssetsLogs::OPERATE_TYPE_SHARE_B_REBATE,
-                        2
-                    );
+                $res = $this->leaderRebate($orderNo, $memberHead->invite_uid, $headAmount, $assets, '邀请商家盟主分红',
+                                           AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, 2);
                 if ($res == false) {
                     if ($headAmount > 0) {
-                        AssetsService::BalancesChange(
-                            $orderNo,
-                            $platformUid,
-                            $assets,
-                            $assets->assets_name,
-                            $headAmount,
-                            AssetsLogs::OPERATE_TYPE_SHARE_B_REBATE,
-                            '没有盟主，分配到平台账户'
-                        );
+                        AssetsService::BalancesChange2($platformUid, $assets->id, $assets->assets_name, $headAmount,
+                                                       AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, '没有盟主，分配到平台账户',
+                                                       $orderNo);
                     }
                     $isSamePlat = true;
                 } else {
                     //同级盟主奖励
-                    $res =
-                        $this->leaderRebate(
-                            $orderNo,
-                            $res->invite_uid,
-                            $sameAmount,
-                            $assets,
-                            '同级别盟主奖励',
-                            AssetsLogs::OPERATE_TYPE_SHARE_B_REBATE,
-                            1
-                        );
+                    $res = $this->leaderRebate($orderNo, $res->invite_uid, $sameAmount, $assets, '同级别盟主奖励',
+                                               AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, 1);
                     if ($res == false) {
                         $isSamePlat = true;
                     }
@@ -432,33 +396,15 @@ class OrderService
             }
         }
         if ($sameAmount > 0 && $isSamePlat == true) {
-            AssetsService::BalancesChange(
-                $orderNo,
-                $platformUid,
-                $assets,
-                $assets->assets_name,
-                $sameAmount,
-                AssetsLogs::OPERATE_TYPE_SHARE_B_REBATE,
-                '没有同级盟主，分配到平台账户'
-            );
+            AssetsService::BalancesChange2($platformUid, $assets->id, $assets->assets_name, $sameAmount,
+                                           AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, '没有同级盟主，分配到平台账户', $orderNo);
         }
         if ($inviteAmount > 0) {
-            AssetsService::BalancesChange(
-                $orderNo,
-                $uid,
-                $assets,
-                $assets->assets_name,
-                $inviteAmount,
-                AssetsLogs::OPERATE_TYPE_SHARE_B_REBATE,
-                $remark
-            );
+            AssetsService::BalancesChange2($uid, $assets->id, $assets->assets_name, $inviteAmount,
+                                           AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, $remark, $orderNo);
         }
-        $market =
-            bcadd(
-                $districtAmount,
-                bcadd($cityAmount, bcadd(bcadd($sameAmount, $headAmount, 8), $ordinaryAmount, 8), 8),
-                8
-            );
+        $market = bcadd($districtAmount,
+                        bcadd($cityAmount, bcadd(bcadd($sameAmount, $headAmount, 8), $ordinaryAmount, 8), 8), 8);
         $this->updateRebateData($welfareAmount, $shareAmount, $market, $platformAmount, $order->price, $user);
     }
     

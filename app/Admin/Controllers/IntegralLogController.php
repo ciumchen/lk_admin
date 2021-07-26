@@ -49,6 +49,10 @@ class IntegralLogController extends AdminController
                     return '飞机票';
                 }elseif($v=='UB'){
                     return '生活缴费';
+                }elseif($v=='CLP'){
+                    return '兑换额度(话费)';
+                }elseif($v=='CLM'){
+                    return '兑换额度(美团)';
                 }else{
                     return "未知类型";
                 }

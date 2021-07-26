@@ -61,7 +61,6 @@ class addLkshopUser extends Command
         $userData = ShopUser::where('id','>',$addLog->user_id)->limit(10)->get();
         if($userData->first()!=''){
             $userArr = $userData->toArray();
-            $lkUserDataModel = new User();
             foreach ($userArr as $k=>$v){
                 if ($v['binding']==''){
                     $userNoPhoneModel = new ShopUserNoPhone();

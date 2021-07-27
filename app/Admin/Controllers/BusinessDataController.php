@@ -132,8 +132,10 @@ class BusinessDataController extends AdminController
             $form->column(4, function (Form $form) {
             $form->display('id');
             $form->display('uid');
+            $form->display('user_id_img.uid','uid');
+
             $form->display('name');
-            $form->display('state');
+//            $form->display('state');
 
             $form->image('business_apply.img','营业执照')->uniqueName()->retainable()->disableRemove()->accept('jpg,png,gif,jpeg', 'image/*')->disk('oss')->move('/business')->autoUpload();
                 $form->image('user_id_img.img_back','身份证反面')->uniqueName()->retainable()->disableRemove()->accept('jpg,png,gif,jpeg', 'image/*')->disk('oss')->move('/business')->autoUpload();
@@ -145,6 +147,8 @@ class BusinessDataController extends AdminController
                 $form->display('is_recommend');
                 $form->display('contact_number');
                 $form->display('address');
+                $form->display('business_apply_id','申请id');
+
 
                 $form->image('business_apply.img2','商家门头照')->uniqueName()->retainable()->disableRemove()->accept('jpg,png,gif,jpeg', 'image/*')->disk('oss')->move('/business')->autoUpload();
                 $form->image('business_apply.img_details1','商家详情照1')->uniqueName()->retainable()->disableRemove()->accept('jpg,png,gif,jpeg', 'image/*')->disk('oss')->move('/business')->autoUpload();
@@ -155,6 +159,7 @@ class BusinessDataController extends AdminController
                 $form->display('run_time');
                 $form->display('name');
                 $form->display('sort');
+                $form->display('user_id_img.business_apply_id','申请id');
 
                 $form->image('user_id_img.img_just','身份证正面')->uniqueName()->retainable()->disableRemove()->accept('jpg,png,gif,jpeg', 'image/*')->disk('oss')->move('/business')->autoUpload();
 

@@ -57,7 +57,7 @@ class addLkshopOrder extends Command
      */
     public function handle()
     {
-        log::info('=================导入商户订单开始===================================');
+//        log::info('=================导入商户订单开始===================================');
 
         //查询记录
         $OrderLogModel = new LkshopOrderLog();
@@ -78,7 +78,7 @@ class addLkshopOrder extends Command
         $orderId = $OrderLogModel::where('type', 'mch_order')->value('order_id');
         $shopOrderData = ShopOrder::where('confirm_time', '>', $orderId)->where('is_confirm', 1)->orderBy('confirm_time', "asc")->first();
 
-        log::info('=================导入商户订单开始==================================='.$orderId);
+//        log::info('=================导入商户订单开始==================================='.$orderId);
         if ($shopOrderData != '') {
             $orderArr = $shopOrderData->toArray();
 
@@ -91,7 +91,7 @@ class addLkshopOrder extends Command
                 $LogData1688->order_id = $orderArr['confirm_time'];
                 $LogData1688->save();
                 var_dump('该订单已导入1');
-                log::info('=================该订单已导入1===================================');
+//                log::info('=================该订单已导入1===================================');
                 return false;
             }
 
@@ -102,7 +102,7 @@ class addLkshopOrder extends Command
                 $LogData1688->order_id = $orderArr['confirm_time'];
                 $LogData1688->save();
                 var_dump('该订单已导入2');
-                log::info('=================该订单已导入2===================================');
+//                log::info('=================该订单已导入2===================================');
                 return false;
             } else {
                 //查询订单数量
@@ -111,7 +111,7 @@ class addLkshopOrder extends Command
                     $shopOrderDataArr = ShopOrder::where('confirm_time',$orderArr['confirm_time'])->where('is_confirm', 1)->orderBy('confirm_time', "asc")->get()->toArray();
 //                    dd($shopOrderDataArr);
                     foreach($shopOrderDataArr as $k=>$v){
-                        log::info('=================商城订单号==================================='.$v['order_no']);
+//                        log::info('=================商城订单号==================================='.$v['order_no']);
                         $lkUserId = (new AddLkshopOrderService())->getLkUserId($v['user_id']);//lk用户uid
 //                        dd($v);
                         $goods_id = ShopOrderDetail::where('order_id',$v['id'])->value('goods_id');
@@ -133,7 +133,7 @@ class addLkshopOrder extends Command
                             $LogData1688->order_id = $v['confirm_time'];
                             $LogData1688->save();
                             var_dump('非商户订单和自营订单');
-                            log::info('=================非商户订单和自营订单===================================');
+//                            log::info('=================非商户订单和自营订单===================================');
                             return false;
                         }
 
@@ -185,18 +185,18 @@ dump($lkBusinessUid,$lkBusinessUid);
                             $LogData1688->order_id = $v['confirm_time'];
                             $LogData1688->save();
                             var_dump('导入订单成功');
-                            log::info('=================导入订单成功===================================');
+//                            log::info('=================导入订单成功===================================');
                             DB::commit();
                         } catch (Exception $exception) {
                             DB::rollBack();
-                            log::info('=================导入订单失败===================================');
+//                            log::info('=================导入订单失败===================================');
                             var_dump($exception->getMessage());
                         }
                     }
 
             }
         } else {
-            log::info('=================所有订单导入完成===================================');
+//            log::info('=================所有订单导入完成===================================');
             var_dump( "所有订单导入完成");
             return false;
         }

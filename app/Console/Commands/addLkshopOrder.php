@@ -111,6 +111,12 @@ class addLkshopOrder extends Command
 //                    dd($shopOrderDataArr);
                     foreach($shopOrderDataArr as $k=>$v){
 
+                        //**********************************
+                        if ($v['confirm_time']==1627299220){
+                            log::info('==打印订单记录===============1627299220===============a11====================');
+                        }
+                        //**********************************
+
                         $lkUserId = (new AddLkshopOrderService())->getLkUserId($v['user_id']);//lk用户uid
 //                        dd($v);
                         $goods_id = ShopOrderDetail::where('order_id',$v['id'])->value('goods_id');
@@ -135,7 +141,11 @@ class addLkshopOrder extends Command
 //                            log::info('=================非商户订单和自营订单===================================');
                             return false;
                         }
-
+//**********************************
+                        if ($v['confirm_time']==1627299220){
+                            log::info('==打印订单记录===============1627299220===============a222====================');
+                        }
+                        //**********************************
 //dd($lkBusinessUid,$lkBusinessUid);
 dump($lkBusinessUid,$lkBusinessUid);
                         DB::beginTransaction();
@@ -191,7 +201,20 @@ dump($lkBusinessUid,$lkBusinessUid);
 //                            log::info('=================导入订单失败===================================');
                             var_dump($exception->getMessage());
                         }
+
+                        //**********************************
+                        if ($v['confirm_time']==1627299220){
+                            log::info('==打印订单记录===============1627299220===============foreach====================');
+                        }
+                        //**********************************
+
                     }
+
+                //**********************************
+                if ($v['confirm_time']==1627299220){
+                    log::info('==打印订单记录===============1627299220===============bbbb====================');
+                }
+                //**********************************
 
             }
         } else {

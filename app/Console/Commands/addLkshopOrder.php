@@ -5,8 +5,10 @@ namespace App\Console\Commands;
 use App\Models\LkshopOrder;
 use App\Models\LkshopOrderLog;
 use App\Models\Order;
+use App\Models\ShopGoods;
 use App\Models\ShopMch;
 use App\Models\ShopOrder;
+use App\Models\ShopOrderDetail;
 use App\Models\Users;
 use App\Services\ShopOrderService;
 use Illuminate\Console\Command;
@@ -111,12 +113,15 @@ class addLkshopOrder extends Command
 
                         $lkUserId = (new AddLkshopOrderService())->getLkUserId($v['user_id']);//lk用户uid
 //                        dd($v);
+                        $goods_id = ShopOrderDetail::where('order_id',$v['id'])->value('goods_id');
+                        $osg_id = ShopGoods::where('id',$goods_id)->value('osg_id');
+
                         if ($v['mch_id'] != 0){
                             $orderType = 'mch_order';
                             $orderName = '商户订单';
 
                             $lkBusinessUid = (new AddLkshopOrderService())->getLkBusinessUid($v['mch_id']);//lk商户uid
-                        }elseif ($v['ali_order_no'] != ''){
+                        }elseif ($v['ali_order_no'] != '' || $osg_id != 0){
                             $orderType = '1688_order';
                             $lkBusinessUid = 2;//lk商户uid
                             $orderName = '自营订单';

@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Models\ShopGoods;
+use App\Models\ShopOrderDetail;
 use Illuminate\Console\Command;
 use App\Models\LkshopOrder;
 use App\Models\LkshopOrderLog;
@@ -56,7 +58,7 @@ class addLkshopOrderOne extends Command
     public function handle()
     {
 
-        $order_no = '20210619194322443811';
+        $order_no = '20210723103238242771';
         echo '关闭1';
         return false;
         exit;
@@ -72,12 +74,17 @@ class addLkshopOrderOne extends Command
 
             $lkUserId = (new AddLkshopOrderService())->getLkUserId($shopOrderDataArr['user_id']);//lk用户uid
 
+            //*************************************************
+            $goods_id = ShopOrderDetail::where('order_id',$shopOrderDataArr['id'])->value('goods_id');
+            $goodsInfo = ShopGoods::where('id',$goods_id)->first();
+            //*************************************************
+
             if ($shopOrderDataArr['mch_id'] != 0){
                 $orderType = 'mch_order';
                 $orderName = '商户订单';
 
                 $lkBusinessUid = (new AddLkshopOrderService())->getLkBusinessUid($shopOrderDataArr['mch_id']);//lk商户uid
-            }elseif ($shopOrderDataArr['ali_order_no'] != ''){
+            }elseif ($shopOrderDataArr['ali_order_no'] != '' || $goodsInfo->osg_id!=0){
                 $orderType = '1688_order';
                 $lkBusinessUid = 2;//lk商户uid
                 $orderName = '自营订单';

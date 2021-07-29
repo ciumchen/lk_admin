@@ -27,7 +27,7 @@ class MobileAgentController extends AdminController
             $grid->column('order_no');
             $grid->column('money');
             $grid->column('orders.profit_ratio', '商家让利')->display(function () {
-                return $this->orders[ 'profit_ratio' ].'%';
+                return ($this->orders[ 'profit_ratio' ] ?? '').'%';
             });
             $grid->column('uid');
             $grid->column('mobile');

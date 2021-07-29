@@ -29,6 +29,8 @@ Route::group(
         $router->resource('ykdd', 'LkOilCardOrderController');
         $router->resource('mtdd', 'LkMeiTuanOrderController');
         $router->resource('hfdc', 'LkPhoneDcController');
+        // 话费代充[新]
+        $router->resource('mobile-agent', 'MobileAgentController');
         $router->resource('lkscsh', 'LkShopMerchantOrderController');
         $router->resource('lksczy', 'LkShopSelfSupportOrderController');
         $router->resource('sphy', 'VideoOrderController'); //视频会员订单

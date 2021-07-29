@@ -52,7 +52,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|OrderMobileRecharge whereNum($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\OrderMobileRechargeDetails[] $details
  * @property-read int|null                                                                          $details_count
- * @property-read \App\Models\Order $orders
+ * @property-read \App\Models\Order                                                                 $orders
  */
 class OrderMobileRecharge extends AdminBaseModel
 {
@@ -63,6 +63,12 @@ class OrderMobileRecharge extends AdminBaseModel
     const CREATE_TYPE_ZL       = 2;
     
     const CREATE_TYPE_MZL      = 3;
+    
+    const STATUS_DEFAULT       = 0;
+    
+    const STATUS_SUCCESS       = 1;
+    
+    const STATUS_CANCEL        = 9;
     
     /**
      * @var string 表名
@@ -76,15 +82,31 @@ class OrderMobileRecharge extends AdminBaseModel
         self::CREATE_TYPE_ZL       => '代充',
         self::CREATE_TYPE_MZL      => '批量代充',
     ];
+    /**
+     * @var string[] 充值状态对应文字
+     */
+    public static $statusText = [
+        self::STATUS_DEFAULT => '充值中',
+        self::STATUS_SUCCESS => '成功',
+        self::STATUS_CANCEL  => '撤销',
+    ];
+    /**
+     * @var string[]
+     */
+    public static $statusLabelStyle = [
+        self::STATUS_DEFAULT => 'primary',
+        self::STATUS_SUCCESS => 'success',
+        self::STATUS_CANCEL  => 'dark',
+    ];
     
     /**
      * Description:
      *
-     * @param  int     $order_id  order表ID
-     * @param  string  $order_no  订单号
-     * @param  int     $uid       用户ID
-     * @param  string  $mobile    手机号
-     * @param  string  $money     充值金额
+     * @param int    $order_id order表ID
+     * @param string $order_no 订单号
+     * @param int    $uid      用户ID
+     * @param string $mobile   手机号
+     * @param string $money    充值金额
      *
      * @return $this
      * @throws \Exception
@@ -109,11 +131,11 @@ class OrderMobileRecharge extends AdminBaseModel
     /**
      * Description:创建话费订单
      *
-     * @param  int     $order_id  order表ID
-     * @param  string  $order_no  订单号
-     * @param  int     $uid       用户ID
-     * @param  string  $mobile    手机号
-     * @param  string  $money     充值金额
+     * @param int    $order_id order表ID
+     * @param string $order_no 订单号
+     * @param int    $uid      用户ID
+     * @param string $mobile   手机号
+     * @param string $money    充值金额
      *
      * @return $this
      * @throws \Exception
@@ -134,11 +156,11 @@ class OrderMobileRecharge extends AdminBaseModel
     /**
      * 创建代充订单
      *
-     * @param  int     $order_id  order表ID
-     * @param  string  $order_no  订单号
-     * @param  int     $uid       用户ID
-     * @param  string  $mobile    手机号
-     * @param  string  $money     充值金额
+     * @param int    $order_id order表ID
+     * @param string $order_no 订单号
+     * @param int    $uid      用户ID
+     * @param string $mobile   手机号
+     * @param string $money    充值金额
      *
      * @return \App\Models\OrderMobileRecharge
      * @throws \Exception
@@ -157,11 +179,11 @@ class OrderMobileRecharge extends AdminBaseModel
     /**
      * Description:
      *
-     * @param  int     $order_id  order表ID
-     * @param  string  $order_no  订单号
-     * @param  int     $uid       用户ID
-     * @param  string  $mobile    手机号
-     * @param  string  $money     充值金额
+     * @param int    $order_id order表ID
+     * @param string $order_no 订单号
+     * @param int    $uid      用户ID
+     * @param string $mobile   手机号
+     * @param string $money    充值金额
      *
      * @return $this
      * @throws \Exception

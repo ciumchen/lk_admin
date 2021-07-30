@@ -29,19 +29,19 @@ class LkOilCardOrderController extends AdminController
 //            $grid->column('goods_id');
             $grid->column('order_no');//订单号
 //            $grid->column('goods_bn');
-            $grid->column('title');
+//            $grid->column('title');
             $grid->column('price');
 //            $grid->column('num');
 //            $grid->column('shop_id');//所属商家
             $grid->column('profit_ratio')->display(function () {
                 return ($this->profit_ratio*100).'%';
             });//让利比例
-            $grid->column('integral');//获得积分
+//            $grid->column('integral');//获得积分
 
             $grid->column('user.id','消费者UID');//买家uid
 //            $grid->column('user.username','买家用户名');//买家用户名
             $grid->column('numeric','油卡号');//油卡号
-            $grid->column('telecom','运营商');//运营商
+//            $grid->column('telecom','运营商');//运营商
 
             $grid->column('status')->using(['await' => '待支付', 'pending' => '支付处理中','succeeded'=>'支付成功','failed'=>'支付失败','ddyc'=>"订单异常"])->label([
                 'await' => 'primary',

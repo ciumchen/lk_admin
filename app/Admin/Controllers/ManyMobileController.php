@@ -15,12 +15,12 @@ use Illuminate\Database\Eloquent\Model;
 class ManyMobileController extends AdminController
 {
     protected $model;
-
+    
     public function __construct()
     {
         $this->model = new OrderMobileRecharge();
     }
-
+    
     //
     public function grid()
     : Grid
@@ -28,7 +28,7 @@ class ManyMobileController extends AdminController
         return Grid::make($this->model->where('create_type', '=', '3')->with(['orders', 'details']),
             function (Grid $grid) {
                 $grid->model()->orderByDesc('order_id');
-                $grid->column('order_id','录单ID')->sortable();
+                $grid->column('order_id', '录单ID')->sortable();
                 $grid->column('uid');
                 $grid->column('order_no');
                 $grid->column('money');
@@ -36,7 +36,7 @@ class ManyMobileController extends AdminController
                     return $this->orders[ 'name' ] ?? '';
                 });
                 $grid->column('profit_ratio')->display(function () {
-                    return $this->orders[ 'profit_ratio' ] ?? '';
+                    return ($this->orders[ 'profit_ratio' ] ?? '').'%';
                 });
                 $grid->column('to_be_added_integral')->display(function () {
                     return $this->orders[ 'to_be_added_integral' ] ?? '';
@@ -58,21 +58,21 @@ class ManyMobileController extends AdminController
                 $grid->disableEditButton();              // 禁用删除按钮
                 $grid->disableDeleteButton();
                 $grid->filter(function (Grid\Filter $filter) {
-                    $filter->equal('order_id','录单ID');
+                    $filter->equal('order_id', '录单ID');
                     $filter->equal('uid', '消费者ID');
                     $filter->equal('details.mobile', '手机号');
                     $filter->equal('orders.pay_status', '支付状态');
                 });
             });
     }
-
+    
     public function form()
     : Form
     {
         return Form::make($this->model, function (Form $form) {
         });
     }
-
+    
     public function detail($id)
     : Grid {
         $Model = (new OrderMobileRechargeDetails())->with(['pMobile'])->where('order_mobile_id', '=', $id);

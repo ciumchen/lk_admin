@@ -1,11 +1,12 @@
 <?php
 
 return [
-    'labels' => [
-        'Order' => '商家录单列表',
+    'labels'  => [
+        'Order'  => '商家录单列表',
+        'orders' => '商家录单列表',
     ],
     //手动审核
-    'fields' => [
+    'fields'  => [
         'uid'          => '消费者UID',
         'business_uid' => '商家UID',
         'profit_ratio' => '让利比列(%)',

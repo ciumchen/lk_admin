@@ -4,6 +4,7 @@ return [
     'labels'  => [
         'MobileAgent'  => '话费代充',
         'mobile-agent' => '话费代充',
+        'hfdc'         => '话费代充',
     ],
     'fields'  => [
         'order_no'    => '订单号',

@@ -52,11 +52,9 @@ class VideoOrderController extends AdminController
                 $grid->column('goods_title');
                 $grid->column('money');
                 $grid->column('profit_ratio')
-                     ->display(
-                         function () {
-                             return $this->orders[ 'profit_ratio' ] ?? '';
-                         }
-                     );
+                     ->display(function () {
+                         return ($this->orders[ 'profit_ratio' ] ?? '').'%';
+                     });
                 $grid->column('to_be_added_integral')
                      ->display(
                          function () {

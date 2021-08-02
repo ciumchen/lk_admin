@@ -13,16 +13,16 @@ use App\Admin\Actions\Grid\DisableConvert;
 class ConvertController extends AdminController
 {
     public $columns_name = [
-        'oid'                  => '订单ID',
-        'uid'                  => '消费者ID',
-        'order_no'             => '订单号',
-        'phone'                => '手机号',
-        'name'                 => '兑换商品',
-        'price'                => '兑换金额',
-        'profit_ratio'         => '商家让利',
-        'profit_price'         => '让利金额',
-        'status'               => '审核状态',
-        'pay_status'           => '支付状态',
+        'oid'          => '订单ID',
+        'uid'          => '消费者ID',
+        'order_no'     => '订单号',
+        'phone'        => '手机号',
+        'name'         => '兑换商品',
+        'price'        => '兑换金额',
+        'profit_ratio' => '商家让利',
+        'profit_price' => '让利金额',
+        'status'       => '审核状态',
+        'pay_status'   => '支付状态',
     ];
     
     /**
@@ -43,24 +43,18 @@ class ConvertController extends AdminController
                 $grid->column('order_no', '订单号');
                 $grid->column('phone', '手机号');
                 $grid->column('name')
-                     ->display(
-                         function () {
-                             return $this->orders[ 'name' ] ?? '';
-                         }
-                     );
+                     ->display(function () {
+                         return $this->orders[ 'name' ] ?? '';
+                     });
                 $grid->column('price', '兑换金额');
                 $grid->column('profit_ratio', '让利比例（%）')
-                     ->display(
-                         function () {
-                             return $this->orders[ 'profit_ratio' ] ?? '';
-                         }
-                     );
+                     ->display(function () {
+                         return $this->orders[ 'profit_ratio' ] ?? '';
+                     });
                 $grid->column('profit_price', '让利金额')
-                     ->display(
-                         function () {
-                             return $this->orders[ 'profit_price' ] ?? '';
-                         }
-                     );
+                     ->display(function () {
+                         return $this->orders[ 'profit_price' ] ?? '';
+                     });
                 $grid->column('orders.status', '审核状态')
                      ->using(Order::$statusLabel)
                      ->label(Order::$statusLabelStyle);
@@ -74,8 +68,7 @@ class ConvertController extends AdminController
                 $grid->column('updated_at')->sortable();
                 /* 操作按钮 更新充值状态*/
                 $grid->actions(function (Grid\Displayers\Actions $actions) {
-                    if ($actions->row->type == 1)
-                    {
+                    if ($actions->row->type == 1) {
                         return;
                     }
                     $actions->append(new DisableConvert());
@@ -96,6 +89,7 @@ class ConvertController extends AdminController
                         $filter->equal('oid', '订单ID');
                         $filter->equal('uid', '消费者ID');
                         $filter->equal('order_no', '订单号');
+                        $filter->equal('phone', '手机号');
                         $filter->equal('type', '兑换类型')->select(
                             function () {
                                 return Convert::$createType_text;
@@ -120,7 +114,6 @@ class ConvertController extends AdminController
                         $filter->between('updated_at')->datetime();
                     }
                 );
-                
                 /* 导出 */
                 $grid->export($this->columns_name)->rows(
                     function (array $rows) {
@@ -136,7 +129,7 @@ class ConvertController extends AdminController
                         return $rows;
                     }
                 );
-                $grid->export()->filename('兑换充值数据-' . date('YmdHis'));
+                $grid->export()->filename('兑换充值数据-'.date('YmdHis'));
             }
         );
     }

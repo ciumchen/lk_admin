@@ -18,7 +18,7 @@ return [
         'run_time' => '营业时间',
         'content' => '商家内容介绍',
         'name' => '商店名称',
-        'is_recommend' => '推荐',
+        'is_recommend' => '星级商家',
         'sort' => '排序（数字越大越靠前）',
         'img' => '营业执照',
         'img2' => '商家头图',

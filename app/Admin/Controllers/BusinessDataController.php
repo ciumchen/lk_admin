@@ -96,7 +96,7 @@ class BusinessDataController extends AdminController
                     return BusinessData::$IS_STATE;
                 });
                 $filter->equal('limit_price', '单日录单限额');
-                $filter->equal('is_recommend', '推荐商家')->select(function () {
+                $filter->equal('is_recommend', '星级商家')->select(function () {
                     return BusinessData::$IS_RECOMMEND;
                 });
 

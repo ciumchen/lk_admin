@@ -152,7 +152,7 @@ class addLkshopOrder extends Command
                             $LogData1688->order_id = $v['confirm_time'];
                             $LogData1688->save();
                             var_dump('导入的订单类型不合法');
-//                            log::info('=================非商户订单和自营订单===================================');
+                            log::info('=================导入的订单类型不合法===================================');
                             return false;
                         }
 

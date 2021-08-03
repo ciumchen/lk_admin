@@ -64,7 +64,7 @@ class addLkshopOrder extends Command
         $LogDataMch = $OrderLogModel::where('type', 'mch_order')->first();
         $LogData1688 = $OrderLogModel::where('type', '1688_order')->first();
         $orderType = '';
-        $orderName = '';
+        $orderName = '商城订单';
         if ($LogDataMch == '') {
             DB::table('lkshop_order_log')->insert(['order_id'=>0,'type'=>'mch_order']);
             $LogDataMch = $OrderLogModel::where('type', 'mch_order')->first();
@@ -117,26 +117,7 @@ class addLkshopOrder extends Command
                         $goods_id = ShopOrderDetail::where('order_id',$v['id'])->value('goods_id');
                         $osg_id = ShopGoods::where('id',$goods_id)->value('osg_id');
 
-                        $scDdInfo = ShopOrder::where('id',$v['id'])->where('is_show',1)->where('store_id',1)
-                            ->where('mch_id',0)->where('is_send',1)
-                            ->where('is_confirm',1)
-                            ->where(function($query){
-                                $query->where('is_pay',1)
-                                    ->orWhere(function($query){
-                                        $query->where('pay_type',2);
-                                    });
-                            })
-                            ->where('store_id',1)
-                            ->where('is_delete',0)->where('type',0)
-                            ->where('is_recycle',0)
-                            ->first();
-
-                        if ($scDdInfo!=null){
-                            $orderType = 'shop_order';
-                            $orderName = '商城订单';
-                            $lkBusinessUid = 2;//lk商户uid
-
-                        }elseif ($v['mch_id'] != 0){
+                        if ($v['mch_id'] != 0){
                             $orderType = 'mch_order';
                             $orderName = '商户订单';
 
@@ -151,22 +132,17 @@ class addLkshopOrder extends Command
                             $LogDataMch->save();
                             $LogData1688->order_id = $v['confirm_time'];
                             $LogData1688->save();
-                            var_dump('导入的订单类型不合法');
+                            var_dump('非商户订单和自营订单');
 //                            log::info('=================非商户订单和自营订单===================================');
                             return false;
                         }
 
 //dd($lkBusinessUid,$lkBusinessUid);
-//dump($lkBusinessUid,$lkBusinessUid);
+dump($lkBusinessUid,$lkBusinessUid);
                         DB::beginTransaction();
                         try {
 //                    $profit_ratio = Setting::where('key', 'lkshop_profit_ratio')->value('value');
-                            if ($scDdInfo!=null){//商城订单自定义让利比例
-                                $profit_ratio = floor($scDdInfo->platform_ratio);
-                            }else{//商户和1688默认20让利比例
-                                $profit_ratio = 20;
-                            }
-
+                            $profit_ratio = 20;
                             //实际付款
                             $sjPay = $v['pay_price'] - $v['express_price'];
                             $LkshopOrderModel = new LkshopOrder();

@@ -23,6 +23,8 @@ Route::group(
         $router->any('updateImg', 'TestController@updateImg');
         $router->any('delApply', 'TestController@delApply');
         $router->any('updateUser', 'TestController@updateUser');
+
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
         //话费订单、油卡订单、美团订单
         $router->resource('hfdd', 'LkPhoneBillOrderController');
@@ -85,5 +87,15 @@ Route::group(
     function (Router $router) {
         //获取城市
         $router->get('get-city', 'CityNodeController@getCity');
+
+        $router->any('mytest1', 'TestController@mytest');
+        $router->any('getTtShopDdInfo', 'TestController@getTtShopDdInfo');
     }
+
+
+
 );
+
+
+
+

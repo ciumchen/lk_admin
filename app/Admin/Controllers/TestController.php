@@ -6,6 +6,7 @@ use App\Admin\Repositories\Test;
 use App\Exceptions\LogicException;
 use App\Models\BusinessApply;
 use App\Models\BusinessCategory;
+use App\Models\ShopOrder;
 use App\Models\ShopUser;
 use App\Services\OssService;
 use Dcat\Admin\Form;
@@ -186,6 +187,34 @@ class TestController extends AdminController
         echo '修改成功';
 
     }
+
+
+    //查询商城订单测试
+    public function getTtShopDdInfo(){
+//        dd(123);
+        $data = DB::connection('mysql_center')->table('tableName')->select("SELECT * FROM `ttshop_order` WHERE `id`= ? and (`is_show`=1)
+AND ((`store_id`=1) AND (`mch_id`=0)) AND ((`is_send`=1) AND (`is_confirm`=1))
+AND ((`is_pay`=1) OR (`pay_type`=2)) AND (`is_delete`=0) AND (`type`=0) AND (`is_recycle`=0) ", [45]);
+
+        $shopId = 45;
+        $data = ShopOrder::where('id',$shopId)->where('is_show',1)->where('store_id',1)
+            ->where('mch_id',0)->where('is_send',1)
+            ->where('is_confirm',1)
+            ->where(function($query){
+
+                $query->where('is_pay',1)
+                    ->orWhere(function($query){
+                        $query->where('pay_type',2);
+                    });
+            })
+            ->where('store_id',1)
+            ->where('is_delete',0)->where('type',0)
+            ->where('is_recycle',0)
+            ->first();
+
+        dd($data);
+    }
+
 
 
 }

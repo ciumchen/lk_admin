@@ -21,7 +21,7 @@ use App\Services\ShowApi\VideoOrderService;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+
 class ShopOrderService
 {
     /**商城
@@ -39,11 +39,6 @@ class ShopOrderService
             if ($order->status != Order::STATUS_DEFAULT) {
                 return false;
             }
-            log::info('=================打印方法传递的变量===================================',$orderId);
-            log::info('=================打印方法传递的变量===================================',$consumer_uid);
-            log::info('=================打印方法传递的变量===================================',$orderNo);
-            log::info('=================打印方法传递的变量===================================',$description);
-
             $order->status = Order::STATUS_SUCCEED;
             $order->pay_status = 'succeeded';//测试自动审核不要改支付状态
             $order->updated_at = date("Y-m-d H:i:s");
@@ -101,14 +96,12 @@ class ShopOrderService
             (new VerifyOrder())->encourage($order, $customer, $business, $orderNo);
             $order->save();
             DB::commit();
-            log::info('=================添加排队成功===================================');
         } catch (Exception $exception) {
             DB::rollBack();
             var_dump($exception->getMessage());
-            log::info('=================添加排队失败===================================');
         }
     }
-
+    
     /**完成订单
      *
      * @param string $orderNo
@@ -194,7 +187,7 @@ class ShopOrderService
             var_dump($exception->getMessage());
         }
     }
-
+    
     /**完成订单
      *
      * @param string $orderNo
@@ -285,7 +278,7 @@ class ShopOrderService
             DB::rollBack();
         }
     }
-
+    
     /**返佣
      *
      * @param $order
@@ -538,7 +531,7 @@ class ShopOrderService
             );
         $this->updateRebateData($welfareAmount, $shareAmount, $market, $platformAmount, $order->price, $user);
     }
-
+    
     /**找盟主
      *
      * @param       $invite_uid
@@ -579,7 +572,7 @@ class ShopOrderService
             return false;
         }
     }
-
+    
     /**更新返佣统计
      *
      * @param $welfare
@@ -603,7 +596,7 @@ class ShopOrderService
         $rebateData->total_consumption = bcadd($price, $rebateData->total_consumption, 8);
         $rebateData->save();
     }
-
+    
     //邀请补贴和邀请人积分添加
     //商户uid,实际让利比例，订单分类 HF YK MT,消费者uid
     public function addInvitePoints($order_business_uid, $order_profit_price, $description, $uid, $orderNo)
@@ -662,7 +655,7 @@ class ShopOrderService
             $description
         );
     }
-
+    
     /**
      * Description:
      *
@@ -746,7 +739,7 @@ class ShopOrderService
             DB::rollBack();
         }
     }
-
+    
     /**
      * Description:
      * TODO:判断订单类型
@@ -790,7 +783,7 @@ class ShopOrderService
         }
         return $description;
     }
-
+    
     /**
      * Description:更新对应子订单
      *
@@ -840,7 +833,7 @@ class ShopOrderService
             throw $e;
         }
     }
-
+    
     /**
      * Description:支付前更新子订单
      *
@@ -876,7 +869,7 @@ class ShopOrderService
             throw $e;
         }
     }
-
+    
     /**
      * Description:完成订单后的后续操作[充值等]
      *

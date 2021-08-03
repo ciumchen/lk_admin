@@ -78,7 +78,7 @@ class addLkshopOrder extends Command
         $orderId = $OrderLogModel::where('type', 'mch_order')->value('order_id');
         $shopOrderData = ShopOrder::where('confirm_time', '>', $orderId)->where('is_confirm', 1)->orderBy('confirm_time', "asc")->first();
 
-        log::info('=================导入商户订单开始==================================='.$orderId);
+//        log::info('=================导入商户订单开始==================================='.$orderId);
         if ($shopOrderData != '') {
             $orderArr = $shopOrderData->toArray();
 

@@ -68,10 +68,10 @@ class ShopOrderService
                 //按比例计算实际获得积分
                 $profit_ratio_offset = ($order->profit_ratio < 1) ? $order->profit_ratio * 100 : $order->profit_ratio;
                 log::info('=================打印方法传递的变量===========4444444444444444444========================'.$profit_ratio_offset);
-                log::info('=================打印方法传递的变量===========4444444444444444444========================'.intval($profit_ratio_offset);
-                log::info('=================打印方法传递的变量===========4444444444444444444========================'.$rebateScale[ intval($profit_ratio_offset)]);
+                log::info('=================打印方法传递的变量===========55555555555555555========================'.intval($profit_ratio_offset));
+                log::info('=================打印方法传递的变量===========6666666666666666666========================'.$rebateScale[ intval($profit_ratio_offset)]);
                 $profit_ratio = bcdiv($rebateScale[ intval($profit_ratio_offset) ], 100, 4);
-                log::info('=================打印方法传递的变量===========555555555555555555555========================'.$profit_ratio);
+                log::info('=================打印方法传递的变量===========777777777777777777========================'.$profit_ratio);
                 $order->to_be_added_integral = bcmul($order->price, $profit_ratio, 2);
                 log::info('=================打印方法传递的变量===========排队========================'.$order->to_be_added_integral);
             } else {

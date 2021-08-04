@@ -53,6 +53,8 @@ class IntegralLogController extends AdminController
                     return '兑换额度(话费)';
                 }elseif($v=='CLM'){
                     return '兑换额度(美团)';
+                }elseif($v=='SHOP'){
+                    return '来客优选';
                 }else{
                     return "未知类型";
                 }

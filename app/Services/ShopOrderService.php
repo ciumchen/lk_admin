@@ -59,11 +59,14 @@ class ShopOrderService
                 log::info('=================打印方法传递的变量===========22222222222222222========================');
                 $order->line_up = 1;
                 $customer = User::find($order->uid);
+                log::info('=================打印方法传递的变量===========3333333333333333========================'.$customer);
                 //按比例计算实际获得积分
                 $profit_ratio_offset = ($order->profit_ratio < 1) ? $order->profit_ratio * 100 : $order->profit_ratio;
+                log::info('=================打印方法传递的变量===========4444444444444444444========================'.$profit_ratio_offset);
                 $profit_ratio = bcdiv($rebateScale[ intval($profit_ratio_offset) ], 100, 4);
+                log::info('=================打印方法传递的变量===========555555555555555555555========================'.$profit_ratio);
                 $order->to_be_added_integral = bcmul($order->price, $profit_ratio, 2);
-                log::info('=================打印方法传递的变量===========排队========================');
+                log::info('=================打印方法传递的变量===========排队========================'.$order->to_be_added_integral);
             } else {
                 log::info('=================打印方法传递的变量===========aaaaaaaaaaaa========================');
                 //通过，给用户加积分、更新LK

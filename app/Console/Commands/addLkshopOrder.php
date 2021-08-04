@@ -163,8 +163,10 @@ class addLkshopOrder extends Command
 //                    $profit_ratio = Setting::where('key', 'lkshop_profit_ratio')->value('value');
                             if ($scDdInfo!=null){//商城订单自定义让利比例
                                 $profit_ratio = floor($scDdInfo->platform_ratio);
+                                $shopSjrlbl=$profit_ratio;
                             }else{//商户和1688默认20让利比例
                                 $profit_ratio = 20;
+                                $shopSjrlbl=0;
                             }
 
                             //实际付款
@@ -201,7 +203,7 @@ class addLkshopOrder extends Command
 
                             //添加积分
 //            completeOrderTable(int $id, int $consumer_uid, string $description, string $orderNo)
-                            (new ShopOrderService())->completeShopOrder($orderModel->id, $lkUserId, $v['order_no'], $orderType);
+                            (new ShopOrderService())->completeShopOrder($orderModel->id, $lkUserId, $v['order_no'], $orderType,$shopSjrlbl);
 
                             //更新记录
                             $LogDataMch->order_id = $v['confirm_time'];

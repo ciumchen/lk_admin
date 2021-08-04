@@ -30,7 +30,7 @@ class ShopOrderService
      *
      * @return mixed
      */
-    public function completeShopOrder($orderId, $consumer_uid, $orderNo, $description)
+    public function completeShopOrder($orderId, $consumer_uid, $orderNo, $description,$shopSjrlbl=0)
     {
         DB::beginTransaction();
         try {
@@ -48,8 +48,13 @@ class ShopOrderService
             $order->pay_status = 'succeeded';//测试自动审核不要改支付状态
             $order->updated_at = date("Y-m-d H:i:s");
             //用户应返还几分比例
-            $userRebateScale = Setting::getManySetting('user_rebate_scale');
-            $businessRebateScale = Setting::getManySetting('business_rebate_scale');
+            if ($shopSjrlbl==0){
+                $userRebateScale = Setting::getManySetting('user_rebate_scale');
+                $businessRebateScale = Setting::getManySetting('business_rebate_scale');
+            }else{
+                $userRebateScale = $shopSjrlbl*5;
+                $businessRebateScale = $shopSjrlbl;
+            }
             $rebateScale = array_combine($businessRebateScale, $userRebateScale);
             //判断控单是否开启
             $setValue = Setting::where('key', 'consumer_integral')
@@ -63,6 +68,8 @@ class ShopOrderService
                 //按比例计算实际获得积分
                 $profit_ratio_offset = ($order->profit_ratio < 1) ? $order->profit_ratio * 100 : $order->profit_ratio;
                 log::info('=================打印方法传递的变量===========4444444444444444444========================'.$profit_ratio_offset);
+                log::info('=================打印方法传递的变量===========4444444444444444444========================'.intval($profit_ratio_offset);
+                log::info('=================打印方法传递的变量===========4444444444444444444========================'.$rebateScale[ intval($profit_ratio_offset)]);
                 $profit_ratio = bcdiv($rebateScale[ intval($profit_ratio_offset) ], 100, 4);
                 log::info('=================打印方法传递的变量===========555555555555555555555========================'.$profit_ratio);
                 $order->to_be_added_integral = bcmul($order->price, $profit_ratio, 2);

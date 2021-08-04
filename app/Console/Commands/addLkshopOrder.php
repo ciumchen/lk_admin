@@ -211,7 +211,7 @@ class addLkshopOrder extends Command
                             $LogData1688->order_id = $v['confirm_time'];
                             $LogData1688->save();
                             var_dump('导入订单成功');
-                            log::info('=================导入订单成功===================================');
+//                            log::info('=================导入订单成功===================================');
                             DB::commit();
                         } catch (Exception $exception) {
                             DB::rollBack();
@@ -222,7 +222,7 @@ class addLkshopOrder extends Command
 
             }
         } else {
-            log::info('=================所有订单导入完成===================================');
+//            log::info('=================所有订单导入完成===================================');
             var_dump( "所有订单导入完成");
             return false;
         }

@@ -54,7 +54,9 @@ class ShopOrderService
             //判断控单是否开启
             $setValue = Setting::where('key', 'consumer_integral')
                                ->value('value');
+            log::info('=================打印方法传递的变量===========1111111111111111========================');
             if ($setValue == 1) {
+                log::info('=================打印方法传递的变量===========22222222222222222========================');
                 $order->line_up = 1;
                 $customer = User::find($order->uid);
                 //按比例计算实际获得积分
@@ -63,6 +65,7 @@ class ShopOrderService
                 $order->to_be_added_integral = bcmul($order->price, $profit_ratio, 2);
                 log::info('=================打印方法传递的变量===========排队========================');
             } else {
+                log::info('=================打印方法传递的变量===========aaaaaaaaaaaa========================');
                 //通过，给用户加积分、更新LK
                 $customer = User::lockForUpdate()
                                 ->find($order->uid);

@@ -61,6 +61,7 @@ class ShopOrderService
                 $profit_ratio_offset = ($order->profit_ratio < 1) ? $order->profit_ratio * 100 : $order->profit_ratio;
                 $profit_ratio = bcdiv($rebateScale[ intval($profit_ratio_offset) ], 100, 4);
                 $order->to_be_added_integral = bcmul($order->price, $profit_ratio, 2);
+                log::info('=================打印方法传递的变量===========排队========================');
             } else {
                 //通过，给用户加积分、更新LK
                 $customer = User::lockForUpdate()
@@ -98,8 +99,10 @@ class ShopOrderService
             }
             $business = User::find($order->business_uid);
             //返佣
+            log::info('=================打印方法传递的变量==============返佣1=====================');
             (new VerifyOrder())->encourage($order, $customer, $business, $orderNo);
             $order->save();
+            log::info('=================打印方法传递的变量==============返佣2=====================');
             DB::commit();
             log::info('=================添加排队成功===================================');
         } catch (Exception $exception) {

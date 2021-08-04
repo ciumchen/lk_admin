@@ -51,11 +51,13 @@ class ShopOrderService
             if ($shopSjrlbl==0){
                 $userRebateScale = Setting::getManySetting('user_rebate_scale');
                 $businessRebateScale = Setting::getManySetting('business_rebate_scale');
+                $rebateScale = array_combine($businessRebateScale, $userRebateScale);
             }else{
                 $userRebateScale = $shopSjrlbl*5;
                 $businessRebateScale = $shopSjrlbl;
+                $rebateScale = array($businessRebateScale=>$userRebateScale);
             }
-            $rebateScale = array_combine($businessRebateScale, $userRebateScale);
+
             //判断控单是否开启
             $setValue = Setting::where('key', 'consumer_integral')
                                ->value('value');

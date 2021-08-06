@@ -45,12 +45,14 @@ class MobileAgentController extends AdminController
                 $filter->equal('order_id');
                 $filter->equal('uid');
                 $filter->equal('mobile');
+                $filter->equal('order_no');
                 $filter->equal('orders.pay_status', '支付状态');
+
             });
             $thisController->disableButtons($grid);
         });
     }
-    
+
     /**
      * Make a show builder.
      *
@@ -78,7 +80,7 @@ class MobileAgentController extends AdminController
             $show->field('updated_at');
         });
     }
-    
+
     /**
      * Make a form builder.
      *
@@ -104,7 +106,7 @@ class MobileAgentController extends AdminController
             $form->display('updated_at');
         });
     }
-    
+
     /**
      * Description:
      *

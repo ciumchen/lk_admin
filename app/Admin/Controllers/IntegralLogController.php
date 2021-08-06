@@ -57,6 +57,8 @@ class IntegralLogController extends AdminController
                     return '来客优选';
                 }elseif($v=='MZL'){
                     return '批量代充';
+                }elseif($v=='KTHY'){
+                    return '开通会员';
                 }else{
                     return "未知类型";
                 }

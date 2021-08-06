@@ -15,12 +15,12 @@ use Illuminate\Database\Eloquent\Model;
 class ManyMobileController extends AdminController
 {
     protected $model;
-    
+
     public function __construct()
     {
         $this->model = new OrderMobileRecharge();
     }
-    
+
     //
     public function grid()
     : Grid
@@ -61,18 +61,19 @@ class ManyMobileController extends AdminController
                     $filter->equal('order_id', '录单ID');
                     $filter->equal('uid', '消费者ID');
                     $filter->equal('details.mobile', '手机号');
+                    $filter->equal('order_no');
                     $filter->equal('orders.pay_status', '支付状态');
                 });
             });
     }
-    
+
     public function form()
     : Form
     {
         return Form::make($this->model, function (Form $form) {
         });
     }
-    
+
     public function detail($id)
     : Grid {
         $Model = (new OrderMobileRechargeDetails())->with(['pMobile'])->where('order_mobile_id', '=', $id);

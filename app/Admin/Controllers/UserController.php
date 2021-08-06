@@ -37,6 +37,16 @@ class UserController extends AdminController
             $grid->column('phone', '手机号');
             $grid->column('salt');
             $grid->column('code_invite');
+            $grid->column('member_status')->display(function ($v){
+                if ($v==0){
+                    return "否";
+                }elseif($v==1){
+                    return "是";
+                }else{
+                    return "异常";
+                }
+
+            });
             $grid->column('role')->display(function ($v){
                 return User::$roleLabel[$v];
             });

@@ -20,6 +20,7 @@ return [
         'ban_reason' => '封禁原因',
         'return_lk' => '已返LK积分',
         'market_business' => '市商',
+        'member_status' => '来客会员',
     ],
     'options' => [
     ],

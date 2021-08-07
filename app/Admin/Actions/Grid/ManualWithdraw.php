@@ -89,7 +89,8 @@ class ManualWithdraw extends RowAction
             $transaction = $geth->personal()->transaction($payer, $contract_address)
                 ->amount("0")
                 ->data($data);
-            $transaction->gas(90000,"0.000000001");
+//            $transaction->gas(90000,"0.000000001");//旧
+            $transaction->gas(90000,"0.0000001");//新，2021年8月7日 11:56:55修改
             $txId = $transaction->send(env('WITHDRAW_PASSWORD'));
 
             if ($txId && strlen($txId) == 66) {

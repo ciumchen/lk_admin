@@ -46,7 +46,7 @@ class addLkshopUser extends Command
      */
     public function handle()
     {
-//        log::info('=================导入商城用户任务===================================');
+        log::info('========addLkshopUser=========导入商城用户任务===================================');
         //查询记录
         $LkUserModel = new LkshopAddUserLog();
         $addLog = $LkUserModel::where('type','addLkShopuser')->first();

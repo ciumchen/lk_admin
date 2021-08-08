@@ -152,8 +152,17 @@ class RebateService
                     log::info('=================13===================================');
                     $today = strtotime(date('Y-m-d',time()));
                     $todayData = OrderIntegralLkDistribution::where('day',$today)->first();
-                    $todayData->count_lk = Users::sum('lk');
-                    $todayData->save();
+                    if ($todayData!=''){
+                        $todayData->count_lk = Users::sum('lk');
+                        $todayData->save();
+                    }else{
+                        $addData = array(
+                            'day'=>$today,
+                            'count_lk'=>Users::sum('lk'),
+                        );
+                        OrderIntegralLkDistribution::create($addData);
+                    }
+
                     log::info('=================14===================================');
 
                 });

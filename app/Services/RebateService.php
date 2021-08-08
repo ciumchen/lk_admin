@@ -63,7 +63,6 @@ class RebateService
 
             try {
                 DB::transaction(function () use ($totalProfit) {
-                    log:info("=====================1111111111111111111111========================================");
                     $assets = AssetsType::where("assets_name", AssetsType::DEFAULT_ASSETS_NAME)->first();
                     if(!$assets)
                     {
@@ -71,15 +70,12 @@ class RebateService
                         return false;
                     }
 
-                    log::info('=================2222222222===================================');
-
                     $rebateData = RebateData::where("day", Carbon::yesterday()->toDateString())->where('status', 1)->lockForUpdate()->first();
                     if(!$rebateData){
                         $rebateData = new RebateData();
                         $rebateData->day = Carbon::yesterday()->toDateString();//返佣日期
                     }
 
-                    log::info('=================333333333===================================');
                     //记录分红数据
                     $rebateData->join_consumer = 0;//参与分红的消费者人数
                     $rebateData->join_business = 0;//参与分红的商家人数
@@ -88,7 +84,6 @@ class RebateService
                     $rebateData->business = 0;//商家返佣
                     $rebateData->consumer = 0;//消费者返佣
                     $rebateData->status = 2;//改为已分配
-                    log::info('=================44444444444444===================================');
                     //判断控单是否开启
                     $setValue = Setting::where('key','consumer_integral')->value('value');
                     if($setValue==1) {
@@ -98,13 +93,11 @@ class RebateService
                                 ->groupBy("uid")
                                 ->where('line_up',0)
                                 ->count() ?? 0;
-                        log::info('=================55555555555555===================================');
                         //总消费金额
                         $rebateData->total_consumption = Order::where("status", \App\Admin\Repositories\Order::STATUS_SUCCESS)
                                 ->whereBetween("updated_at", [now()->yesterday()->startOfDay(), now()->yesterday()->endOfDay()])
                                 ->where('line_up',0)
                                 ->sum("price") ?? 0;
-                        log::info('=================6666666666666===================================');
                     }else{
                         //消费人数
                         $rebateData->people = Order::where("status", \App\Admin\Repositories\Order::STATUS_SUCCESS)
@@ -117,16 +110,13 @@ class RebateService
                                 ->sum("price") ?? 0;
                     }
 
-                    log::info('=================7777777777777===================================');
                     //新增商家
                     $rebateData->new_business = BusinessData::whereBetween("created_at", [now()->yesterday()->startOfDay(), now()->yesterday()->endOfDay()])->count();
 
-                    log::info('=================888888888888888888===================================');
                     //来客商家
                     $businessPercent = Setting::getSetting("business_percent") ?? 0;
                     if(bccomp($businessPercent, 0, 2) > 0)
                     {
-                        log::info('=================999999999999999===================================');
                         //商家返利总额 = 总让利 * 商家返利比例
                         $businessAmount = bcdiv(bcmul($totalProfit, $businessPercent, 2), 100 ,2);
                         $this->rebateByRole($businessAmount, \App\Admin\Repositories\User::ROLE_BUSINESS);
@@ -134,12 +124,10 @@ class RebateService
                         $rebateData->join_business = $this->totalUser;
                         $rebateData->business_lk_iets = $this->perMoney;
                     }
-                    log::info('=================10===================================');
                     //消费者
                     $userPercent = Setting::getSetting("user_percent") ?? 0;
                     if(bccomp($userPercent, 0, 2) > 0)
                     {
-                        log::info('=================11===================================');
                         //用户返利总额 = 总让利 * 用户返利比例
                         $userAmount = bcdiv(bcmul($totalProfit, $userPercent, 2), 100 , 2);
                         $this->rebateByRole($userAmount, \App\Admin\Repositories\User::ROLE_NORMAL);
@@ -147,9 +135,8 @@ class RebateService
                         $rebateData->join_consumer = $this->totalUser;
                         $rebateData->consumer_lk_iets = $this->perMoney;
                     }
-                    log::info('=================12===================================');
+
                     $rebateData->save();
-                    log::info('=================13===================================');
                     $today = strtotime(date('Y-m-d',time()));
                     $todayData = OrderIntegralLkDistribution::where('day',$today)->first();
                     if ($todayData!=''){
@@ -162,8 +149,6 @@ class RebateService
                         );
                         OrderIntegralLkDistribution::create($addData);
                     }
-
-                    log::info('=================14===================================');
 
                 });
             } catch (\Exception $e) {

@@ -42,4 +42,10 @@ class OrderIntegralLkDistribution extends Model
 
 
     protected $table = 'order_integral_lk_distribution';
+    protected $fillable = [
+        'day',
+        'count_lk',
+        'created_at',
+        'updated_at',
+    ];
 }

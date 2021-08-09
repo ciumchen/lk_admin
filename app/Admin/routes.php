@@ -39,6 +39,10 @@ Route::group(
         $router->resource('lkscdd', 'LkShopMallOrderController');
         $router->resource('sphy', 'VideoOrderController'); //视频会员订单
         $router->resource('addjf', 'ToBeAddedIntegralController');
+
+        $router->resource('kthydd', 'LkKthyOrderController');//开通会员订单列表
+
+
         $router->resource('drddtj', 'DailyImportOrderStatisticController');//导入订单统计
         $router->get('/', 'HomeController@index');
         $router->resource('users', 'UserController');

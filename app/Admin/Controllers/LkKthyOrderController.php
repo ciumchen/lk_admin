@@ -3,16 +3,16 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Actions\Grid\VerifyOrder;
+use App\Admin\Repositories\LkKthyOrder;
 use App\Admin\Repositories\Order;
+use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Controllers\AdminController;
-use Dcat\Admin\Admin;
 
-class OrderController extends AdminController
+class LkKthyOrderController extends AdminController
 {
-
     /**
      * Make a grid builder.
      *
@@ -21,6 +21,7 @@ class OrderController extends AdminController
     protected function grid()
     {
         return Grid::make(new Order(), function (Grid $grid) {
+            $grid->model()->where('name', '开通会员');
             $grid->model()->orderBy('id', 'desc');
             $grid->model()->with(['user', 'business', 'select_trade_order','order_video','lkshop_order', 'convert']);
             $grid->column('id','录单ID')->sortable();
@@ -34,13 +35,13 @@ class OrderController extends AdminController
                 }
             });
             $grid->column('business.phone', "商家手机号");
-            $grid->column('select_trade_order.numeric', '录入消费者手机号')->display(function ($phone) {
-                if (!empty($phone)) {
-                    return $phone;
-                } else {
-                    return $this->convert[ 'phone' ] ?? '';
-                }
-            });
+//            $grid->column('select_trade_order.numeric', '录入消费者手机号')->display(function ($phone) {
+//                if (!empty($phone)) {
+//                    return $phone;
+//                } else {
+//                    return $this->convert[ 'phone' ] ?? '';
+//                }
+//            });
             $grid->column('profit_ratio');
             $grid->column('price');
             $grid->column('profit_price');
@@ -65,10 +66,11 @@ class OrderController extends AdminController
                 $filter->equal('id','录单ID');
                 $filter->equal('uid');
                 $filter->equal('business_uid');
-                $filter->equal('select_trade_order.order_no', '订单号');
-                $filter->equal('order_video.order_no', '视频卡订单号');
-                $filter->equal('lkshop_order.order_no', '来客优选订单号');
-                $filter->equal('select_trade_order.numeric', '录入消费者手机号');
+                $filter->equal('order_no', '订单号');
+//                $filter->equal('select_trade_order.order_no', '自营订单号');
+//                $filter->equal('order_video.order_no', '视频卡订单号');
+//                $filter->equal('lkshop_order.order_no', '来客优选订单号');
+//                $filter->equal('select_trade_order.numeric', '录入消费者手机号');
                 $filter->equal('profit_price');
                 $filter->equal('name')->select(function () {
                     return Order::$ld_order_select;
@@ -94,15 +96,15 @@ class OrderController extends AdminController
                 'id'                          => '录单ID',
                 'uid'                         => '消费者UID',
                 'business_uid'                => '	商家UID',
-                'select_trade_order.order_no' => '订单号',
+                'order_no' => '订单号',
                 'business.phone'              => '商家手机号',
                 'profit_ratio'                => '让利比列(%)',
-                'select_trade_order.numeric'  => '录入消费者手机号',
+//                'select_trade_order.numeric'  => '录入消费者手机号',
                 'price'                       => '消费金额',
                 'profit_price'                => '实际让利金额',
                 'status'                      => '审核状态',
                 'pay_status'                  => '	支付状态',
-                'name'                        => '消费商品名',
+//                'name'                        => '消费商品名',
                 'remark'                      => '备注',
                 'created_at'                  => '创建时间',
                 'updated_at'                  => '更新时间',

@@ -46,6 +46,8 @@ class Order extends EloquentRepository
 
     const LD_ORDER_SELECT7     = '飞机票';
 
+    const LD_ORDER_KTHY     = '开通会员';
+
     const SHOP_STATUS_DEFAULT       = 1;
 
     const SHOP_STATUS_ERROE       = 0;
@@ -77,6 +79,7 @@ class Order extends EloquentRepository
         self::LD_ORDER_SELECT5 => "滴滴",
         self::LD_ORDER_SELECT6 => "代充",
         self::LD_ORDER_SELECT7 => "飞机票",
+        self::LD_ORDER_KTHY => "开通会员",
     ];
 
     static public $statusLabelStyle = [

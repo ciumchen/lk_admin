@@ -72,9 +72,9 @@ class LkKthyOrderController extends AdminController
 //                $filter->equal('lkshop_order.order_no', '来客优选订单号');
 //                $filter->equal('select_trade_order.numeric', '录入消费者手机号');
                 $filter->equal('profit_price');
-                $filter->equal('name')->select(function () {
-                    return Order::$ld_order_select;
-                });
+//                $filter->equal('name')->select(function () {
+//                    return Order::$ld_order_select;
+//                });
                 $filter->equal('status')->select(function () {
                     return Order::$statusLabel;
                 });

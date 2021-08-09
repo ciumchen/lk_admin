@@ -119,7 +119,12 @@ class OrderController extends AdminController
                         $row[ 'select_trade_order.order_no' ] = $row[ 'select_trade_order' ][ 'order_no' ];
                     }
 
-                    $row[ 'select_trade_order.numeric' ] = $row[ 'select_trade_order' ][ 'numeric' ];
+                    if (!empty($row[ 'select_trade_order.numeric' ])) {
+                        $row[ 'select_trade_order.numeric' ] = $row[ 'select_trade_order' ][ 'numeric' ];
+                    } else {
+                        $row[ 'select_trade_order.numeric' ] = $this->convert[ 'phone' ] ?? '';
+                    }
+
                     if ($row[ 'status' ] == 1) {
                         $row[ 'status' ] = "审核中";
                     } elseif ($row[ 'status' ] == 2) {

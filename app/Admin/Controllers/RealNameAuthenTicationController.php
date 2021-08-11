@@ -27,9 +27,9 @@ class RealNameAuthenTicationController extends AdminController
             $grid->column('name');
             $grid->column('num_id');
             $grid->column('status')->using([0 => '审核中', 1 => '审核通过',2=>'审核不通过'])->label([
-                1 => 'primary',
-                2 => 'success',
-                3 => 'danger',
+                0 => 'primary',
+                1 => 'success',
+                2 => 'danger',
                 4 => Admin::color()->info()
             ]);
 //            $grid->column('img')->image(env('OSS_URL'),50,50);

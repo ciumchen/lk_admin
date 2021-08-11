@@ -41,6 +41,7 @@ Route::group(
         $router->resource('addjf', 'ToBeAddedIntegralController');
 
         $router->resource('kthydd', 'LkKthyOrderController');//开通会员订单列表
+        $router->resource('sfzsmrz', 'RealNameAuthenTicationController');//身份证实名认证
 
 
         $router->resource('drddtj', 'DailyImportOrderStatisticController');//导入订单统计

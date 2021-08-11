@@ -78,6 +78,11 @@ Route::group(
         $router->resource('many-mobile', 'ManyMobileController');
         //兑换充值
         $router->resource('convert', 'ConvertController');
+        /*********************** 拼团管理 ***********************/
+        //新增拼团
+        $router->resource('add-gather', 'GatherController');
+        //拼团录单列表
+        $router->resource('gather-trade', 'GatherTradeController');
     }
 );
 Route::group(

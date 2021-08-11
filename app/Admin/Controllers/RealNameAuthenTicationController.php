@@ -26,15 +26,15 @@ class RealNameAuthenTicationController extends AdminController
             $grid->column('uid');
             $grid->column('name');
             $grid->column('num_id');
-            $grid->column('status')->using([0 => '审核中', 1 => '审核通过',2=>'审核不通过'])->label([
+            $grid->column('img_just')->image(env('OSS_URL'),50,50);
+            $grid->column('img_back')->image(env('OSS_URL'),50,50);
+            $grid->column('status','OCR验证')->using([0 => '验证中', 1 => '验证成功',2=>'验证失败'])->label([
                 0 => 'primary',
                 1 => 'success',
                 2 => 'danger',
                 4 => Admin::color()->info()
             ]);
-//            $grid->column('img')->image(env('OSS_URL'),50,50);
-            $grid->column('img_just')->image(env('OSS_URL'),50,50);
-            $grid->column('img_back')->image(env('OSS_URL'),50,50);
+
             $grid->column('remark');
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();

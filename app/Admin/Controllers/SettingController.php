@@ -61,6 +61,7 @@ class SettingController extends AdminController
     protected function form()
     {
         return Form::make(new Setting(), function (Form $form) {
+            ini_set('memory_limit','80M');
             $form->display('id');
             $form->text('key');
             $form->text('value');

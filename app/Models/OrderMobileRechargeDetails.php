@@ -40,19 +40,21 @@ use Illuminate\Support\Facades\DB;
 class OrderMobileRechargeDetails extends AdminBaseModel
 {
     use HasFactory;
-    
+
     protected $table = 'order_mobile_recharge_details';
-    
+
     const STATUS_DEFAULT = 0;
-    
+
     const STATUS_SUCCESS = 1;
-    
+    const STATUS_CANCEL = 9;
+
     /**
      * @var string[]
      */
     public static $statusLabel = [
         self::STATUS_DEFAULT => '充值中',
         self::STATUS_SUCCESS => '成功',
+        self::STATUS_CANCEL => '撤销',
     ];
     /**
      * @var array
@@ -60,8 +62,9 @@ class OrderMobileRechargeDetails extends AdminBaseModel
     public static $statusLabelStyle = [
         self::STATUS_DEFAULT => 'primary',
         self::STATUS_SUCCESS => 'success',
+        self::STATUS_CANCEL => 'dark',
     ];
-    
+
     /**
      * Description:
      *
@@ -86,7 +89,7 @@ class OrderMobileRechargeDetails extends AdminBaseModel
         }
         return $res;
     }
-    
+
     /**
      * Description:批量更新状态
      *
@@ -107,7 +110,7 @@ class OrderMobileRechargeDetails extends AdminBaseModel
         }
         return $res;
     }
-    
+
     /**
      * Description:反查上级
      *

@@ -59,10 +59,9 @@ class RealNameAuthenTicationController extends AdminController
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
                 $filter->equal('uid');
-                $filter->equal('phone');
                 $filter->equal('name');
                 $filter->equal('status')->select(function () {
-                    return BusinessApply::$statusLabel;
+                    return RealNameAuthenTication::$sfz_statusLabel;
                 });
 
             });
@@ -77,34 +76,34 @@ class RealNameAuthenTicationController extends AdminController
      *
      * @return Show
      */
-    protected function detail($id)
-    {
-        return Show::make($id, new RealNameAuthenTication(), function (Show $show) {
-            $show->field('id');
-            $show->field('uid');
-            $show->field('name');
-            $show->field('num_id');
-            $show->field('status');
-            $show->field('img_just');
-            $show->field('img_back');
-            $show->field('remark');
-            $show->field('created_at');
-            $show->field('updated_at');
-        });
-    }
-
-    /**
-     * Make a form builder.
-     *
-     * @return Form
-     */
-    protected function form()
-    {
-        return Form::make(new RealNameAuthenTication(), function (Form $form) {
-            $form->display('id');
-
-            $form->display('created_at');
-            $form->display('updated_at');
-        });
-    }
+//    protected function detail($id)
+//    {
+//        return Show::make($id, new RealNameAuthenTication(), function (Show $show) {
+//            $show->field('id');
+//            $show->field('uid');
+//            $show->field('name');
+//            $show->field('num_id');
+//            $show->field('status');
+//            $show->field('img_just');
+//            $show->field('img_back');
+//            $show->field('remark');
+//            $show->field('created_at');
+//            $show->field('updated_at');
+//        });
+//    }
+//
+//    /**
+//     * Make a form builder.
+//     *
+//     * @return Form
+//     */
+//    protected function form()
+//    {
+//        return Form::make(new RealNameAuthenTication(), function (Form $form) {
+//            $form->display('id');
+//
+//            $form->display('created_at');
+//            $form->display('updated_at');
+//        });
+//    }
 }

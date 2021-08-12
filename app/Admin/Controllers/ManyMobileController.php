@@ -2,6 +2,8 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Grid\ManyMobile;
+use App\Admin\Actions\Grid\MobileAgent;
 use App\Admin\Repositories\Order;
 use App\Admin\Repositories\OrderMobileDetails;
 use App\Models\OrderMobileRecharge;
@@ -57,6 +59,7 @@ class ManyMobileController extends AdminController
                 $grid->disableCreateButton();            // 禁用编辑按钮
                 $grid->disableEditButton();              // 禁用删除按钮
                 $grid->disableDeleteButton();
+
                 $grid->filter(function (Grid\Filter $filter) {
                     $filter->equal('order_id', '录单ID');
                     $filter->equal('uid', '消费者ID');
@@ -93,9 +96,16 @@ class ManyMobileController extends AdminController
                 $grid->column('created_at');
                 $grid->column('updated_at')->sortable();
                 // 禁用创建按钮
-                $grid->disableCreateButton();
-                $grid->disableActions();
+                $grid->disableCreateButton();            // 禁用编辑按钮
+                $grid->disableEditButton();              // 禁用删除按钮
+                $grid->disableDeleteButton();              // 禁用删除按钮
+//                $grid->disableActions();
                 $grid->disablePagination();
+
+                $grid->actions(function (Grid\Displayers\Actions $actions) {
+                    $actions->append(new ManyMobile());
+                });
+
             }
         );
     }

@@ -2,9 +2,12 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Grid\MobileAgent;
+use App\Admin\Actions\Grid\VerifyOrder;
 use App\Admin\Repositories\Order;
 use App\Admin\Repositories\OrderMobile;
 use App\Models\OrderMobileRecharge;
+use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
@@ -35,7 +38,7 @@ class MobileAgentController extends AdminController
             $grid->column('orders.pay_status', '支付状态')
                  ->using(Order::$pay_status)
                  ->label(Order::$payStatusLabelStyle);
-            $grid->column('goods_title');
+//            $grid->column('goods_title');
             $grid->column('status')
                  ->using(OrderMobileRecharge::$statusText)
                  ->label(OrderMobileRecharge::$statusLabelStyle);
@@ -50,6 +53,11 @@ class MobileAgentController extends AdminController
 
             });
             $thisController->disableButtons($grid);
+
+            $grid->actions(function (Grid\Displayers\Actions $actions) {
+                $actions->append(new MobileAgent());
+            });
+
         });
     }
 

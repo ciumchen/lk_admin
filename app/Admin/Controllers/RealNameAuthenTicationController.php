@@ -6,12 +6,14 @@ use App\Admin\Actions\Grid\RealNameAuthAction;
 use App\Admin\Actions\Grid\ReviewBusinessApply;
 use App\Admin\Repositories\BusinessApply;
 use App\Admin\Repositories\RealNameAuthenTication;
+use App\Models\Users;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Controllers\AdminController;
-
+use Illuminate\Support\Facades\Log;
+use App\Models\RealNameAuthenTication as RealNameAuthModel;
 class RealNameAuthenTicationController extends AdminController
 {
     /**
@@ -46,10 +48,10 @@ class RealNameAuthenTicationController extends AdminController
             $grid->withBorder();
             $grid->disableBatchDelete();
             $grid->disableCreateButton();
-            $grid->disableActions();
-            $grid->disableBatchDelete();
+//            $grid->disableActions();
+
             $grid->actions(function ($actions) {
-                $actions->disableDelete();
+//                $actions->disableDelete();
                 // 去掉编辑
                 $actions->disableEdit();
                 // 去掉查看
@@ -97,13 +99,23 @@ class RealNameAuthenTicationController extends AdminController
 //     *
 //     * @return Form
 //     */
-//    protected function form()
-//    {
-//        return Form::make(new RealNameAuthenTication(), function (Form $form) {
-//            $form->display('id');
-//
-//            $form->display('created_at');
-//            $form->display('updated_at');
-//        });
-//    }
+    protected function form()
+    {
+        return Form::make(new RealNameAuthenTication(), function (Form $form) {
+            if ($form->isDeleting()) {
+                $id = $form->getKey();
+                $realData = RealNameAuthModel::find($id);
+                $userInfo = Users::where('id',$realData->uid)->first();
+                $userInfo->is_auth = 1;
+                $userInfo->save();
+
+            }
+
+            $form->display('id');
+            $form->display('created_at');
+            $form->display('updated_at');
+        });
+    }
+
+
 }

@@ -24,6 +24,7 @@ class RealNameAuthenTicationController extends AdminController
     protected function grid()
     {
         return Grid::make(new RealNameAuthenTication(), function (Grid $grid) {
+            $grid->model()->orderBy('id', 'desc');
             $grid->column('id')->sortable();
             $grid->column('uid');
             $grid->column('name');

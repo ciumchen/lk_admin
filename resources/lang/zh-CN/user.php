@@ -21,7 +21,7 @@ return [
         'return_lk' => '已返LK积分',
         'market_business' => '市商',
         'member_status' => '来客会员',
-        'balance_tuan' => '拼团金',
+        'balance_tuan' => '来拼金',
     ],
     'options' => [
     ],

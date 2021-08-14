@@ -17,6 +17,13 @@ class Gather extends Model
         3 => '已终止',
     ];
 
+    const GATHER_TYPE = [
+        1 => '话费',
+        2 => '美团',
+        3 => '油卡',
+        4 => '录单',
+    ];
+
     /**格式化输出日期
      * Prepare a date for array / JSON serialization.
      * @param  \DateTimeInterface  $date

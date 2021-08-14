@@ -22,9 +22,11 @@ class GatherController extends AdminController
         return Grid::make(new Gather(), function (Grid $grid) {
             $grid->model()->orderBy('id','desc');
             $grid->column('id')->sortable();
-            $grid->column('type', '类型');
-            $grid->column('status', '状态')->display(function ($v){
-                return Gather::GATHER_STATUS[$v];
+            $grid->column('type', '类型')->display(function ($type){
+                return Gather::GATHER_TYPE[$type];
+            });
+            $grid->column('status', '状态')->display(function ($status){
+                return Gather::GATHER_STATUS[$status];
             });
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
@@ -41,8 +43,9 @@ class GatherController extends AdminController
             $grid->perPages([20, 50, 100, 200, 500]);
 
             $grid->filter(function (Grid\Filter $filter) {
-                $filter->equal('id');
-                $filter->equal('type');
+                $filter->equal('id', '拼团id');
+                $filter->equal('type', '拼团类型');
+                $filter->between('created_at')->datetime();
             });
         });
     }

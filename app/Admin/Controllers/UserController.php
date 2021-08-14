@@ -35,8 +35,8 @@ class UserController extends AdminController
                 }
             });
             $grid->column('phone', '手机号');
-            $grid->column('salt');
-            $grid->column('code_invite');
+//            $grid->column('salt');
+//            $grid->column('code_invite');
             $grid->column('is_auth')->display(function ($v){
                 if ($v==1){
                     return "未实名";
@@ -66,6 +66,7 @@ class UserController extends AdminController
             $grid->column('member_head','盟主')->display(function ($v){
                 return User::$memberHeadLabel[$v];
             });
+            $grid->column('balance_tuan');
             $grid->column('business_lk');
             $grid->column('lk');
             $grid->column('business_integral');

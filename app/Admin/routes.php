@@ -83,6 +83,9 @@ Route::group(
         $router->resource('many-mobile', 'ManyMobileController');
         //兑换充值
         $router->resource('convert', 'ConvertController');
+
+        //来拼金记录
+        $router->resource('user_lpj_log', 'UserLpjLogController');
     }
 );
 Route::group(

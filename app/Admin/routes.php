@@ -81,6 +81,8 @@ Route::group(
         $router->resource('convert', 'ConvertController');
         //现金提现
         $router->resource('withdraw-cash', 'WithdrawCashLogController');
+        //来拼金记录
+        $router->resource('user_lpj_log', 'UserLpjLogController');
     }
 );
 Route::group(

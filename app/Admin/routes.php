@@ -12,7 +12,8 @@ Route::group(
         'namespace'  => config('admin.route.namespace'),
         'middleware' => config('admin.route.middleware'),
     ],
-    function (Router $router) {
+    function (Router $router)
+    {
         //test测试
         $router->resource('test', 'TestController');
         $router->any('getShopUserInfo', 'TestController@getShopUserInfo');
@@ -23,8 +24,6 @@ Route::group(
         $router->any('updateImg', 'TestController@updateImg');
         $router->any('delApply', 'TestController@delApply');
         $router->any('updateUser', 'TestController@updateUser');
-
-
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
         //话费订单、油卡订单、美团订单
         $router->resource('hfdd', 'LkPhoneBillOrderController');
@@ -39,11 +38,8 @@ Route::group(
         $router->resource('lkscdd', 'LkShopMallOrderController');
         $router->resource('sphy', 'VideoOrderController'); //视频会员订单
         $router->resource('addjf', 'ToBeAddedIntegralController');
-
-        $router->resource('kthydd', 'LkKthyOrderController');//开通会员订单列表
-        $router->resource('sfzsmrz', 'RealNameAuthenTicationController');//身份证实名认证
-
-
+        $router->resource('kthydd', 'LkKthyOrderController');              //开通会员订单列表
+        $router->resource('sfzsmrz', 'RealNameAuthenTicationController');  //身份证实名认证
         $router->resource('drddtj', 'DailyImportOrderStatisticController');//导入订单统计
         $router->get('/', 'HomeController@index');
         $router->resource('users', 'UserController');
@@ -83,6 +79,8 @@ Route::group(
         $router->resource('many-mobile', 'ManyMobileController');
         //兑换充值
         $router->resource('convert', 'ConvertController');
+        //现金提现
+        $router->resource('withdraw-cash', 'WithdrawCashLogController');
     }
 );
 Route::group(
@@ -90,16 +88,13 @@ Route::group(
         'prefix'    => config('admin.route.prefix'),
         'namespace' => config('admin.route.namespace'),
     ],
-    function (Router $router) {
+    function (Router $router)
+    {
         //获取城市
         $router->get('get-city', 'CityNodeController@getCity');
-
         $router->any('mytest1', 'TestController@mytest');
         $router->any('getTtShopDdInfo', 'TestController@getTtShopDdInfo');
     }
-
-
-
 );
 
 

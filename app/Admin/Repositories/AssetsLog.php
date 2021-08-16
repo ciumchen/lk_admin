@@ -32,6 +32,7 @@ class AssetsLog extends EloquentRepository
     const OPERATE_TYPE_EXCHANGE_IETS = 'exchagne_iets';//兑换iets
     const OPERATE_TYPE_EXCHANGE_IETS_SUB_ENCOURATGE = 'exchagne_iets_sub';//兑换扣除
     const OPERATE_TYPE_IETS_TO_USDT = 'IETS兑换为USDT';
+    const OPERATE_TYPE_RECHARGE_LPJ = 'recharge_lpj';
 
     /**
      * 类型文本.
@@ -54,6 +55,7 @@ class AssetsLog extends EloquentRepository
         self::OPERATE_TYPE_EXCHANGE_IETS => '兑换',
         self::OPERATE_TYPE_EXCHANGE_IETS_SUB_ENCOURATGE => '兑换扣除',
         self::OPERATE_TYPE_IETS_TO_USDT => 'IETS兑换为USDT',
+        self::OPERATE_TYPE_RECHARGE_LPJ => '兑换来拼金',
     ];
 
 }

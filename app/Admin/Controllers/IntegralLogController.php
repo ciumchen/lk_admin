@@ -59,11 +59,11 @@ class IntegralLogController extends AdminController
                     return '批量代充';
                 }elseif($v=='KTHY'){
                     return '开通会员';
+                }elseif($v=='PT'){
+                    return '拼团补贴';
                 }else{
                     return "未知类型";
                 }
-
-
                 return User::$roleLabel[$v] ?? $v;
             });
             $grid->column('operate_type')->display(function ($v){

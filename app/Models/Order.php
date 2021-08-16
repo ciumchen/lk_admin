@@ -238,4 +238,16 @@ class Order extends Model
     {
         return $this->hasOne(ConvertLogs::class, 'oid', 'id');
     }
+
+    /**
+     * Description:拼团录单
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @author
+     * @date
+     */
+    public function gatherTrade()
+    {
+        return $this->hasOne(GatherTrade::class, 'oid', 'id');
+    }
 }

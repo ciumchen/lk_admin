@@ -83,6 +83,11 @@ Route::group(
         $router->resource('withdraw-cash', 'WithdrawCashLogController');
         //来拼金记录
         $router->resource('user_lpj_log', 'UserLpjLogController');
+        /*********************** 拼团管理 ***********************/
+        //新增拼团
+        $router->resource('add-gather', 'GatherController');
+        //拼团录单列表
+        $router->resource('gather-trade', 'GatherTradeController');
     }
 );
 Route::group(

@@ -63,6 +63,11 @@ use Illuminate\Support\Carbon;
  * @method static Builder|WithdrawCashLog whereUpdatedAt($value)
  * @method static Builder|WithdrawCashLog whereUserId($value)
  * @mixin \Eloquent
+ * @property-read string $balance_type_text
+ * @property-read string $channel_text
+ * @property-read mixed|string $create_time
+ * @property-read string $status_text
+ * @property-read mixed|string $update_time
  */
 class WithdrawCashLog extends BaseModel
 {

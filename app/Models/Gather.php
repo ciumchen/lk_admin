@@ -5,6 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Gather
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|Gather newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Gather newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Gather query()
+ * @mixin \Eloquent
+ */
 class Gather extends Model
 {
     use HasFactory;

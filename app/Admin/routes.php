@@ -88,6 +88,8 @@ Route::group(
         $router->resource('add-gather', 'GatherController');
         //拼团录单列表
         $router->resource('gather-trade', 'GatherTradeController');
+        // 斑马订单列表
+        $router->resource('bm-order-lists', 'BmRechargeOrderController');
     }
 );
 Route::group(

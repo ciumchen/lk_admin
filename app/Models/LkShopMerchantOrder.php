@@ -69,6 +69,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|LkShopMerchantOrder whereRemark($value)
  * @method static \Illuminate\Database\Eloquent\Builder|LkShopMerchantOrder whereShopOrderId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|LkShopMerchantOrder whereUid($value)
+ * @property int|null $is_confirm 确认收货状态：0=未确认，1=已确认收货
+ * @method static \Illuminate\Database\Eloquent\Builder|LkShopMerchantOrder whereIsConfirm($value)
  */
 class LkShopMerchantOrder extends Model
 {

@@ -6,6 +6,14 @@ use Dcat\Admin\Traits\HasDateTimeFormatter;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\UserLpjLog
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|UserLpjLog newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserLpjLog newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserLpjLog query()
+ * @mixin \Eloquent
+ */
 class UserLpjLog extends Model
 {
 	use HasDateTimeFormatter;

@@ -57,6 +57,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\TradeOrder|null          $trade
  * @property-read \App\Models\OrderUtilityBill|null    $utility
  * @property-read \App\Models\OrderVideo|null          $video
+ * @property int|null $import_day 导入日期
+ * @property int|null $member_gl_oid 购买来客会员邀请人订单关联用户订单oid
+ * @property-read \App\Models\ConvertLogs|null $convert
+ * @property-read \App\Models\GatherTrade|null $gatherTrade
+ * @property-read \App\Models\LkshopOrder $lkshop_order
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereImportDay($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereMemberGlOid($value)
  */
 class Order extends Model
 {

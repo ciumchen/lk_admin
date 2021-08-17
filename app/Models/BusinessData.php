@@ -63,6 +63,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|BusinessData whereUid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|BusinessData whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int|null $is_status 审核状态，1审核中，2审核通过，3审核失败
+ * @method static \Illuminate\Database\Eloquent\Builder|BusinessData whereIsStatus($value)
  */
 class BusinessData extends Model
 {

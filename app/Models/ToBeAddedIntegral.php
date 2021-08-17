@@ -51,6 +51,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|ToBeAddedIntegral whereUid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ToBeAddedIntegral whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int|null $import_day 导入日期
+ * @property int|null $member_gl_oid 购买来客会员邀请人订单关联用户订单oid
+ * @method static \Illuminate\Database\Eloquent\Builder|ToBeAddedIntegral whereImportDay($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ToBeAddedIntegral whereMemberGlOid($value)
  */
 class ToBeAddedIntegral extends Model
 {

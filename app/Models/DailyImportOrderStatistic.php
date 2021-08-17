@@ -35,6 +35,8 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property int|null $dr_count 导入订单数量统计
  * @method static \Illuminate\Database\Eloquent\Builder|DailyImportOrderStatistic whereDrCount($value)
+ * @property string|null $other_price 订单消费金额其他让利比例的累计
+ * @method static \Illuminate\Database\Eloquent\Builder|DailyImportOrderStatistic whereOtherPrice($value)
  */
 class DailyImportOrderStatistic extends Model
 {

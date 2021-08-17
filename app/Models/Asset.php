@@ -31,6 +31,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Asset whereUid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Asset whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int $change_times 资产变更次数
+ * @method static \Illuminate\Database\Eloquent\Builder|Asset whereChangeTimes($value)
  */
 class Asset extends Model
 {

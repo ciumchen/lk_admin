@@ -65,6 +65,24 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property int $market_business 市商身份，0不是，1是
  * @method static \Illuminate\Database\Eloquent\Builder|Users whereMarketBusiness($value)
+ * @property int|null $shop_uid 商城用户uid
+ * @property int|null $member_status 来客会员状态，0普通用户，1会员
+ * @property string $alipay_user_id 用户支付宝ID
+ * @property string $alipay_account 用户支付宝账户
+ * @property string $alipay_nickname 用户支付宝昵称
+ * @property string $alipay_avatar 用户支付宝头像
+ * @property string $balance_tuan 拼团金额账户
+ * @property string $balance_allowance 可提现额度[补贴]
+ * @property string $balance_consume 再消费额度
+ * @method static \Illuminate\Database\Eloquent\Builder|Users whereAlipayAccount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Users whereAlipayAvatar($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Users whereAlipayNickname($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Users whereAlipayUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Users whereBalanceAllowance($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Users whereBalanceConsume($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Users whereBalanceTuan($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Users whereMemberStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Users whereShopUid($value)
  */
 class Users extends Model
 {

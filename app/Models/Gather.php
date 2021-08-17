@@ -18,7 +18,7 @@ class Gather extends Model
     ];
 
     const GATHER_TYPE = [
-        1 => '话费',
+        1 => '100元来客购物卡',
         2 => '美团',
         3 => '油卡',
         4 => '录单',

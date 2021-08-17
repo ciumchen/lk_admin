@@ -88,6 +88,8 @@ Route::group(
         $router->resource('add-gather', 'GatherController');
         //拼团录单列表
         $router->resource('gather-trade', 'GatherTradeController');
+        //用户拼团列表
+        $router->resource('gather-winning', 'GatherWinningController');
     }
 );
 Route::group(

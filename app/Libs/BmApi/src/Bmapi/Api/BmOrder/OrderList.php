@@ -107,15 +107,14 @@ class OrderList extends ApiRequest
     /**
      * Description:
      *
-     * @param string $val
+     * @param  string  $val
      *
      * @return $this
      * @author lidong<947714443@qq.com>
      * @date   2021/8/2 0002
      */
     public function setRechargeAccount(string $val)
-    : self
-    {
+    : self {
         $this->rechargeAccount = $val;
         return $this;
     }
@@ -123,15 +122,14 @@ class OrderList extends ApiRequest
     /**
      * Description:
      *
-     * @param string $val
+     * @param  string  $val
      *
      * @return $this
      * @author lidong<947714443@qq.com>
      * @date   2021/8/2 0002
      */
     public function setPageNo(string $val)
-    : self
-    {
+    : self {
         $this->pageNo = $val;
         return $this;
     }
@@ -139,15 +137,14 @@ class OrderList extends ApiRequest
     /**
      * Description:
      *
-     * @param string $val
+     * @param  string  $val
      *
      * @return $this
      * @author lidong<947714443@qq.com>
      * @date   2021/8/2 0002
      */
     public function setPageSize(string $val)
-    : self
-    {
+    : self {
         $this->pageSize = $val;
         return $this;
     }
@@ -155,15 +152,14 @@ class OrderList extends ApiRequest
     /**
      * Description:
      *
-     * @param string $val
+     * @param  string  $val
      *
      * @return $this
      * @author lidong<947714443@qq.com>
      * @date   2021/8/2 0002
      */
     public function setOrderState(string $val)
-    : self
-    {
+    : self {
         $this->orderState = $val;
         return $this;
     }
@@ -171,15 +167,14 @@ class OrderList extends ApiRequest
     /**
      * Description:
      *
-     * @param string $val
+     * @param  string  $val
      *
      * @return $this
      * @author lidong<947714443@qq.com>
      * @date   2021/8/2 0002
      */
     public function setOrderTime(string $val)
-    : self
-    {
+    : self {
         $this->orderTime = $val;
         return $this;
     }

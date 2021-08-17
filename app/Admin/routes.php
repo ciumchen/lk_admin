@@ -86,7 +86,7 @@ Route::group(
 
         //购物卡兑换记录列表
         $router->resource('user_gwk_log', 'UserShoppingCardDhLogController');
-        
+
         /*********************** 拼团管理 ***********************/
         //新增拼团
         $router->resource('add-gather', 'GatherController');

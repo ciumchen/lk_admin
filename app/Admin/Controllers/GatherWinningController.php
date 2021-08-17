@@ -2,7 +2,6 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\Gather;
 use App\Models\GatherUsers;
 use Dcat\Admin\Controllers\AdminController;
 use Dcat\Admin\Form;
@@ -61,7 +60,7 @@ class GatherWinningController extends AdminController
      */
     protected function detail($id)
     {
-        return Show::make($id, new GatherShoppingCard(), function (Show $show) {
+        return Show::make($id, new GatherUsers(), function (Show $show) {
             $show->field('id');
             $show->field('gid');
             $show->field('uid');
@@ -78,7 +77,7 @@ class GatherWinningController extends AdminController
      */
     protected function form()
     {
-        return Form::make(new GatherShoppingCard(), function (Form $form) {
+        return Form::make(new GatherUsers(), function (Form $form) {
             $form->display('id');
             $form->display('gid');
             $form->display('uid');

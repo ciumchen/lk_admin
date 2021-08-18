@@ -32,8 +32,7 @@ class CreateBmOrders extends Migration
             $table->mediumInteger('itemNum')->default(0)->comment('商品数量');
             $table->string('itemName', 100)->default('')->comment('商品名称');
             $table->string('supUserId', 50)->default('')->comment('供货商编号');
-            $table->string('orderTimeFull')->default('')->comment('供货商编号');
-            
+            $table->string('orderTimeFull')->default('')->comment('订单时间');
             $table->timestamps();
         });
     }

@@ -2,13 +2,12 @@
 
 namespace App\Admin\Controllers;
 
-use App\Admin\Extensions\Tools\BmOrderGetList;
 use App\Admin\Repositories\BmRechargeOrder;
-use App\Services\BmApi\BmOrderService;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Controllers\AdminController;
+use App\Models\BmRechargeOrder as BmModel;
 
 class BmRechargeOrderController extends AdminController
 {
@@ -19,34 +18,35 @@ class BmRechargeOrderController extends AdminController
      */
     protected function grid()
     {
-//        $res = (new BmOrderService)->getOrderLists('2021-08-16');
-//        dd($res);
-        return Grid::make(new BmRechargeOrder(), function (Grid $grid)
+        $_this = $this;
+        return Grid::make(new BmRechargeOrder(), function (Grid $grid) use ($_this)
         {
-            $grid->column('id')->sortable();
+            $grid->model()->orderByDesc('orderTimeFull');
             $grid->column('billId');
-            $grid->column('classType');
+            $grid->column('rechargeAccount');
+//            $grid->column('classType');
             $grid->column('facePrice');
-            $grid->column('itemCost');
+            $grid->column('saleAmount');
+            $grid->column('orderCost');
+//            $grid->column('itemCost');
             $grid->column('itemName');
             $grid->column('itemNum');
-            $grid->column('operateTime');
-            $grid->column('orderCost');
-            $grid->column('orderProfit');
-            $grid->column('orderTime');
+//            $grid->column('operateTime');
+//            $grid->column('orderProfit');
+//            $grid->column('orderTime');
             $grid->column('orderTimeFull');
-            $grid->column('payState');
-            $grid->column('rechargeAccount');
-            $grid->column('rechargeState');
-            $grid->column('revokeMessage');
-            $grid->column('saleAmount');
+            $grid->column('payState')->using(BmModel::$payStateText)->label(BmModel::$payStateStyle);
+            $grid->column('rechargeState')->using(BmModel::$rechargeStateText)->label(BmModel::$rechargeStateStyle);
+            $grid->column('revokeMessage')->limit(20);
             $grid->column('supUserId');
-            $grid->column('created_at');
-            $grid->column('updated_at')->sortable();
             $grid->filter(function (Grid\Filter $filter)
             {
-                $filter->equal('id');
+                $filter->equal('billId');
+                $filter->equal('rechargeAccount');
+                $filter->equal('rechargeState')->select(BmModel::$rechargeStateText);
+                $filter->between('orderTimeFull')->date();
             });
+            $_this->disableButton($grid);
         });
     }
     
@@ -114,5 +114,27 @@ class BmRechargeOrderController extends AdminController
             $form->display('created_at');
             $form->display('updated_at');
         });
+    }
+    
+    /**
+     * Description:禁用操作按钮
+     *
+     * @param  \Dcat\Admin\Grid  $grid
+     *
+     * @author lidong<947714443@qq.com>
+     * @date   2021/8/18 0018
+     */
+    public function disableButton(Grid $grid)
+    {
+        $grid->disableActions();
+        // 禁用创建按钮
+        $grid->disableCreateButton();
+        // 禁用编辑按钮
+        $grid->disableEditButton();
+        // 禁用删除按钮
+        $grid->disableDeleteButton();
+        // 禁用显示按钮
+        $grid->disableViewButton();
+        $grid->disableBatchDelete();
     }
 }

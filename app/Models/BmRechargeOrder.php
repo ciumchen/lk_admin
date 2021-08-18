@@ -59,4 +59,75 @@ use Illuminate\Support\Carbon;
 class BmRechargeOrder extends BaseModel
 {
     use HasFactory;
+    
+    //订单付款状态 0 未付款1 已付款
+    const PAY_STATE_DEFAULT = 0;
+    
+    const PAY_STATE_SUCCESS = 1;
+    
+    //订单充值状态 0充值中 1成功 9撤销
+    const RECHARGE_STATE_DEFAULT = 0;
+    
+    const RECHARGE_STATE_SUCCESS = 1;
+    
+    const RECHARGE_STATE_CANCEL  = 9;
+    
+    // 商品类型：1:实物商品 2:直充商品 3:卡密商品 4:话费充值 6:支付和金币充值
+    const CLASS_TYPE_DEFAULT         = 0;
+    
+    const CLASS_TYPE_IN_KIND         = 1;
+    
+    const CLASS_TYPE_RECHARGE        = 2;
+    
+    const CLASS_TYPE_CD_KEY          = 3;
+    
+    const CLASS_TYPE_MOBILE_RECHARGE = 4;
+    
+    const CLASS_TYPE_PAY             = 6;
+    
+    /**
+     * @var string[] 支付状态文字
+     */
+    public static $payStateText = [
+        self::PAY_STATE_DEFAULT => '未付款',
+        self::PAY_STATE_SUCCESS => '已付款',
+    ];
+    
+    /**
+     * @var string[] 支付状态样式
+     */
+    public static $payStateStyle = [
+        self::PAY_STATE_DEFAULT => 'warning',
+        self::PAY_STATE_SUCCESS => 'success',
+    ];
+    
+    /**
+     * @var string[] 支付状态文字
+     */
+    public static $rechargeStateText = [
+        self::RECHARGE_STATE_DEFAULT => '充值中',
+        self::RECHARGE_STATE_SUCCESS => '成功',
+        self::RECHARGE_STATE_CANCEL  => '撤销',
+    ];
+    
+    /**
+     * @var array 支付状态样式
+     */
+    public static $rechargeStateStyle = [
+        self::RECHARGE_STATE_DEFAULT => 'danger',
+        self::RECHARGE_STATE_SUCCESS => 'success',
+        self::RECHARGE_STATE_CANCEL  => 'dark',
+    ];
+    
+    /**
+     * @var string[] 商品类型文字
+     */
+    public static $classTypeText = [
+        self::CLASS_TYPE_DEFAULT         => '未知',
+        self::CLASS_TYPE_IN_KIND         => '实物',
+        self::CLASS_TYPE_RECHARGE        => '直充',
+        self::CLASS_TYPE_CD_KEY          => '卡密',
+        self::CLASS_TYPE_MOBILE_RECHARGE => '话费',
+        self::CLASS_TYPE_PAY             => '支付',
+    ];
 }

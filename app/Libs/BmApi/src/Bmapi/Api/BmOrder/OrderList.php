@@ -92,6 +92,7 @@ class OrderList extends ApiRequest
         $this->lists = $result[ 'data' ][ 'dataList' ];
         $this->pageNo = $result[ 'data' ][ 'pageNo' ];
         $this->pageSize = $result[ 'data' ][ 'pageSize' ];
+        $this->totalCount = $result[ 'data' ][ 'totalCount' ];
         return $this;
     }
     
@@ -101,7 +102,11 @@ class OrderList extends ApiRequest
         return $this->lists;
     }
     
-    
+    public function getTotalCount()
+    : int
+    {
+        return $this->totalCount;
+    }
     
     /** ********************************************* **/
     /**

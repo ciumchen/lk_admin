@@ -26,14 +26,15 @@ class UserController extends AdminController
             $grid->model()->orderBy('id','desc');
             $grid->model()->with(['invite']);
             $grid->column('id')->sortable();
-            $grid->column('invite_uid', '邀请人')->display(function (){
-                if($this->invite_uid > 0)
-                {
-                    return $this->invite['phone']."（UID：".$this->invite_uid."）";
-                }else{
-                    return 0;
-                }
-            });
+//            $grid->column('invite_uid', '邀请人')->display(function (){
+//                if($this->invite_uid > 0)
+//                {
+//                    return $this->invite['phone']."（UID：".$this->invite_uid."）";
+//                }else{
+//                    return 0;
+//                }
+//            });
+            $grid->column('invite_uid', '邀请人');
             $grid->column('phone', '手机号');
 //            $grid->column('salt');
 //            $grid->column('code_invite');
@@ -67,6 +68,7 @@ class UserController extends AdminController
                 return User::$memberHeadLabel[$v];
             });
             $grid->column('balance_tuan');
+            $grid->column('gather_card','购物卡');
             $grid->column('business_lk');
             $grid->column('lk');
             $grid->column('business_integral');
@@ -75,17 +77,17 @@ class UserController extends AdminController
             $grid->column('return_business_integral');
             $grid->column('return_lk');
             $grid->column('ban_reason');
-            if (Admin::user()->id==1||Admin::user()->id==2){
-                $grid->column('market_business')->switch('', true);
-            }else{
-                $grid->column('market_business')->display(function($v){
-                    if($v==1){
-                        return "<span style='color: green;font-weight:bold;'>市商</span>";
-                    }else{
-                        return "<span style='color: red;font-weight:bold;'>非市商</span>";
-                    }
-                });
-            }
+//            if (Admin::user()->id==1||Admin::user()->id==2){
+//                $grid->column('market_business')->switch('', true);
+//            }else{
+//                $grid->column('market_business')->display(function($v){
+//                    if($v==1){
+//                        return "<span style='color: green;font-weight:bold;'>市商</span>";
+//                    }else{
+//                        return "<span style='color: red;font-weight:bold;'>非市商</span>";
+//                    }
+//                });
+//            }
 
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();

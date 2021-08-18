@@ -83,6 +83,8 @@ Route::group(
         $router->resource('withdraw-cash', 'WithdrawCashLogController');
         //来拼金记录
         $router->resource('user_lpj_log', 'UserLpjLogController');
+        //购物卡兑换记录列表
+        $router->resource('user_gwk_log', 'UserShoppingCardDhLogController');
         /*********************** 拼团管理 ***********************/
         //新增拼团
         $router->resource('add-gather', 'GatherController');
@@ -90,6 +92,8 @@ Route::group(
         $router->resource('gather-trade', 'GatherTradeController');
         // 斑马订单列表
         $router->resource('bm-order-lists', 'BmRechargeOrderController');
+        //用户拼团列表
+        $router->resource('gather-winning', 'GatherWinningController');
     }
 );
 Route::group(

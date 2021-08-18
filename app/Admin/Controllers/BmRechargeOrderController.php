@@ -39,14 +39,9 @@ class BmRechargeOrderController extends AdminController
             $grid->column('rechargeState')->using(BmModel::$rechargeStateText)->label(BmModel::$rechargeStateStyle);
             $grid->column('revokeMessage')->limit(20);
             $grid->column('supUserId');
-            $grid->filter(function (Grid\Filter $filter)
-            {
-                $filter->equal('billId');
-                $filter->equal('rechargeAccount');
-                $filter->equal('rechargeState')->select(BmModel::$rechargeStateText);
-                $filter->between('orderTimeFull')->date();
-            });
             $_this->disableButton($grid);
+            $_this->filterSearch($grid);
+            $_this->exportExcel($grid);
         });
     }
     
@@ -136,5 +131,75 @@ class BmRechargeOrderController extends AdminController
         // 禁用显示按钮
         $grid->disableViewButton();
         $grid->disableBatchDelete();
+    }
+    
+    /**
+     * Description:搜索查询
+     *
+     * @param  \Dcat\Admin\Grid  $grid
+     *
+     * @author lidong<947714443@qq.com>
+     * @date   2021/8/18 0018
+     */
+    public function filterSearch(Grid $grid)
+    {
+        $grid->filter(function (Grid\Filter $filter)
+        {
+            $filter->equal('billId');
+            $filter->equal('rechargeAccount');
+            $filter->equal('rechargeState')->select(BmModel::$rechargeStateText);
+            $filter->between('orderTimeFull')->date();
+        });
+    }
+    
+    /**
+     * Description:导出
+     *
+     * @param  \Dcat\Admin\Grid  $grid
+     *
+     * @author lidong<947714443@qq.com>
+     * @date   2021/8/18 0018
+     */
+    public function exportExcel(Grid $grid)
+    {
+        $grid->export()->titles($this->getTitles())->rows(function (array $rows)
+        {
+            foreach ($rows as &$row) {
+                $row[ 'payState' ] = BmModel::$payStateText[ $row[ 'payState' ] ];
+                $row[ 'rechargeState' ] = BmModel::$rechargeStateText[ $row[ 'rechargeState' ] ];
+            }
+            return $rows;
+        })->filename('斑马订单-'.date('YmdHis'));
+    }
+    
+    /**
+     * Description:获取导出列以及对应标题
+     *
+     * @return array
+     * @author lidong<947714443@qq.com>
+     * @date   2021/8/18 0018
+     */
+    public function getTitles()
+    : array
+    {
+        return [
+            'billId'          => admin_trans_field('billId'),
+            //            'classType'       => admin_trans_field('classType'),
+            'facePrice'       => admin_trans_field('facePrice'),
+            //            'itemCost'        => admin_trans_field('itemCost'),
+            'itemName'        => admin_trans_field('itemName'),
+            'itemNum'         => admin_trans_field('itemNum'),
+            //            'operateTime'     => admin_trans_field('operateTime'),
+            'orderCost'       => admin_trans_field('orderCost'),
+            //            'orderProfit'     => admin_trans_field('orderProfit'),
+            //            'orderTime'       => admin_trans_field('orderTime'),
+            'orderTimeFull'   => admin_trans_field('orderTimeFull'),
+            'payState'        => admin_trans_field('payState'),
+            'rechargeAccount' => admin_trans_field('rechargeAccount'),
+            'rechargeState'   => admin_trans_field('rechargeState'),
+            'revokeMessage'   => admin_trans_field('revokeMessage'),
+            'saleAmount'      => admin_trans_field('saleAmount'),
+            'supUserId'       => admin_trans_field('supUserId'),
+        ];
     }
 }

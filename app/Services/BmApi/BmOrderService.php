@@ -104,11 +104,6 @@ class BmOrderService
                 $this->saveOrderList($list);
                 $offset = ($page + 1) * $pageSize;
                 $page++;
-                dump("\$page = ".$page);
-                dump("\$pageSize = ".$pageSize);
-                dump("\$total = ".$total);
-                dump("\$offset = ".$offset);
-                dump("------");
                 sleep(5);
             } while ($offset < $total);
         } catch (\Exception $e) {

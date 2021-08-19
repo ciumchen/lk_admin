@@ -94,6 +94,8 @@ Route::group(
         $router->resource('bm-order-lists', 'BmRechargeOrderController');
         //用户拼团列表
         $router->resource('gather-winning', 'GatherWinningController');
+        // 用户等级管理
+        $router->resource('user-level', 'UserLevelController');
     }
 );
 Route::group(

@@ -301,6 +301,21 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection change_password_time
      * @property Grid\Column|Collection change_password_ip
      * @property Grid\Column|Collection img_hold
+     * @property Grid\Column|Collection level
+     * @property Grid\Column|Collection promotion_rewards_ratio
+     * @property Grid\Column|Collection same_level_rewards_ratio
+     * @property Grid\Column|Collection weighted_equally_rewards_ratio
+     * @property Grid\Column|Collection self_integral
+     * @property Grid\Column|Collection direct_num
+     * @property Grid\Column|Collection direct_type
+     * @property Grid\Column|Collection direct_activity
+     * @property Grid\Column|Collection direct_integral
+     * @property Grid\Column|Collection team_num
+     * @property Grid\Column|Collection team_type
+     * @property Grid\Column|Collection team_activity
+     * @property Grid\Column|Collection team_integral
+     * @property Grid\Column|Collection is_auto_update
+     * @property Grid\Column|Collection is_verified
      * @property Grid\Column|Collection sys_mid
      * @property Grid\Column|Collection time
      * @property Grid\Column|Collection edit_to_phone
@@ -631,6 +646,21 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection change_password_time(string $label = null)
      * @method Grid\Column|Collection change_password_ip(string $label = null)
      * @method Grid\Column|Collection img_hold(string $label = null)
+     * @method Grid\Column|Collection level(string $label = null)
+     * @method Grid\Column|Collection promotion_rewards_ratio(string $label = null)
+     * @method Grid\Column|Collection same_level_rewards_ratio(string $label = null)
+     * @method Grid\Column|Collection weighted_equally_rewards_ratio(string $label = null)
+     * @method Grid\Column|Collection self_integral(string $label = null)
+     * @method Grid\Column|Collection direct_num(string $label = null)
+     * @method Grid\Column|Collection direct_type(string $label = null)
+     * @method Grid\Column|Collection direct_activity(string $label = null)
+     * @method Grid\Column|Collection direct_integral(string $label = null)
+     * @method Grid\Column|Collection team_num(string $label = null)
+     * @method Grid\Column|Collection team_type(string $label = null)
+     * @method Grid\Column|Collection team_activity(string $label = null)
+     * @method Grid\Column|Collection team_integral(string $label = null)
+     * @method Grid\Column|Collection is_auto_update(string $label = null)
+     * @method Grid\Column|Collection is_verified(string $label = null)
      * @method Grid\Column|Collection sys_mid(string $label = null)
      * @method Grid\Column|Collection time(string $label = null)
      * @method Grid\Column|Collection edit_to_phone(string $label = null)
@@ -966,6 +996,21 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection change_password_time
      * @property Show\Field|Collection change_password_ip
      * @property Show\Field|Collection img_hold
+     * @property Show\Field|Collection level
+     * @property Show\Field|Collection promotion_rewards_ratio
+     * @property Show\Field|Collection same_level_rewards_ratio
+     * @property Show\Field|Collection weighted_equally_rewards_ratio
+     * @property Show\Field|Collection self_integral
+     * @property Show\Field|Collection direct_num
+     * @property Show\Field|Collection direct_type
+     * @property Show\Field|Collection direct_activity
+     * @property Show\Field|Collection direct_integral
+     * @property Show\Field|Collection team_num
+     * @property Show\Field|Collection team_type
+     * @property Show\Field|Collection team_activity
+     * @property Show\Field|Collection team_integral
+     * @property Show\Field|Collection is_auto_update
+     * @property Show\Field|Collection is_verified
      * @property Show\Field|Collection sys_mid
      * @property Show\Field|Collection time
      * @property Show\Field|Collection edit_to_phone
@@ -1296,6 +1341,21 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection change_password_time(string $label = null)
      * @method Show\Field|Collection change_password_ip(string $label = null)
      * @method Show\Field|Collection img_hold(string $label = null)
+     * @method Show\Field|Collection level(string $label = null)
+     * @method Show\Field|Collection promotion_rewards_ratio(string $label = null)
+     * @method Show\Field|Collection same_level_rewards_ratio(string $label = null)
+     * @method Show\Field|Collection weighted_equally_rewards_ratio(string $label = null)
+     * @method Show\Field|Collection self_integral(string $label = null)
+     * @method Show\Field|Collection direct_num(string $label = null)
+     * @method Show\Field|Collection direct_type(string $label = null)
+     * @method Show\Field|Collection direct_activity(string $label = null)
+     * @method Show\Field|Collection direct_integral(string $label = null)
+     * @method Show\Field|Collection team_num(string $label = null)
+     * @method Show\Field|Collection team_type(string $label = null)
+     * @method Show\Field|Collection team_activity(string $label = null)
+     * @method Show\Field|Collection team_integral(string $label = null)
+     * @method Show\Field|Collection is_auto_update(string $label = null)
+     * @method Show\Field|Collection is_verified(string $label = null)
      * @method Show\Field|Collection sys_mid(string $label = null)
      * @method Show\Field|Collection time(string $label = null)
      * @method Show\Field|Collection edit_to_phone(string $label = null)

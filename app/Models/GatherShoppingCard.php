@@ -5,6 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\GatherShoppingCard
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|GatherShoppingCard newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|GatherShoppingCard newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|GatherShoppingCard query()
+ * @mixin \Eloquent
+ */
 class GatherShoppingCard extends Model
 {
     use HasFactory;

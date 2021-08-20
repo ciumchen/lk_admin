@@ -64,8 +64,8 @@ class UserLevelController extends AdminController
             $grid->column('team_type')->using(LevelModel::getTypesArray());
             $grid->column('team_activity');
             $grid->column('team_integral');
-            $grid->column('is_verified');
-            $grid->column('is_auto_update');
+            $grid->column('is_verified')->switch();
+            $grid->column('is_auto_update')->switch();
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
             $grid->filter(function (Grid\Filter $filter)

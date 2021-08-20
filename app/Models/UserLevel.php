@@ -83,7 +83,7 @@ class UserLevel extends Model
         $types_arr = [];
         UserLevel::all()->each(function (&$item) use (&$types_arr)
         {
-            $types_arr[ $item->id ] = $item->name;
+            $types_arr[ $item->id ] = $item->title;
         });
         return $types_arr;
     }

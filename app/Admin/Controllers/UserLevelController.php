@@ -17,9 +17,11 @@ class UserLevelController extends AdminController
      * @return Grid
      */
     protected function grid()
+    : Grid
     {
         return Grid::make(new UserLevel(), function (Grid $grid)
         {
+            $grid->model()->orderByDesc('sort');
             $grid->combine(
                 '升级限制',
                 [
@@ -41,16 +43,25 @@ class UserLevelController extends AdminController
             $grid->column('title');
             $grid->column('level')->sortable();
 //            $grid->column('sort')->sortable();
-            $grid->column('promotion_rewards_ratio');
-            $grid->column('same_level_rewards_ratio');
-            $grid->column('weighted_equally_rewards_ratio');
+            $grid->column('promotion_rewards_ratio')->display(function ()
+            {
+                return ($this->promotion_rewards_ratio ?? '').'%';
+            });
+            $grid->column('same_level_rewards_ratio')->display(function ()
+            {
+                return ($this->same_level_rewards_ratio ?? '').'%';
+            });;
+            $grid->column('weighted_equally_rewards_ratio')->display(function ()
+            {
+                return ($this->weighted_equally_rewards_ratio ?? '').'%';
+            });;
             $grid->column('self_integral');
             $grid->column('direct_num');
-            $grid->column('direct_type');
+            $grid->column('direct_type')->using(LevelModel::getTypesArray());
             $grid->column('direct_activity');
             $grid->column('direct_integral');
             $grid->column('team_num');
-            $grid->column('team_type');
+            $grid->column('team_type')->using(LevelModel::getTypesArray());
             $grid->column('team_activity');
             $grid->column('team_integral');
             $grid->column('is_verified');
@@ -61,6 +72,8 @@ class UserLevelController extends AdminController
             {
                 $filter->equal('id');
             });
+            //固定首尾列
+            $grid->fixColumns(2, -1);
         });
     }
     
@@ -118,7 +131,7 @@ class UserLevelController extends AdminController
                 $form->select('level')
                      ->options(LevelModel::getLevelsArray())
                      ->default(0)
-                     ->help('请设置该等级的'.admin_trans_field('level'));
+                     ->help('请设置该等级的'.admin_trans_field('level').',数字越大等级越高');
                 $form->rate('promotion_rewards_ratio')
                      ->default(0)
                      ->required()
@@ -135,7 +148,8 @@ class UserLevelController extends AdminController
                      ->options([0 => '否', 1 => '是'])
                      ->default(1)
                      ->help('请设置该等级的是否可以'.admin_trans_field('is_auto_update'));
-                $form->number('sort')->default(0)->help('请设置'.admin_trans_field('sort').',数字越大等级越高');
+                $form->number('sort')
+                     ->default(0)->help('请设置'.admin_trans_field('sort').',数字越大排序越靠前');
                 $form->display('created_at');
                 $form->display('updated_at');
             });

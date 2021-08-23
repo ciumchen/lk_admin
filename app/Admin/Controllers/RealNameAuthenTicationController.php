@@ -108,6 +108,7 @@ class RealNameAuthenTicationController extends AdminController
                 $realData = RealNameAuthModel::find($id);
                 $userInfo = Users::where('id',$realData->uid)->first();
                 $userInfo->is_auth = 1;
+                $userInfo->alipay_user_id = '';
                 $userInfo->save();
 
             }

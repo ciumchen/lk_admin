@@ -62,7 +62,7 @@ class RealNameAuthenTicationController extends AdminController
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
                 $filter->equal('uid');
-                $filter->equal('name');
+                $filter->like('name');
                 $filter->equal('status')->select(function () {
                     return RealNameAuthenTication::$sfz_statusLabel;
                 });

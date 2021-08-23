@@ -61,6 +61,8 @@ class LkMeiTuanOrderController extends AdminController
                     return '支付宝支付';
                 }elseif($v=='wx'){
                     return '微信支付';
+                }elseif($v=='gwk'){
+                    return '购物卡';
                 }else{
                     return "其他支付";
                 }

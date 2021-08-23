@@ -23,12 +23,16 @@ class UserShoppingCardDhLogController extends AdminController
             $grid->column('id')->sortable();
             $grid->column('uid');
             $grid->column('operate_type')->display(function ($v) {
-                if ($v=='exchange_dc'){
+                if ($v=='exchange_zl'){
                     return "代充";
                 } elseif ($v=='exchange_pl') {
                     return "批量代充";
                 }elseif ($v=='exchange_mt') {
                     return "美团";
+                }elseif ($v=='exchange_hf') {
+                    return "直充";
+                }elseif ($v=='exchange_lr') {
+                    return "录单";
                 }else{
                     return "未知操作";
                 }

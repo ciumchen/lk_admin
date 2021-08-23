@@ -96,6 +96,8 @@ Route::group(
         $router->resource('gather-winning', 'GatherWinningController');
         // 用户等级管理
         $router->resource('user-level', 'UserLevelController');
+        // 用户等级关系管理
+        $router->resource('user-relation', 'UserLevelRelationController');
     }
 );
 Route::group(

@@ -25,3 +25,4 @@ psalm.xml
 .user.ini
 404.html
 index.html
+dcat_admin_ide_helper.php

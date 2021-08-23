@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Dcat\Admin\Traits\HasDateTimeFormatter;
-
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 /**
  * App\Models\Users
@@ -86,8 +86,57 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Users extends Model
 {
-	use HasDateTimeFormatter;
-
-
+    use HasDateTimeFormatter;
+    
     protected $table = 'users';
+    
+    /**
+     * Description:
+     *
+     * @param  array  $filter
+     * @param  int  $limit
+     *
+     * @return \Illuminate\Support\Collection
+     * @author lidong<947714443@qq.com>
+     * @date 2021/8/23 0023
+     */
+    public static function getAllUserListWithoutIds(array $filter = [], int $limit = 0)
+    : Collection {
+        $Users = Users::whereNotIn('id', $filter);
+        if ($limit > 0) {
+            $Users->limit($limit);
+        }
+        return $Users->get();
+    }
+    
+    /**
+     * Description:
+     *
+     * @return array
+     * @author lidong<947714443@qq.com>
+     * @date 2021/8/23 0023
+     */
+    public static function getUserAllIds()
+    : array
+    {
+        return Users::all()->pluck('id')->toArray();
+    }
+    
+    /**
+     * Description:
+     *
+     * @param  array  $ids
+     *
+     * @return \Illuminate\Support\Collection
+     * @author lidong<947714443@qq.com>
+     * @date 2021/8/23 0023
+     */
+    public static function getUserList(array $ids = [], $limit = 0)
+    : Collection {
+        $Users = Users::whereIn('id', $ids);
+        if ($limit > 0) {
+            $Users->limit($limit);
+        }
+        return $Users->get();
+    }
 }

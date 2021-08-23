@@ -316,6 +316,13 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection team_integral
      * @property Grid\Column|Collection is_auto_update
      * @property Grid\Column|Collection is_verified
+     * @property Grid\Column|Collection level_id
+     * @property Grid\Column|Collection diamond_id
+     * @property Grid\Column|Collection gold_id
+     * @property Grid\Column|Collection silver_id
+     * @property Grid\Column|Collection invite_id
+     * @property Grid\Column|Collection pid_route
+     * @property Grid\Column|Collection is_ban
      * @property Grid\Column|Collection sys_mid
      * @property Grid\Column|Collection time
      * @property Grid\Column|Collection edit_to_phone
@@ -661,6 +668,13 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection team_integral(string $label = null)
      * @method Grid\Column|Collection is_auto_update(string $label = null)
      * @method Grid\Column|Collection is_verified(string $label = null)
+     * @method Grid\Column|Collection level_id(string $label = null)
+     * @method Grid\Column|Collection diamond_id(string $label = null)
+     * @method Grid\Column|Collection gold_id(string $label = null)
+     * @method Grid\Column|Collection silver_id(string $label = null)
+     * @method Grid\Column|Collection invite_id(string $label = null)
+     * @method Grid\Column|Collection pid_route(string $label = null)
+     * @method Grid\Column|Collection is_ban(string $label = null)
      * @method Grid\Column|Collection sys_mid(string $label = null)
      * @method Grid\Column|Collection time(string $label = null)
      * @method Grid\Column|Collection edit_to_phone(string $label = null)
@@ -1011,6 +1025,13 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection team_integral
      * @property Show\Field|Collection is_auto_update
      * @property Show\Field|Collection is_verified
+     * @property Show\Field|Collection level_id
+     * @property Show\Field|Collection diamond_id
+     * @property Show\Field|Collection gold_id
+     * @property Show\Field|Collection silver_id
+     * @property Show\Field|Collection invite_id
+     * @property Show\Field|Collection pid_route
+     * @property Show\Field|Collection is_ban
      * @property Show\Field|Collection sys_mid
      * @property Show\Field|Collection time
      * @property Show\Field|Collection edit_to_phone
@@ -1356,6 +1377,13 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection team_integral(string $label = null)
      * @method Show\Field|Collection is_auto_update(string $label = null)
      * @method Show\Field|Collection is_verified(string $label = null)
+     * @method Show\Field|Collection level_id(string $label = null)
+     * @method Show\Field|Collection diamond_id(string $label = null)
+     * @method Show\Field|Collection gold_id(string $label = null)
+     * @method Show\Field|Collection silver_id(string $label = null)
+     * @method Show\Field|Collection invite_id(string $label = null)
+     * @method Show\Field|Collection pid_route(string $label = null)
+     * @method Show\Field|Collection is_ban(string $label = null)
      * @method Show\Field|Collection sys_mid(string $label = null)
      * @method Show\Field|Collection time(string $label = null)
      * @method Show\Field|Collection edit_to_phone(string $label = null)

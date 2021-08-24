@@ -25,22 +25,22 @@ class UserShoppingCardDhLogController extends AdminController
             $grid->column('id')->sortable();
             $grid->column('uid');
 //            $grid->column('gwkDhLog.gather_shopping_card_id');
-            $grid->column('gwkDhLog.operate_type');
-//            $grid->column('gwkDhLog.operate_type','操作类型')->display(function ($v) {
-//                if ($v=='exchange_zl'){
-//                    return "代充";
-//                } elseif ($v=='exchange_pl') {
-//                    return "批量代充";
-//                }elseif ($v=='exchange_mt') {
-//                    return "美团";
-//                }elseif ($v=='exchange_hf') {
-//                    return "直充";
-//                }elseif ($v=='exchange_lr') {
-//                    return "录单";
-//                }else{
-//                    return "拼团中奖";
-//                }
-//            });
+//            $grid->column('gwkDhLog.operate_type');
+            $grid->column('gwkDhLog.operate_type','操作类型')->display(function ($v) {
+                if ($v=='exchange_zl'){
+                    return "代充";
+                } elseif ($v=='exchange_pl') {
+                    return "批量代充";
+                }elseif ($v=='exchange_mt') {
+                    return "美团";
+                }elseif ($v=='exchange_hf') {
+                    return "直充";
+                }elseif ($v=='exchange_lr') {
+                    return "录单";
+                }else{
+                    return "拼团中奖";
+                }
+            });
             $grid->column('name');
             $grid->column('money');
 //            $grid->column('gwkDhLog.money_before_change','变动前购物卡余额');

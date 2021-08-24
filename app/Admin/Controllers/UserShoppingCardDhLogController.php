@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Repositories\UserShoppingCardDhLog;
+use App\Models\GatherShoppingCard;
 use App\Models\UserLpjLog as UserLpjLogModel;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
@@ -18,11 +19,14 @@ class UserShoppingCardDhLogController extends AdminController
      */
     protected function grid()
     {
-        return Grid::make(new UserShoppingCardDhLog(), function (Grid $grid) {
+        return Grid::make(new GatherShoppingCard(), function (Grid $grid) {
+            $grid->model()->with(['gwkDhLog']);
             $grid->model()->orderBy('id','desc');
             $grid->column('id')->sortable();
             $grid->column('uid');
-            $grid->column('operate_type')->display(function ($v) {
+//            $grid->column('gwkDhLog.gather_shopping_card_id');
+//            $grid->column('gwkDhLog.operate_type');
+            $grid->column('gwkDhLog.operate_type','操作类型')->display(function ($v) {
                 if ($v=='exchange_zl'){
                     return "代充";
                 } elseif ($v=='exchange_pl') {
@@ -34,13 +38,14 @@ class UserShoppingCardDhLogController extends AdminController
                 }elseif ($v=='exchange_lr') {
                     return "录单";
                 }else{
-                    return "未知操作";
+                    return "拼团中奖";
                 }
             });
+            $grid->column('name');
             $grid->column('money');
-            $grid->column('money_before_change');
-            $grid->column('order_no');
-            $grid->column('status')->using(UserLpjLogModel::$statusLabel)->label(UserLpjLogModel::$statusLabelStyle);
+//            $grid->column('gwkDhLog.money_before_change','变动前购物卡余额');
+            $grid->column('gwkDhLog.order_no','订单号');
+            $grid->column('gwkDhLog.status','兑换状态')->using(UserLpjLogModel::$statusLabel)->label(UserLpjLogModel::$statusLabelStyle);
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
 

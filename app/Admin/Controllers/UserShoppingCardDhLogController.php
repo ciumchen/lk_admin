@@ -9,6 +9,7 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Controllers\AdminController;
+use App\Models\UserShoppingCardDhLog as UserShoppingCardDhLogModel;
 
 class UserShoppingCardDhLogController extends AdminController
 {
@@ -56,14 +57,14 @@ class UserShoppingCardDhLogController extends AdminController
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
                 $filter->equal('uid');
-                $filter->equal('operate_type')->select(function () {
-                    return UserLpjLogModel::$operateTypeTexts;
+                $filter->equal('gwkDhLog.operate_type','操作类型')->select(function () {
+                    return UserShoppingCardDhLogModel::$operateTypeTextsGWK;
                 });
 
-                $filter->equal('order_no');
-                $filter->equal('status')->select(function () {
-                    return UserLpjLogModel::$operateStatus;
-                });
+                $filter->equal('gwkDhLog.order_no','订单号');
+//                $filter->equal('status')->select(function () {
+//                    return UserLpjLogModel::$operateStatus;
+//                });
 
             });
         });

@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Grid\ReGetWithdraw;
 use App\Admin\Repositories\WithdrawCashLog;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
@@ -62,6 +63,8 @@ class WithdrawCashLogController extends AdminController
             });
             //固定首尾列
             $grid->fixColumns(2, 0);
+            /* 操作按钮 */
+            $_this->customActions($grid);
             $_this->disableButton($grid);
             $_this->searchFilter($grid);
             $_this->exportExcel($grid);
@@ -151,7 +154,7 @@ class WithdrawCashLogController extends AdminController
     protected function disableButton(Grid $grid)
     {
         //禁用操作
-        $grid->disableActions();
+//        $grid->disableActions();
         /* 禁用创建按钮 */
         $grid->disableCreateButton();
         /* 禁用编辑按钮 */
@@ -221,5 +224,25 @@ class WithdrawCashLogController extends AdminController
             'out_trade_no'      => admin_trans_field('out_trade_no'),
             'pay_fund_order_id' => admin_trans_field('pay_fund_order_id'),
         ];
+    }
+    
+    /**
+     * Description:自定义操作
+     *
+     * @param  \Dcat\Admin\Grid  $grid
+     *
+     * @author lidong<947714443@qq.com>
+     * @date 2021/8/24 0024
+     */
+    public function customActions(Grid $grid)
+    {
+        $grid->actions(
+            function (Grid\Displayers\Actions $actions)
+            {
+                if ($this->status == WithModel::STATUS_DEFAULT) {
+                    $actions->append(new ReGetWithdraw());
+                }
+            }
+        );
     }
 }

@@ -204,3 +204,71 @@ if (!function_exists('createNotifyUrl')) {
         return $notify_url;
     }
 }
+
+if (!function_exists('apiSuccess')) {
+    /**
+     * 成功返回
+     *
+     * @param array  $data
+     * @param string $msg
+     *
+     * @return string
+     */
+    function apiSuccess($data = [], $msg = 'success')
+    {
+        $return_array = [
+            'code' => 0,
+            'data' => $data,
+            'msg'  => $msg,
+        ];
+        return response()->json($return_array);
+    }
+}
+if (!function_exists('createOrderNo')) {
+    /**
+     * 来客订单号
+     *
+     * @return string
+     */
+    function createOrderNo()
+    {
+        return "PY_".date("YmdHis").rand(100000, 999999);
+    }
+}
+if (!function_exists('createWithdrawOrderNo')) {
+    /**
+     * Description:提现单号生成
+     *
+     * @return string
+     * @author lidong<947714443@qq.com>
+     * @date   2021/8/10 0010
+     */
+    function createWithdrawOrderNo()
+    {
+        return "TX_".date("YmdHis").rand(100000, 999999);
+    }
+}
+if (!function_exists('createNotifyUrl')) {
+    /**
+     * Description:获取异步通知地址
+     *
+     * @param $notify_url
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\UrlGenerator|string|string[]
+     * @author lidong<947714443@qq.com>
+     * @date   2021/6/11 0011
+     */
+    function createNotifyUrl($notify_url)
+    {
+        if (strpos('http://', $notify_url) === false && strpos('https://', $notify_url) === false) {
+            $notify_url = url($notify_url);
+        }
+        if (strpos($notify_url, 'lk.catspawvideo.com') !== false) {
+            $notify_url = str_replace('http://', 'https://', $notify_url);
+        }
+        if (strpos($notify_url, 'lk-api.laikego.cn') !== false) {
+            $notify_url = str_replace('http://', 'https://', $notify_url);
+        }
+        return $notify_url;
+    }
+}

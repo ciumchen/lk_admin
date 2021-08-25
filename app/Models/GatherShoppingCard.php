@@ -28,4 +28,12 @@ class GatherShoppingCard extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
+
+    public function gwkDhLog()
+    {
+        return $this->belongsTo(UserShoppingCardDhLog::class, 'id','gather_shopping_card_id');
+    }
+
+
+
 }

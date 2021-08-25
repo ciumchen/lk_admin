@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\DB;
 
 class ReGetCard extends RowAction
 {
-    
     protected $model;
     
     /**
@@ -32,9 +31,10 @@ class ReGetCard extends RowAction
      * @param  Request  $request
      *
      * @return Response
+     * @throws \Throwable
      */
     public function handle(Request $request)
-    {
+    : Response {
         $order_video_id = $this->getKey();
         DB::beginTransaction();
         try {
@@ -43,9 +43,9 @@ class ReGetCard extends RowAction
                 throw new Exception('订单信息不存在');
             }
             $Order = $OrderVideo->orders;
-//            if ($Order->pay_status != Order::PAY_STATUS_SUCCEEDED) {
-//                throw new Exception('订单未支付不可补发');
-//            }
+            if ($Order->pay_status != Order::PAY_STATUS_SUCCEEDED) {
+                throw new Exception('订单未支付不可补发');
+            }
             /* 获取卡密 */
             $VideoService = new VideoOrderService();
             $VideoService->recharge($Order->id, $Order);

@@ -62,7 +62,7 @@ class RealNameAuthenTicationController extends AdminController
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
                 $filter->equal('uid');
-                $filter->equal('name');
+                $filter->like('name');
                 $filter->equal('status')->select(function () {
                     return RealNameAuthenTication::$sfz_statusLabel;
                 });
@@ -108,6 +108,7 @@ class RealNameAuthenTicationController extends AdminController
                 $realData = RealNameAuthModel::find($id);
                 $userInfo = Users::where('id',$realData->uid)->first();
                 $userInfo->is_auth = 1;
+                $userInfo->alipay_user_id = '';
                 $userInfo->save();
 
             }

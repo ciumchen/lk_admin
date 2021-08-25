@@ -23,6 +23,7 @@ class OrderController extends AdminController
         return Grid::make(new Order(), function (Grid $grid) {
             $grid->model()->orderBy('id', 'desc');
             $grid->model()->with(['user', 'business', 'select_trade_order','order_video','lkshop_order', 'convert']);
+            $grid->model()->where('description','!=','PT');
             $grid->column('id','录单ID')->sortable();
             $grid->column('uid');
             $grid->column('business_uid');

@@ -35,6 +35,7 @@ class UserLpjLogController extends AdminController
             $grid->column('money');
             $grid->column('money_before_change');
             $grid->column('order_no');
+            $grid->column('remark');
             $grid->column('status')->using(UserLpjLogModel::$statusLabel)->label(UserLpjLogModel::$statusLabelStyle);
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();

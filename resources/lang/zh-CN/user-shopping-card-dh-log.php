@@ -4,7 +4,7 @@ return [
         'UserShoppingCardDhLog' => '购物卡兑换记录',
     ],
     'fields' => [
-        'uid' => 'UID',
+        'uid' => '用户UID',
         'operate_type' => '操作类型',
         'money' => '变动金额',
         'money_before_change' => '变动前余额',

@@ -9,6 +9,7 @@ return [
         'money' => '变动来拼金',
         'money_before_change' => '变动前来拼金',
         'order_no' => '订单号',
+        'remark' => '备注',
         'status' => '充值状态',
     ],
     'options' => [

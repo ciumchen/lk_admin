@@ -23,6 +23,7 @@ class Gather extends Model
         0 => '待开启',
         1 => '开团中',
         3 => '已终止',
+        4 => '已解散',
     ];
 
     const GATHER_TYPE = [

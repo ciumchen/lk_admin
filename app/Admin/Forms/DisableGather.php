@@ -34,7 +34,7 @@ class DisableGather extends Form implements LazyRenderable
         ];
         try {
             DB::transaction(function () use ($data) {
-                $status = 3;
+                $status = 4;
                 //更新拼团状态
                 Gather::where(['id' => $data['id']])
                     ->update(['status' => $status, 'updated_at' => $data['date']]);

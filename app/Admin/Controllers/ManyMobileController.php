@@ -67,6 +67,36 @@ class ManyMobileController extends AdminController
                     $filter->equal('order_no');
                     $filter->equal('orders.pay_status', '支付状态');
                 });
+
+                $titles = [
+                    'order_id' => '录单ID',
+                    'uid' => '用户UID',
+                    'order_no' => '订单号',
+                    'money' => '商品价格',
+                    'name' => '消费商品名',
+                    'profit_ratio' => '商家让利',
+                    'to_be_added_integral' => '获得积分',
+                    'orders.status' => '审核状态',
+                    'orders.pay_status' => '支付状态',
+                    'created_at' => '创建时间',
+                    'updated_at' => '更新时间',
+
+                ];
+                $grid->export($titles)->rows(function (array $rows) {
+                    foreach ($rows as $index => &$row) {
+                        $row[ 'orders.status' ] = Order::$statusLabel[ $row[ 'orders' ][ 'status' ] ] ?? '';
+                        $row[ 'orders.pay_status' ] = Order::$pay_status[ $row[ 'orders' ][ 'pay_status' ] ] ?? '';
+                        $row[ 'profit_ratio' ] = $row[ 'orders' ][ 'profit_ratio' ];
+                        $row[ 'name' ] = $row[ 'orders' ][ 'name' ];
+                        $row[ 'to_be_added_integral' ] = $row[ 'orders' ][ 'to_be_added_integral' ];
+
+                    }
+                    return $rows;
+                })->filename("批量代充订单".date("YmdHis"));
+
+
+
+
             });
     }
 

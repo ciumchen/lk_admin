@@ -65,7 +65,7 @@ class UserLevelRelation extends Model
     /**
      * Description:获取所有已有关系的用户ID
      *
-     * @return \Illuminate\Support\Collection
+     * @return array
      * @author lidong<947714443@qq.com>
      * @date 2021/8/23 0023
      */
@@ -73,5 +73,17 @@ class UserLevelRelation extends Model
     : array
     {
         return UserLevelRelation::all()->pluck('user_id')->toArray();
+    }
+    
+    /**
+     * Description:
+     *
+     * @return \App\Models\UserLevelRelation[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     * @author lidong<947714443@qq.com>
+     * @date 2021/8/25 0025
+     */
+    public static function noVerifiedUsers()
+    {
+        return UserLevelRelation::whereIsVerified(0)->get();
     }
 }

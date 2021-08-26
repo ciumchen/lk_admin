@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Services\UserRelationService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
 
 class updateUserRelation extends Command
 {
@@ -37,6 +39,8 @@ class updateUserRelation extends Command
      */
     public function handle()
     {
-        return 0;
+        $this->info(Carbon::now()->toDateTimeString()." \n开始执行\n更新会员关系");
+        (new UserRelationService())->updateUserRelations();
+        $this->info(Carbon::now()->toDateTimeString()." \n更新会员关系\n执行完毕");
     }
 }

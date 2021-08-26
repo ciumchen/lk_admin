@@ -19,7 +19,7 @@ class UserLevelRelationController extends AdminController
     protected function grid()
     {
         $UserRelationService = new UserRelationService();
-        $res = $UserRelationService->updateRelation();
+        $res = $UserRelationService->updateIsVerified();
         dd($res);
         return Grid::make(new UserLevelRelation(), function (Grid $grid)
         {

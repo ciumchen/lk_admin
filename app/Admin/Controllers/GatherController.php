@@ -7,8 +7,8 @@ use Dcat\Admin\Controllers\AdminController;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
-use App\Admin\Actions\Grid\DisableConvert;
 use Illuminate\Http\Request;
+use App\Admin\Actions\Grid\DisableGather;
 
 class GatherController extends AdminController
 {
@@ -30,6 +30,13 @@ class GatherController extends AdminController
             });
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
+            /* 操作按钮 更新充值状态*/
+            $grid->actions(function (Grid\Displayers\Actions $actions) {
+                if (in_array($actions->row->status, [3])) {
+                    return;
+                }
+                $actions->append(new DisableGather());
+            });
 
             /* 禁用创建按钮 */
             //$grid->disableCreateButton();

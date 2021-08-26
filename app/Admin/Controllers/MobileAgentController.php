@@ -61,6 +61,9 @@ class MobileAgentController extends AdminController
                 $filter->equal('uid');
                 $filter->equal('mobile');
                 $filter->equal('order_no');
+                $filter->equal('tradeOrder.order_from', '订单来源')->select(function () {
+                    return Order::$ORDER_FROM;
+                });
                 $filter->equal('orders.pay_status', '支付状态')->select(function () {
                     return Order::$pay_status;
                 });

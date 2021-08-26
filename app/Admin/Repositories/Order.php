@@ -52,6 +52,10 @@ class Order extends EloquentRepository
 
     const SHOP_STATUS_ERROE       = 0;
 
+    const PAY_ORDER_FROM_alipay       = 'alipay';
+    const PAY_ORDER_FROM_wx       = 'wx';
+    const PAY_ORDER_FROM_gwk       = 'gwk';
+
     /**
      * 状态
      *
@@ -69,6 +73,12 @@ class Order extends EloquentRepository
         self::PAY_STATUS_SUCCEEDED => "支付成功",
         self::PAY_STATUS_FAILED    => "支付失败",
         self::PAY_STATUS_DDYC      => "订单异常",
+    ];
+
+    public static $ORDER_FROM = [
+        self::PAY_ORDER_FROM_alipay     => "支付宝支付",
+        self::PAY_ORDER_FROM_wx   => "微信支付",
+        self::PAY_ORDER_FROM_gwk => "购物卡",
     ];
 
     public static $ld_order_select = [

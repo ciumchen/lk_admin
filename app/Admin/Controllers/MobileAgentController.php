@@ -24,6 +24,7 @@ class MobileAgentController extends AdminController
     {
         $thisController = $this;
         return Grid::make(new OrderMobile(), function (Grid $grid) use ($thisController) {
+            $grid->model()->where('create_type','!=',3);
             $grid->model()->with(['orders','tradeOrder'])->orderByDesc('order_id');
 
             $grid->column('order_id')->sortable();

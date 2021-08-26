@@ -24,7 +24,7 @@ class MobileAgentController extends AdminController
     {
         $thisController = $this;
         return Grid::make(new OrderMobile(), function (Grid $grid) use ($thisController) {
-            $grid->model()->with(['orders'])->orderByDesc('order_id');
+            $grid->model()->with(['orders','tradeOrder'])->orderByDesc('order_id');
             $grid->column('order_id')->sortable();
             $grid->column('order_id');
             $grid->column('order_no');
@@ -34,6 +34,17 @@ class MobileAgentController extends AdminController
             });
             $grid->column('uid');
             $grid->column('mobile');
+            $grid->column('tradeOrder.order_from','订单来源')->display(function($v){
+                if($v=='alipay'){
+                    return '支付宝支付';
+                }elseif($v=='wx'){
+                    return '微信支付';
+                }elseif($v=='gwk'){
+                    return '购物卡';
+                }else{
+                    return "其他支付";
+                }
+            });//订单来源
 //            $grid->column('trade_no');
             $grid->column('orders.pay_status', '支付状态')
                  ->using(Order::$pay_status)

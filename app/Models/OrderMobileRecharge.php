@@ -57,19 +57,24 @@ use Illuminate\Database\Eloquent\Model;
 class OrderMobileRecharge extends AdminBaseModel
 {
     use HasFactory;
-    
+
     const CREATE_TYPE_RECHARGE = 1;
-    
+
     const CREATE_TYPE_ZL       = 2;
-    
+
     const CREATE_TYPE_MZL      = 3;
-    
+
     const STATUS_DEFAULT       = 0;
-    
+
     const STATUS_SUCCESS       = 1;
-    
+
     const STATUS_CANCEL        = 9;
-    
+
+    const ORDER_FROM1        = 'alipay';
+    const ORDER_FROM2        = 'wx';
+    const ORDER_FROM3        = 'gwk';
+
+
     /**
      * @var string 表名
      */
@@ -98,7 +103,18 @@ class OrderMobileRecharge extends AdminBaseModel
         self::STATUS_SUCCESS => 'success',
         self::STATUS_CANCEL  => 'dark',
     ];
-    
+
+    public static $ORDER_FROM = [
+        self::ORDER_FROM1 => '支付宝',
+        self::ORDER_FROM2 => '微信',
+        self::ORDER_FROM3  => '购物卡',
+    ];
+    static public  $ORDER_FROME_VALUE = [
+        self::ORDER_FROM1        => 'alipay',
+        self::ORDER_FROM2        => 'wx',
+        self::ORDER_FROM3        => 'gwk',
+    ];
+
     /**
      * Description:
      *
@@ -127,7 +143,7 @@ class OrderMobileRecharge extends AdminBaseModel
         }
         return $this;
     }
-    
+
     /**
      * Description:创建话费订单
      *
@@ -152,7 +168,7 @@ class OrderMobileRecharge extends AdminBaseModel
         }
         return $this;
     }
-    
+
     /**
      * 创建代充订单
      *
@@ -175,7 +191,7 @@ class OrderMobileRecharge extends AdminBaseModel
         }
         return $this;
     }
-    
+
     /**
      * Description:
      *
@@ -200,7 +216,7 @@ class OrderMobileRecharge extends AdminBaseModel
         }
         return $this;
     }
-    
+
     /**
      * Description:关联详情
      *
@@ -212,7 +228,7 @@ class OrderMobileRecharge extends AdminBaseModel
     {
         return $this->hasMany(OrderMobileRechargeDetails::class, 'order_mobile_id', 'id');
     }
-    
+
     /**
      * Description:
      *
@@ -223,5 +239,10 @@ class OrderMobileRecharge extends AdminBaseModel
     public function orders()
     {
         return $this->belongsTo(Order::class, 'order_id', 'id');
+    }
+    //关联trade_order表
+    public function tradeOrder()
+    {
+        return $this->belongsTo(TradeOrder::class, 'order_id', 'oid');
     }
 }

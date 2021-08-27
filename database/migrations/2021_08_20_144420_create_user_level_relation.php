@@ -38,7 +38,8 @@ class CreateUserLevelRelation extends Migration
             $table->bigInteger('team_activity')->default(0)->comment('团队活跃度');
             $table->decimal('team_integral', 15)->default(0)->comment('团队累计积分');
             $table->tinyInteger('is_verified')->default(0)->comment('是否实名认证');
-            $table->string('pid_route')->default('-0-')->comment('邀请人id系列拼接');
+            $table->tinyInteger('is_vip')->default(0)->comment('是否是会员');
+            $table->string('pid_route')->default('0')->comment('邀请人id系列拼接');
             $table->tinyInteger('is_ban')->default(0)->comment('是否禁用权益');
             $table->tinyInteger('rating')->default(0)->comment('所属用户级别[和会员等级无关]');
             $table->timestamps();

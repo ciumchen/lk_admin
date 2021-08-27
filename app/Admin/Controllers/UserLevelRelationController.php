@@ -18,9 +18,9 @@ class UserLevelRelationController extends AdminController
      */
     protected function grid()
     {
-        $UserRelationService = new UserRelationService();
-        $res = $UserRelationService->updateIsVerified();
-        dd($res);
+//        $UserRelationService = new UserRelationService();
+//        $res = $UserRelationService->updateIsVerified();
+//        dd($res);
         return Grid::make(new UserLevelRelation(), function (Grid $grid)
         {
             $grid->column('id')->sortable();

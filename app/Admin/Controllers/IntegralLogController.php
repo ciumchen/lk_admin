@@ -61,10 +61,12 @@ class IntegralLogController extends AdminController
                     return '开通会员';
                 }elseif($v=='PT'){
                     return '拼团补贴';
+                }elseif($v=='rebate'){
+                    return "分红扣除";
                 }else{
                     return "未知类型";
                 }
-                return User::$roleLabel[$v] ?? $v;
+                //return User::$roleLabel[$v] ?? $v;
             });
             $grid->column('operate_type')->display(function ($v){
                 return \App\Models\IntegralLog::$operateTypeTexts[$v] ?? $v;
@@ -87,6 +89,9 @@ class IntegralLogController extends AdminController
                 $filter->equal('order_no','订单号');
                 $filter->equal('role','用户身份')->select(function () {
                     return IntegralLog::$operateTypeTexts;
+                });
+                $filter->equal('description','订单类型')->select(function () {
+                    return IntegralLog::$ontegralLogTypeTexts;
                 });
 
             });

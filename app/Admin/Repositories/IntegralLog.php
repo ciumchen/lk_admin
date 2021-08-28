@@ -36,6 +36,7 @@ class IntegralLog extends EloquentRepository
     const TYPE_KTHY = 'KTHY';
     const TYPE_PT = 'PT';
     const TYPE_rebate = 'rebate';
+    const TYPE_GLR = 'GLR';
 
     /**
      * 类型文本.
@@ -64,5 +65,6 @@ class IntegralLog extends EloquentRepository
         self::TYPE_KTHY => "开通会员",
         self::TYPE_PT => "拼团补贴",
         self::TYPE_rebate => "分红扣除",
+        self::TYPE_GLR => "广告补贴",
     ];
 }

@@ -33,7 +33,7 @@ class IntegralLogController extends AdminController
             $grid->column('amount');
             $grid->column('amount_before_change');
             $grid->column('description','订单类型')->display(function ($v){
-                if($v=='HF'){
+                /*if($v=='HF'){
                     return '话费';
                 }elseif($v=='YK'){
                     return '油卡';
@@ -65,7 +65,8 @@ class IntegralLogController extends AdminController
                     return "分红扣除";
                 }else{
                     return "未知类型";
-                }
+                }*/
+                return \App\Models\IntegralLog::INTEGRAL_TYPE[$v];
                 //return User::$roleLabel[$v] ?? $v;
             });
             $grid->column('operate_type')->display(function ($v){

@@ -42,8 +42,8 @@ class UserLevelRelationController extends AdminController
             $grid->column('is_verified');
             $grid->column('pid_route');
             $grid->column('is_ban');
-            $grid->column('created_at');
-            $grid->column('updated_at')->sortable();
+//            $grid->column('created_at');
+//            $grid->column('updated_at')->sortable();
             $grid->filter(function (Grid\Filter $filter)
             {
                 $filter->equal('id');

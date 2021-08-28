@@ -38,13 +38,19 @@ class UserRelationService
             /* 更新达到会员条件的消费者为会员 */
             $this->updateToVip();
             /* 更新所有达到银卡的用户*/
-            $this->updateToSliver(3);
+            $this->updateToSliver();
             /* 统计下级银卡数量 */
             $this->countChildSliverNum();
             /* 统计团队银卡数量 */
             $this->countTeamSliverNum();
             /* 更新所有达到金卡的用户*/
-            $this->updateToGold(4);
+            $this->updateToGold();
+            /* 标记银卡团队 */
+            $this->markSilverId();
+            /* 标记金卡团队 */
+            $this->markGoldId();
+            /* 标记钻石卡团队 */
+            $this->markDiamondId();
         } catch (Exception $e) {
             dump($e->getMessage());
         }
@@ -81,12 +87,12 @@ class UserRelationService
                 $i++;
                 return $insert_batch;
             });
-            dump($i);
-            dump($insert_batch[ 0 ][ 'user_id' ].'-'.$insert_batch[ $i - 1 ][ 'user_id' ]);
+            dump($i.'数据');
+            dump('user_id:'.$insert_batch[ 0 ][ 'user_id' ].'-'.$insert_batch[ $i - 1 ][ 'user_id' ]);
             $res = UserLevelRelation::insert($insert_batch);
             $j++;
             dump($res.'用户新增关系');
-            dump($j);
+            dump($j.'轮');
             sleep(3);
             unset($i);
         } while (!empty($UserList));
@@ -118,10 +124,10 @@ class UserRelationService
         try {
             $sql = "UPDATE `user_level_relation` a,`users` b SET a.is_verified =IF	( (b.is_auth=2), 1, 0 ) WHERE	a.user_id = b.id AND a.is_verified = 0;";
             $res = DB::update($sql);
+            dump($res.'用户更新实名状态');
         } catch (Exception $e) {
             dump($e->getMessage());
         }
-        dump($res);
     }
     
     /**
@@ -136,10 +142,10 @@ class UserRelationService
             //member_status
             $sql = "UPDATE `user_level_relation` a,`users` b SET a.is_vip =b.member_status WHERE a.user_id = b.id AND a.is_vip = 0;";
             $res = DB::update($sql);
+            dump($res.'用户更新活跃状态');
         } catch (Exception $e) {
             dump($e->getMessage());
         }
-        dump($res);
     }
     
     /**、
@@ -150,24 +156,30 @@ class UserRelationService
      */
     public function updateRelation()
     {
-        // 初始化
-        $sql1 = "UPDATE `user_level_relation` SET pid_route = '', `rating` = -1;";
-        // 根节点
-        $sql2 = "UPDATE `user_level_relation` SET pid_route = '', `rating` = 0 WHERE `rating` = -1 AND invite_id = 0; ";
-        // 无限下级
-        $sql3 = "UPDATE `user_level_relation` a,user_level_relation b SET a.pid_route = IF( b.rating, concat( b.pid_route, ',', a.invite_id ), a.invite_id ), a.`rating` = b.`rating` + 1 WHERE	a.`rating` = - 1 	AND a.invite_id = b.id 	AND b.`rating` > - 1;";
-        // 增加pid_route前后的分隔符
-        $sql4 = "UPDATE `user_level_relation` a SET  pid_route=IF(a.rating,concat(',',a.pid_route,','),a.invite_id) where a.rating > -1";
-        $res1 = DB::update($sql1);
-        $res2 = DB::update($sql2);
-        dump($res1);
-        dump($res2);
-        do {
-            $res3 = DB::update($sql3);
-            dump($res3);
-        } while ($res3 > 0);
-        $res3 = DB::update($sql4);
-        dump($res3);
+        try {
+            // 初始化
+            $sql1 = "UPDATE `user_level_relation` SET pid_route = '', `rating` = -1;";
+            // 根节点
+            $sql2 = "UPDATE `user_level_relation` SET pid_route = '', `rating` = 0 WHERE `rating` = -1 AND invite_id = 0; ";
+            // 无限下级
+            $sql3 = "UPDATE `user_level_relation` a,user_level_relation b SET a.pid_route = IF( b.rating, concat( b.pid_route, ',', a.invite_id ), a.invite_id ), a.`rating` = b.`rating` + 1 WHERE	a.`rating` = - 1 	AND a.invite_id = b.id 	AND b.`rating` > - 1;";
+            // 增加pid_route前后的分隔符
+            $sql4 = "UPDATE `user_level_relation` a SET  pid_route=IF(a.rating,concat(',',a.pid_route,','),a.invite_id) where a.rating > -1";
+            $res1 = DB::update($sql1);
+            $res2 = DB::update($sql2);
+            dump($res1.'数据初始化');
+            dump($res2.'数据更新根节点');
+            $i = 0;
+            do {
+                $res3 = DB::update($sql3);
+                $i++;
+                dump('第'.$i.'层级'.$res3.'用户更新pid_route');
+            } while ($res3 > 0);
+            $res4 = DB::update($sql4);
+            dump($res4.'数据pid_route增加前后分隔符');
+        } catch (Exception $e) {
+            dump('用户关系更新出错:updateRelation '.$e->getMessage());
+        }
     }
     
     /**
@@ -178,7 +190,8 @@ class UserRelationService
      */
     public function countDirectChild()
     {
-        $sql = "
+        try {
+            $sql = "
 UPDATE user_level_relation a,(
 	SELECT
 		invite_id,
@@ -198,8 +211,11 @@ UPDATE user_level_relation a,(
 WHERE
 	a.user_id = b.invite_id;
 ";
-        $res = DB::update($sql);
-        dump($res);
+            $res = DB::update($sql);
+            dump($res.'用户统计下级数据');
+        } catch (Exception $e) {
+            dump('统计下级数据出错: countDirectChild'.$e->getMessage());
+        }
     }
     
     /**
@@ -257,7 +273,7 @@ WHERE
             $res = DB::update($sql);
             dump('更新'.$res.'为消费者');
         } catch (Exception $e) {
-            dump($e->getMessage());
+            dump('更新用户为消费者出错:updateToConsumer '.$e->getMessage());
         }
     }
     
@@ -274,7 +290,7 @@ WHERE
             $res = DB::update($sql);
             dump('更新'.$res.'为会员');
         } catch (Exception $e) {
-            dump($e->getMessage());
+            dump('更新用户为会员出错:updateToVip'.$e->getMessage());
         }
     }
     
@@ -286,7 +302,7 @@ WHERE
      * @author lidong<947714443@qq.com>
      * @date 2021/8/27 0027
      */
-    public function updateToSliver($sliver_id)
+    public function updateToSliver($sliver_id = 3)
     {
         try {
             $UserLevel = UserLevel::findOrFail($sliver_id);
@@ -315,7 +331,7 @@ WHERE
      * @author lidong<947714443@qq.com>
      * @date 2021/8/27 0027
      */
-    public function updateToGold($gold_id)
+    public function updateToGold($gold_id = 4)
     {
         try {
             $UserLevel = UserLevel::findOrFail($gold_id);
@@ -391,7 +407,138 @@ WHERE
             dump('统计团队银卡数量出错:countSliverNum '.$e->getMessage());
         }
     }
-
+    
+    /**
+     * Description:标记银卡团队
+     *
+     * @author lidong<947714443@qq.com>
+     * @date 2021/8/28 0028
+     */
+    public function markSilverId($silver_id = 3)
+    {
+        try {
+            $sql1 = 'UPDATE user_level_relation SET silver_id = 0';
+            $res1 = DB::update($sql1);
+            dump($res1.'数据重置银卡ID');
+            $sql = "
+UPDATE user_level_relation t1,
+(
+	SELECT
+		MAX( a.user_id ) p_pid,
+		a.level_id,
+		b.pid_route,
+		b.silver_id,
+		b.level_id b_level,
+		b.user_id
+	FROM
+		user_level_relation a
+		RIGHT JOIN user_level_relation b ON FIND_IN_SET( a.user_id, b.pid_route )
+	WHERE
+		a.level_id = {$silver_id}
+	GROUP BY
+		user_id
+	) t2
+	SET t1.silver_id =
+IF
+	( t2.p_pid > t1.silver_id, t2.p_pid, t1.silver_id )
+WHERE
+	t1.user_id = t2.user_id;
+            ";
+            $res = DB::update($sql);
+            dump($res.'标记银卡团队完成');
+        } catch (Exception $e) {
+            dump('标记银卡团队出错:markSilverId '.$e->getMessage());
+        }
+    }
+    
+    /**
+     * Description:标记金卡团队
+     *
+     * @param  int  $gold_id
+     *
+     * @author lidong<947714443@qq.com>
+     * @date 2021/8/28 0028
+     */
+    public function markGoldId($gold_id = 4)
+    {
+        try {
+            $sql1 = 'UPDATE user_level_relation SET gold_id = 0';
+            $res1 = DB::update($sql1);
+            dump($res1.'数据重置金卡团队ID');
+            $sql = "
+UPDATE user_level_relation t1,
+(
+	SELECT
+		MAX( a.user_id ) p_pid,
+		a.level_id,
+		b.pid_route,
+		b.gold_id,
+		b.level_id b_level,
+		b.user_id
+	FROM
+		user_level_relation a
+		RIGHT JOIN user_level_relation b ON FIND_IN_SET( a.user_id, b.pid_route )
+	WHERE
+		a.level_id = {$gold_id}
+	GROUP BY
+		user_id
+	) t2
+	SET t1.gold_id = IF	( t2.p_pid > t1.gold_id, t2.p_pid, t1.silver_id )
+WHERE
+	t1.user_id = t2.user_id;
+            ";
+            $res = DB::update($sql);
+            dump($res.'标记金卡团队完成');
+        } catch (Exception $e) {
+            dump('标记金卡团队出错:markGoldId '.$e->getMessage());
+        }
+    }
+    
+    /**
+     * Description:标记钻石卡团队
+     *
+     * @param  int  $diamond_id
+     *
+     * @author lidong<947714443@qq.com>
+     * @date 2021/8/28 0028
+     */
+    public function markDiamondId($diamond_id = 5)
+    {
+        try {
+            $sql1 = 'UPDATE user_level_relation SET diamond_id = 0';
+            $res1 = DB::update($sql1);
+            dump($res1.'数据重置钻石卡团队ID');
+            $sql = "
+UPDATE user_level_relation t1,
+(
+	SELECT
+		MAX( a.user_id ) p_pid,
+		a.level_id,
+		b.pid_route,
+		b.diamond_id,
+		b.level_id b_level,
+		b.user_id
+	FROM
+		user_level_relation a
+		RIGHT JOIN user_level_relation b ON FIND_IN_SET( a.user_id, b.pid_route )
+	WHERE
+		a.level_id = {$diamond_id}
+	GROUP BY
+		user_id
+	) t2
+	SET t1.diamond_id = IF	( t2.p_pid > t1.diamond_id, t2.p_pid, t1.silver_id )
+WHERE
+	t1.user_id = t2.user_id;
+            ";
+            $res = DB::update($sql);
+            dump($res.'标记钻石卡团队完成');
+        } catch (Exception $e) {
+            dump('标记钻石团队出错:markDiamondId '.$e->getMessage());
+        }
+    }
+    
+    
+    
 //    /*******************************************************************************/
 //    /**
 //     * Description:更新实名状态

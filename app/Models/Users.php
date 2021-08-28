@@ -83,6 +83,8 @@ use Illuminate\Support\Collection;
  * @method static \Illuminate\Database\Eloquent\Builder|Users whereBalanceTuan($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Users whereMemberStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Users whereShopUid($value)
+ * @property string $gather_card 拼团购物卡金额
+ * @method static \Illuminate\Database\Eloquent\Builder|Users whereGatherCard($value)
  */
 class Users extends Model
 {

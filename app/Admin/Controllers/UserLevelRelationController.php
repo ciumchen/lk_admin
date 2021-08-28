@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Repositories\UserLevelRelation;
+use App\Models\UserLevel;
 use App\Services\UserRelationService;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
@@ -25,7 +26,7 @@ class UserLevelRelationController extends AdminController
         {
             $grid->column('id')->sortable();
             $grid->column('user_id');
-            $grid->column('level_id');
+            $grid->column('level_id')->using(UserLevel::getTypesArray());
             $grid->column('diamond_id');
             $grid->column('gold_id');
             $grid->column('silver_id');

@@ -6,6 +6,32 @@ use App\Exceptions\LogicException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\GatherGoldLogs
+ *
+ * @property int $id
+ * @property int $gid gather表 id
+ * @property int $uid 用户id
+ * @property int $guid gather_users表 id
+ * @property string $money 参团来拼金金额
+ * @property int $status 拼团状态：0 开团中；1 开奖中；3 已终止
+ * @property int $type 是否扣减：0 否；1 是
+ * @property \Illuminate\Support\Carbon|null $created_at 创建时间
+ * @property \Illuminate\Support\Carbon|null $updated_at 更新时间
+ * @method static \Illuminate\Database\Eloquent\Builder|GatherGoldLogs newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|GatherGoldLogs newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|GatherGoldLogs query()
+ * @method static \Illuminate\Database\Eloquent\Builder|GatherGoldLogs whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GatherGoldLogs whereGid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GatherGoldLogs whereGuid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GatherGoldLogs whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GatherGoldLogs whereMoney($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GatherGoldLogs whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GatherGoldLogs whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GatherGoldLogs whereUid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GatherGoldLogs whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class GatherGoldLogs extends Model
 {
     use HasFactory;

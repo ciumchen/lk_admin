@@ -64,6 +64,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\LkshopOrder $lkshop_order
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereImportDay($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereMemberGlOid($value)
+ * @property string $description 订单类型
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereDescription($value)
  */
 class Order extends Model
 {

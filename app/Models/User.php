@@ -89,6 +89,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereBalanceTuan($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereMemberStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereShopUid($value)
+ * @property string $gather_card 拼团购物卡金额
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereGatherCard($value)
  */
 class User extends Model
 {

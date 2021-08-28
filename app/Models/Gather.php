@@ -12,6 +12,18 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Gather newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Gather query()
  * @mixin \Eloquent
+ * @property int $id
+ * @property int $type 拼团类型
+ * @property int $status 状态：0 开团中；1 开奖中；3 已终止
+ * @property \Illuminate\Support\Carbon|null $created_at 创建时间
+ * @property \Illuminate\Support\Carbon|null $updated_at 更新时间
+ * @property int $scaler 拼团人数
+ * @method static \Illuminate\Database\Eloquent\Builder|Gather whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Gather whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Gather whereScaler($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Gather whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Gather whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Gather whereUpdatedAt($value)
  */
 class Gather extends Model
 {

@@ -13,6 +13,26 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|UserLpjLog newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|UserLpjLog query()
  * @mixin \Eloquent
+ * @property int $id
+ * @property int|null $uid users表 -- id
+ * @property string|null $operate_type 操作类型,充值：recharge，提现：withdrawal，消费：consumption
+ * @property string $money 变动来拼金
+ * @property string $money_before_change 变动前来拼金
+ * @property string $order_no 充值订单号
+ * @property int $status 充值状态:1处理中,2成功,3失败
+ * @property string|null $remark 备注
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|UserLpjLog whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserLpjLog whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserLpjLog whereMoney($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserLpjLog whereMoneyBeforeChange($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserLpjLog whereOperateType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserLpjLog whereOrderNo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserLpjLog whereRemark($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserLpjLog whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserLpjLog whereUid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserLpjLog whereUpdatedAt($value)
  */
 class UserLpjLog extends Model
 {

@@ -19,16 +19,22 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $invite_id 邀请人id
  * @property string $integral 个人账户积分
  * @property int $direct_num 直推数量
- * @property int|null $direct_type 直推类型
  * @property int $direct_activity 直推活跃度
  * @property string $direct_integral 直接下级累计积分
  * @property int $team_num 团队数量
- * @property int|null $team_type 团队类型
  * @property int $team_activity 团队活跃度
  * @property string $team_integral 团队累计积分
  * @property int $is_verified 是否实名认证
  * @property string $pid_route 邀请人id系列拼接
  * @property int $is_ban 是否禁用权益
+ * @property int $direct_diamond_num 直推钻石数量
+ * @property int $direct_gold_num 直推金卡数量
+ * @property int $direct_silver_num 直推银卡数量
+ * @property int $team_diamond_num 团队钻石数量
+ * @property int $team_gold_num 团队金卡数量
+ * @property int $team_silver_num 团队银卡数量
+ * @property int $is_vip 是否是会员
+ * @property int $rating 所属用户级别[和会员等级无关]
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static Builder|UserLevelRelation whereCreatedAt($value)
@@ -55,6 +61,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|UserLevelRelation newModelQuery()
  * @method static Builder|UserLevelRelation newQuery()
  * @method static Builder|UserLevelRelation query()
+ * @method static Builder|UserLevelRelation whereDirectDiamondNum($value)
+ * @method static Builder|UserLevelRelation whereDirectGoldNum($value)
+ * @method static Builder|UserLevelRelation whereDirectSilverNum($value)
+ * @method static Builder|UserLevelRelation whereIsVip($value)
+ * @method static Builder|UserLevelRelation whereRating($value)
+ * @method static Builder|UserLevelRelation whereTeamDiamondNum($value)
+ * @method static Builder|UserLevelRelation whereTeamGoldNum($value)
+ * @method static Builder|UserLevelRelation whereTeamSilverNum($value)
  */
 class UserLevelRelation extends Model
 {

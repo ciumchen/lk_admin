@@ -55,6 +55,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $member_gl_oid 购买来客会员邀请人订单关联用户订单oid
  * @method static \Illuminate\Database\Eloquent\Builder|ToBeAddedIntegral whereImportDay($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ToBeAddedIntegral whereMemberGlOid($value)
+ * @property string $description 订单类型
+ * @method static \Illuminate\Database\Eloquent\Builder|ToBeAddedIntegral whereDescription($value)
  */
 class ToBeAddedIntegral extends Model
 {

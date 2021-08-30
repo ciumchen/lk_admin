@@ -398,7 +398,7 @@ class WithdrawCashService
             $Withdraw->channel = 'alipay';
             $Withdraw->save();
         } catch (Exception $e) {
-            Log::debug('withdrawSuccessLog:Error:'.$e->getMessage());
+            Log::debug('withdrawSuccessLog:Error:'.$e->getMessage(), [json_encode($response)]);
             throw $e;
         }
     }

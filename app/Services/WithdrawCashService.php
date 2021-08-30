@@ -390,7 +390,7 @@ class WithdrawCashService
             if (empty($Withdraw)) {
                 $Withdraw = WithdrawCashLog::findOrFail($id);
             }
-            $Withdraw->pay_fund_order_id = $response->pay_fund_order_id;
+            $Withdraw->pay_fund_order_id = $response->pay_fund_order_id ?? '';
             $Withdraw->out_trade_no = $response->order_id;
             $Withdraw->alipay_status = $response->status;
             $Withdraw->trans_date = $response->trans_date ?? $response->pay_date;
@@ -398,7 +398,7 @@ class WithdrawCashService
             $Withdraw->channel = 'alipay';
             $Withdraw->save();
         } catch (Exception $e) {
-            Log::debug('withdrawSuccessLog:Error:'.$e->getMessage());
+            Log::debug('withdrawSuccessLog:Error:'.$e->getMessage(), [json_encode($response)]);
             throw $e;
         }
     }

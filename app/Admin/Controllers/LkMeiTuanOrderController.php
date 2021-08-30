@@ -140,6 +140,8 @@ class LkMeiTuanOrderController extends AdminController
                         $row['order_from']="支付宝支付";
                     }elseif($row['order_from']=='wx'){
                         $row['order_from']="微信支付";
+                    }elseif($row['order_from']=='gwk'){
+                        $row['order_from']="购物卡";
                     }else{
                         $row['order_from']="其他支付";
                     }//订单来源

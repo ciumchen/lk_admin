@@ -46,6 +46,7 @@ class UserShoppingCardDhLogController extends AdminController
             $grid->column('money');
 //            $grid->column('gwkDhLog.money_before_change','变动前购物卡余额');
             $grid->column('gwkDhLog.order_no','订单号');
+            $grid->column('gwkDhLog.remark','备注');
             $grid->column('gwkDhLog.status','兑换状态')->using(UserLpjLogModel::$statusLabel)->label(UserLpjLogModel::$statusLabelStyle);
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();

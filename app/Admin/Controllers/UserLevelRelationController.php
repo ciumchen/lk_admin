@@ -147,6 +147,7 @@ class UserLevelRelationController extends AdminController
             $filter->equal('gold_id');
             $filter->equal('silver_id');
             $filter->equal('is_vip');
+            $filter->equal('level_id')->select(UserLevel::getTypesArray());
         });
     }
     

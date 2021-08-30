@@ -2,12 +2,12 @@
 
 return [
     'labels'  => [
-        'UserLevel'  => '等级管理',
-        'user-level' => '等级管理',
+        'UserLevel'  => '级别管理',
+        'user-level' => '级别管理',
     ],
     'fields'  => [
         'title'                          => '头衔',
-        'level'                          => '等级',
+        'level'                          => '级别',
         'sort'                           => '排序',
         'promotion_rewards_ratio'        => '直推奖',
         'same_level_rewards_ratio'       => '平级奖',

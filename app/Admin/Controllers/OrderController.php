@@ -45,9 +45,19 @@ class OrderController extends AdminController
             $grid->column('profit_ratio');
             $grid->column('price');
             $grid->column('profit_price');
+
+            $grid->column('name');
+            $grid->column('payment_method')->display(function ($v) {
+                if ($v=='gwk') {
+                    return "购物卡";
+                } else {
+                    return $v;
+                }
+            });
+
             $grid->column('status')->using(Order::$statusLabel)->label(Order::$statusLabelStyle);
             $grid->column('pay_status')->using(Order::$pay_status)->label(Order::$payStatusLabelStyle);
-            $grid->column('name');
+
 //            $grid->column('remark');
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
@@ -81,6 +91,10 @@ class OrderController extends AdminController
                 $filter->equal('pay_status')->select(function () {
                     return Order::$pay_status;
                 });
+                //支付方式
+                $filter->equal('payment_method')->select(function () {
+                    return Order::$ORDER_FROM;
+                });
                 $filter->between('updated_at')->datetime();
             });
             //审核订单按钮
@@ -102,7 +116,8 @@ class OrderController extends AdminController
                 'price'                       => '消费金额',
                 'profit_price'                => '实际让利金额',
                 'status'                      => '审核状态',
-                'pay_status'                  => '	支付状态',
+                'pay_status'                  => '支付状态',
+                'payment_method'                  => '支付方式',
                 'name'                        => '消费商品名',
                 'remark'                      => '备注',
                 'created_at'                  => '创建时间',
@@ -144,6 +159,9 @@ class OrderController extends AdminController
                         $row[ 'pay_status' ] = "支付失败";
                     } else {
                         $row[ 'pay_status' ] = "订单异常";
+                    }
+                    if ($row[ 'payment_method' ] == 'gwk'){
+                        $row[ 'payment_method' ] = "购物卡";
                     }
                 }
                 return $rows;

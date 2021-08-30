@@ -17,6 +17,7 @@ return [
         'remark'       => '备注',
         'pay_status'   => '支付状态',
         'order_no'     => '订单号',
+        'payment_method'     => '支付方式',
     ],
     //
     //    'fields' => [

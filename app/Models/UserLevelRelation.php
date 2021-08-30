@@ -76,6 +76,48 @@ class UserLevelRelation extends Model
     
     protected $table = 'user_level_relation';
     
+    // 实名认证
+    const IS_VERIFIED_NO  = 0;
+    
+    const IS_VERIFIED_YES = 1;
+    
+    // 购买会员
+    const IS_VIP_NO  = 0;
+    
+    const IS_VIP_YES = 1;
+    
+    /**
+     * @var string[] 实名认证状态文字
+     */
+    public static $isVerifiedText = [
+        self::IS_VERIFIED_NO  => '否',
+        self::IS_VERIFIED_YES => '是',
+    ];
+    
+    /**
+     * @var string[] 是否为会员标识
+     */
+    public static $isVipText = [
+        self::IS_VIP_NO  => '否',
+        self::IS_VIP_YES => '是',
+    ];
+    
+    /**
+     * @var string[]实名认证状态样式
+     */
+    public static $isVerifiedStyle = [
+        self::IS_VERIFIED_NO  => 'dark',
+        self::IS_VERIFIED_YES => 'success',
+    ];
+    
+    /**
+     * @var string[] 购买会员状态标识
+     */
+    public static $isVipStyle = [
+        self::IS_VIP_NO  => 'dark',
+        self::IS_VIP_YES => 'success',
+    ];
+    
     /**
      * Description:获取所有已有关系的用户ID
      *

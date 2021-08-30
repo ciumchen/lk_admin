@@ -19,7 +19,8 @@ class UserLevelController extends AdminController
     protected function grid()
     : Grid
     {
-        return Grid::make(new UserLevel(), function (Grid $grid)
+        $_this = $this;
+        return Grid::make(new UserLevel(), function (Grid $grid) use ($_this)
         {
             $grid->model()->orderByDesc('sort');
             $grid->combine(
@@ -74,6 +75,7 @@ class UserLevelController extends AdminController
             });
             //固定首尾列
             $grid->fixColumns(2, -1);
+            $_this->disableButton($grid);
         });
     }
     
@@ -183,5 +185,20 @@ class UserLevelController extends AdminController
                      ->help('请设置该等级升级是否需要'.admin_trans_field('is_verified'));
             });
         });
+    }
+    
+    protected function disableButton(Grid $grid)
+    {
+        //禁用操作
+//        $grid->disableActions();
+        /* 禁用创建按钮 */
+//        $grid->disableCreateButton();
+        /* 禁用编辑按钮 */
+//        $grid->disableEditButton();
+        /* 禁用删除按钮 */
+        $grid->disableDeleteButton();
+        /* 禁用显示按钮 */
+        $grid->disableViewButton();
+        $grid->disableBatchDelete();
     }
 }

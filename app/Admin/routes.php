@@ -94,6 +94,9 @@ Route::group(
         $router->resource('bm-order-lists', 'BmRechargeOrderController');
         //用户拼团列表
         $router->resource('gather-winning', 'GatherWinningController');
+        /*********************** 拼团管理 ***********************/
+        //新增拼团
+        $router->resource('advert-users', 'AdvertUsersController');
     }
 );
 Route::group(

@@ -20,7 +20,7 @@ class updateUserRelation extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = '更新会员关系';
     
     /**
      * Create a new command instance.

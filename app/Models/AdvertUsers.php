@@ -45,4 +45,9 @@ class AdvertUsers extends Model
         0 => '异常',
         1 => '正常',
     ];
+
+    const ADVERT_BRAND = [
+        1 => '奖励',
+        2 => '拼团',
+    ];
 }

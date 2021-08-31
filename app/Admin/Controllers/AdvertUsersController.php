@@ -26,6 +26,9 @@ class AdvertUsersController extends AdminController
             $grid->column('type', '类型')->display(function ($type){
                 return AdvertUsers::ADVERT_TYPE[$type];
             });
+            $grid->column('brand', '渠道')->display(function ($brand){
+                return AdvertUsers::ADVERT_BRAND[$brand];
+            });
             $grid->column('status', '状态')->display(function ($status){
                 return AdvertUsers::ADVERT_STATUS[$status];
             });
@@ -47,6 +50,7 @@ class AdvertUsersController extends AdminController
                 $filter->equal('id', 'id');
                 $filter->equal('uid', '用户id');
                 $filter->equal('type', '广告类型');
+                $filter->equal('brand', '渠道(1 奖励；2 拼团)');
                 $filter->between('created_at')->datetime();
             });
         });

@@ -22,6 +22,7 @@ class AdvertUsers extends Model
     }
 
     const ADVERT_TYPE = [
+        0  => '未知',
         1  => '幸运抽奖',
         2  => '答题',
         3  => '猜成语',

@@ -28,16 +28,8 @@ class UserShoppingCardDhLogController extends AdminController
 //            $grid->column('gwkDhLog.gather_shopping_card_id');
 //            $grid->column('gwkDhLog.operate_type');
             $grid->column('gwkDhLog.operate_type','操作类型')->display(function ($v) {
-                if ($v=='exchange_zl'){
-                    return "代充";
-                } elseif ($v=='exchange_pl') {
-                    return "批量代充";
-                }elseif ($v=='exchange_mt') {
-                    return "美团";
-                }elseif ($v=='exchange_hf') {
-                    return "直充";
-                }elseif ($v=='exchange_lr') {
-                    return "录单";
+                if(array_key_exists($v, GatherShoppingCard::EXCHANGE_TYPE)){
+                    return GatherShoppingCard::EXCHANGE_TYPE[$v];
                 }else{
                     return "拼团中奖";
                 }

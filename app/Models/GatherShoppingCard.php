@@ -55,6 +55,15 @@ class GatherShoppingCard extends Model
         return $this->belongsTo(UserShoppingCardDhLog::class, 'id','gather_shopping_card_id');
     }
 
+    const EXCHANGE_TYPE = array(
+        'exchange_zl' => '代充',
+        'exchange_pl' => '批量代充',
+        'exchange_mt' => '美团',
+        'exchange_hf' => '直充',
+        'exchange_lr' => '录单',
+        'exchange_give_dc' => '赠送购物卡',
+        'exchange_give_add' => '接收赠送购物卡',
+    );
 
 
 }

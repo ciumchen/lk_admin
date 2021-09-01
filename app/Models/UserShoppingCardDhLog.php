@@ -46,6 +46,8 @@ class UserShoppingCardDhLog extends Model
     const USER_TYPE_GWK3 = 'exchange_mt';
     const USER_TYPE_GWK4 = 'exchange_hf';
     const USER_TYPE_GWK5 = 'exchange_lr';
+    const USER_TYPE_GWK6 = 'exchange_give_dc';
+    const USER_TYPE_GWK7 = 'exchange_give_add';
 
 
     public static $operateTypeTextsGWK = [
@@ -54,6 +56,8 @@ class UserShoppingCardDhLog extends Model
         self::USER_TYPE_GWK3 => "美团",
         self::USER_TYPE_GWK4 => "直充",
         self::USER_TYPE_GWK5 => "录单",
+        self::USER_TYPE_GWK6 => "赠送购物卡",
+        self::USER_TYPE_GWK7 => "接收赠送购物卡",
 
     ];
 

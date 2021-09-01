@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Admin\Repositories\AdvertTrade;
 use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Illuminate\Database\Eloquent\Model;
 
@@ -256,5 +257,17 @@ class Order extends Model
     public function gatherTrade()
     {
         return $this->hasOne(GatherTrade::class, 'oid', 'id');
+    }
+
+    /**
+     * Description:广告录单
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @author
+     * @date
+     */
+    public function advertTrade()
+    {
+        return $this->hasOne(AdvertTrade::class, 'oid');
     }
 }

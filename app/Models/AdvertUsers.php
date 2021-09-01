@@ -39,7 +39,8 @@ class AdvertUsers extends Model
         19 => '步数兑换',
         20 => '气泡兑换',
         21 => '拉新',
-        22 => '拉活'
+        22 => '拉活',
+        30 => '拼团奖励',
     ];
 
     const ADVERT_STATUS = [

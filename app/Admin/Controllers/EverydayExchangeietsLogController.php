@@ -41,7 +41,7 @@ class EverydayExchangeietsLogController extends AdminController
                     $buttoncss = 'background: #5c6bc6;font-weight: 600;color: #fff;margin-bottom: 4px;display: inline;
 padding: .24em .6em .34em;line-height: 1;text-align: center;white-space: nowrap;vertical-align: baseline;border-radius: .25em;cursor: pointer;box-sizing: border-box;';
 
-                    return "<div style='margin: 10px;text-align: center'>
+                    return "<div style='margin: 10px;text-align: right'>
                         <a href=\"javascript:if(confirm('确实要分红吗?'))location='sdEveryDayIetsFh'\"><span style='$buttoncss'>今日资产手动分红</span></a>
                         </div>";
                 }}

@@ -60,6 +60,10 @@ Route::group(
         $router->resource('withdraw-logs', 'WithdrawLogController');
         $router->resource('rebate-data', 'RebateDataController');
         $router->resource('city-node', 'CityNodeController');
+        //10点分红记录列表
+        $router->resource('exchangeiets_log', 'EverydayExchangeietsLogController');
+        $router->any('sdEveryDayIetsFh', 'EverydayExchangeietsLogController@sdEveryDayIetsFh');
+
         //上传图标
         $router->any('file/upload-img', 'FileController@handle');
         //系统消息

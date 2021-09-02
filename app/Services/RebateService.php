@@ -13,7 +13,6 @@ use App\Admin\Repositories\FreezeLog;
 use App\Models\Asset;
 use App\Models\AssetsType;
 use App\Models\BusinessData;
-use App\Models\EverydayExchangeietsLog;
 use App\Models\IntegralLog;
 use App\Models\Order;
 use App\Models\OrderIntegralLkDistribution;
@@ -269,19 +268,6 @@ class RebateService
      */
     public function exchagneIets()
     {
-        $today = date("Y-m-d",time());
-        $exchangeIetsLog = EverydayExchangeietsLog::where('day',$today)->first();
-        if (empty($exchangeIetsLog)){
-            $addData = new EverydayExchangeietsLog();
-            $addData->day = $today;
-            $addData->type = 'exchangeIets';
-            $addData->status = 1;
-            $addData->save();
-        }elseif ($exchangeIetsLog->status==2){
-            echo "命令执行失败，失败原因：今日资产已分红 \n";
-            return false;
-        }
-
         //获取USDT单价
         $usdtPrice = Setting::getSetting('usdt_price');
         if(!$usdtPrice)
@@ -330,15 +316,6 @@ class RebateService
                             );
                         }
                     });
-
-                //更新分红记录状态
-                $exchangeIetsLog = EverydayExchangeietsLog::where('day',date("Y-m-d",time()))->first();
-                if (empty($exchangeIetsLog)){
-                    return false;
-                }
-                $exchangeIetsLog->status = 2;
-                $exchangeIetsLog->save();
-
             });
         } catch (\Exception $e) {
 

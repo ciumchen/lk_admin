@@ -46,6 +46,7 @@ padding: .24em .6em .34em;line-height: 1;text-align: center;white-space: nowrap;
                         </div>";
                 }}
             });
+            $grid->model()->orderBy('id', 'desc');
             $grid->column('id')->sortable();
             $grid->column('day');
             $grid->column('status')->using(EverydayExchangeietsLog::$statusText)->label(EverydayExchangeietsLog::$statusColor);

@@ -274,7 +274,7 @@ class RebateService
         if (empty($exchangeIetsLog)){
             $addData = new EverydayExchangeietsLog();
             $addData->day = $today;
-            $addData->type = 'exchangeIets';
+            $addData->type = 'encourage转换成usdt';
             $addData->status = 1;
             $addData->save();
         }elseif ($exchangeIetsLog->status==2){

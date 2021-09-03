@@ -2,8 +2,10 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Grid\GatherOrder;
 use App\Admin\Repositories\Order;
 use App\Admin\Repositories\GatherTrade;
+use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
@@ -65,6 +67,14 @@ class GatherTradeController extends AdminController
                 $grid->disableViewButton();
                 $grid->disableBatchDelete();
                 $grid->perPages([20, 50, 100, 200, 500]);
+                //审核订单按钮
+                $grid->actions(function (Grid\Displayers\Actions $actions) {
+                    if (Admin::user()->id == 1 || Admin::user()->id == 2) {
+                        $actions->append(new GatherOrder());
+                    } elseif ($actions->row->pay_status == 'succeeded' && $actions->row->status == Order::STATUS_DEFAULT) {
+                        $actions->append(new GatherOrder());
+                    }
+                });
                 /* 筛选 */
                 $grid->filter(
                     function (Grid\Filter $filter) {

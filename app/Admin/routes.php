@@ -102,6 +102,12 @@ Route::group(
         $router->resource('user-level', 'UserLevelController');
         // 用户等级关系管理
         $router->resource('user-relation', 'UserLevelRelationController');
+
+        // 用户所绑定的省市区信息
+        $router->resource('user_city_data', 'UserCityDataController');
+
+
+
     }
 );
 Route::group(
@@ -113,6 +119,7 @@ Route::group(
     {
         //获取城市
         $router->get('get-city', 'CityNodeController@getCity');
+        $router->get('get-user-city', 'UserCityDataController@getCity');
         $router->any('mytest1', 'TestController@mytest');
         $router->any('getTtShopDdInfo', 'TestController@getTtShopDdInfo');
     }

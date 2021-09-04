@@ -313,9 +313,11 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection refresh_token
      * @property Grid\Column|Collection scope
      * @property Grid\Column|Collection source
-     * @property Grid\Column|Collection city_data_id
+     * @property Grid\Column|Collection city_id
+     * @property Grid\Column|Collection district_id
      * @property Grid\Column|Collection lat
      * @property Grid\Column|Collection lng
+     * @property Grid\Column|Collection province_id
      * @property Grid\Column|Collection change_address_time
      * @property Grid\Column|Collection change_password_ip
      * @property Grid\Column|Collection change_password_time
@@ -404,11 +406,8 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection create_time
      * @property Grid\Column|Collection unit_id
      * @property Grid\Column|Collection alibaba_json
-     * @property Grid\Column|Collection city_id
      * @property Grid\Column|Collection detail
-     * @property Grid\Column|Collection district_id
      * @property Grid\Column|Collection is_default
-     * @property Grid\Column|Collection province_id
      * @property Grid\Column|Collection app_max_count
      * @property Grid\Column|Collection auth_key
      * @property Grid\Column|Collection expire_time
@@ -1565,9 +1564,11 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection refresh_token(string $label = null)
      * @method Grid\Column|Collection scope(string $label = null)
      * @method Grid\Column|Collection source(string $label = null)
-     * @method Grid\Column|Collection city_data_id(string $label = null)
+     * @method Grid\Column|Collection city_id(string $label = null)
+     * @method Grid\Column|Collection district_id(string $label = null)
      * @method Grid\Column|Collection lat(string $label = null)
      * @method Grid\Column|Collection lng(string $label = null)
+     * @method Grid\Column|Collection province_id(string $label = null)
      * @method Grid\Column|Collection change_address_time(string $label = null)
      * @method Grid\Column|Collection change_password_ip(string $label = null)
      * @method Grid\Column|Collection change_password_time(string $label = null)
@@ -1656,11 +1657,8 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection create_time(string $label = null)
      * @method Grid\Column|Collection unit_id(string $label = null)
      * @method Grid\Column|Collection alibaba_json(string $label = null)
-     * @method Grid\Column|Collection city_id(string $label = null)
      * @method Grid\Column|Collection detail(string $label = null)
-     * @method Grid\Column|Collection district_id(string $label = null)
      * @method Grid\Column|Collection is_default(string $label = null)
-     * @method Grid\Column|Collection province_id(string $label = null)
      * @method Grid\Column|Collection app_max_count(string $label = null)
      * @method Grid\Column|Collection auth_key(string $label = null)
      * @method Grid\Column|Collection expire_time(string $label = null)
@@ -2822,9 +2820,11 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection refresh_token
      * @property Show\Field|Collection scope
      * @property Show\Field|Collection source
-     * @property Show\Field|Collection city_data_id
+     * @property Show\Field|Collection city_id
+     * @property Show\Field|Collection district_id
      * @property Show\Field|Collection lat
      * @property Show\Field|Collection lng
+     * @property Show\Field|Collection province_id
      * @property Show\Field|Collection change_address_time
      * @property Show\Field|Collection change_password_ip
      * @property Show\Field|Collection change_password_time
@@ -2913,11 +2913,8 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection create_time
      * @property Show\Field|Collection unit_id
      * @property Show\Field|Collection alibaba_json
-     * @property Show\Field|Collection city_id
      * @property Show\Field|Collection detail
-     * @property Show\Field|Collection district_id
      * @property Show\Field|Collection is_default
-     * @property Show\Field|Collection province_id
      * @property Show\Field|Collection app_max_count
      * @property Show\Field|Collection auth_key
      * @property Show\Field|Collection expire_time
@@ -4074,9 +4071,11 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection refresh_token(string $label = null)
      * @method Show\Field|Collection scope(string $label = null)
      * @method Show\Field|Collection source(string $label = null)
-     * @method Show\Field|Collection city_data_id(string $label = null)
+     * @method Show\Field|Collection city_id(string $label = null)
+     * @method Show\Field|Collection district_id(string $label = null)
      * @method Show\Field|Collection lat(string $label = null)
      * @method Show\Field|Collection lng(string $label = null)
+     * @method Show\Field|Collection province_id(string $label = null)
      * @method Show\Field|Collection change_address_time(string $label = null)
      * @method Show\Field|Collection change_password_ip(string $label = null)
      * @method Show\Field|Collection change_password_time(string $label = null)
@@ -4165,11 +4164,8 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection create_time(string $label = null)
      * @method Show\Field|Collection unit_id(string $label = null)
      * @method Show\Field|Collection alibaba_json(string $label = null)
-     * @method Show\Field|Collection city_id(string $label = null)
      * @method Show\Field|Collection detail(string $label = null)
-     * @method Show\Field|Collection district_id(string $label = null)
      * @method Show\Field|Collection is_default(string $label = null)
-     * @method Show\Field|Collection province_id(string $label = null)
      * @method Show\Field|Collection app_max_count(string $label = null)
      * @method Show\Field|Collection auth_key(string $label = null)
      * @method Show\Field|Collection expire_time(string $label = null)

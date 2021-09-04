@@ -22,6 +22,8 @@ class UserRelationService
         try {
             /*插入新曾用户数据*/
             $this->insertUserRelation();
+            /* 更新用户邀请人关系 */
+            $this->updateInviteId();
             /* 更新所有用户关系 */
             $this->updateRelation();
             /* 更新已有用户关系数据中的认证状态 */
@@ -99,6 +101,12 @@ class UserRelationService
         unset($j);
     }
     
+    /**
+     * Description:更新用户邀请人关系
+     *
+     * @author lidong<947714443@qq.com>
+     * @date   2021/9/4 0004
+     */
     public function updateInviteId()
     {
         try {

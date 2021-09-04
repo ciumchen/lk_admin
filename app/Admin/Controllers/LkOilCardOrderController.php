@@ -41,6 +41,8 @@ class LkOilCardOrderController extends AdminController
             $grid->column('user.id','消费者UID');//买家uid
 //            $grid->column('user.username','买家用户名');//买家用户名
             $grid->column('numeric','油卡号');//油卡号
+            $grid->column('user_name','姓名');//油卡号
+            $grid->column('idcard','身份证');//油卡号
 //            $grid->column('telecom','运营商');//运营商
 
             $grid->column('status')->using(['await' => '待支付', 'pending' => '支付处理中','succeeded'=>'支付成功','failed'=>'支付失败','ddyc'=>"订单异常"])->label([
@@ -109,6 +111,8 @@ class LkOilCardOrderController extends AdminController
 //                'refund_fee' => '退款金额',
 //                'aftersales_status' => '售后状态',
                 'order_from' => '订单来源',
+                'user_name' => '姓名',
+                'idcard' => '身份证',
 //                'timeout_action_time' => '订单超时到期时间',
                 'pay_time' => '付款时间',
 //                'end_time' => '结束时间',

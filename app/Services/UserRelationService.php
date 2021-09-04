@@ -10,17 +10,20 @@ use Illuminate\Support\Facades\DB;
 
 class UserRelationService
 {
+    
     /**
      * Description:统一调用更新用户关系数据
      *
      * @author lidong<947714443@qq.com>
-     * @date 2021/8/25 0025
+     * @date   2021/8/25 0025
      */
     public function updateUserRelations()
     {
         try {
             /*插入新曾用户数据*/
             $this->insertUserRelation();
+            /* 更新用户邀请人关系 */
+            $this->updateInviteId();
             /* 更新所有用户关系 */
             $this->updateRelation();
             /* 更新已有用户关系数据中的认证状态 */
@@ -62,7 +65,7 @@ class UserRelationService
      * @param  null  $UserList
      *
      * @author lidong<947714443@qq.com>
-     * @date 2021/8/23 0023
+     * @date   2021/8/23 0023
      */
     public function insertUserRelation($UserList = null)
     {
@@ -78,8 +81,7 @@ class UserRelationService
             $UserList = Users::getUserList($arr, 100);
             $insert_batch = [];
             $i = 0;
-            $UserList->each(function (&$item) use (&$insert_batch, &$i)
-            {
+            $UserList->each(function (&$item) use (&$insert_batch, &$i) {
                 $insert_batch[ $i ][ 'user_id' ] = $item->id;
                 $insert_batch[ $i ][ 'integral' ] = $item->integral ?? 0;
                 $insert_batch[ $i ][ 'invite_id' ] = $item->invite_uid ?? 0;
@@ -100,16 +102,37 @@ class UserRelationService
     }
     
     /**
+     * Description:更新用户邀请人关系
+     *
+     * @author lidong<947714443@qq.com>
+     * @date   2021/9/4 0004
+     */
+    public function updateInviteId()
+    {
+        try {
+            $sql = "UPDATE user_level_relation a, users b SET a.invite_id=IF(ISNULL(b.invite_uid),2,b.invite_uid) WHERE a.user_id=b.id;";
+            $res = DB::update($sql);
+            dump('更新'.$res.'位用户邀请人关系');
+        } catch (Exception $e) {
+            dump('更新邀请人关系出错:updateInviteId'.$e->getMessage());
+        }
+    }
+    
+    /**
      * Description:更新用户积分信息
      *
      * @author lidong<947714443@qq.com>
-     * @date 2021/8/27 0027
+     * @date   2021/8/27 0027
      */
     public function updateAllIntegral()
     {
-        $sql = "UPDATE user_level_relation ul,users u SET ul.integral=u.integral WHERE ul.user_id=u.id;";
-        $res = DB::update($sql);
-        dump('更新'.$res.'位用户积分');
+        try {
+            $sql = "UPDATE user_level_relation ul,users u SET ul.integral=u.integral WHERE ul.user_id=u.id;";
+            $res = DB::update($sql);
+            dump('更新'.$res.'位用户积分');
+        } catch (Exception $e) {
+            dump('更新用户积分出错:updateAllIntegral'.$e->getMessage());
+        }
     }
     
     /**
@@ -117,7 +140,7 @@ class UserRelationService
      *
      * @throws \Exception
      * @author lidong<947714443@qq.com>
-     * @date 2021/8/25 0025
+     * @date   2021/8/25 0025
      */
     public function updateIsVerified()
     {
@@ -134,7 +157,7 @@ class UserRelationService
      * Description:更新所有用户会员购买状态
      *
      * @author lidong<947714443@qq.com>
-     * @date 2021/8/27 0027
+     * @date   2021/8/27 0027
      */
     public function updateIsVip()
     {
@@ -152,7 +175,7 @@ class UserRelationService
      * Description:更新用户关系数据
      *
      * @author lidong<947714443@qq.com>
-     * @date 2021/8/25 0025
+     * @date   2021/8/25 0025
      */
     public function updateRelation()
     {
@@ -186,7 +209,7 @@ class UserRelationService
      * Description:统计直接下级数据
      *
      * @author lidong<947714443@qq.com>
-     * @date 2021/8/25 0025
+     * @date   2021/8/25 0025
      */
     public function countDirectChild()
     {
@@ -222,7 +245,7 @@ WHERE
      * Description:统计团队数据
      *
      * @author lidong<947714443@qq.com>
-     * @date 2021/8/26 0026
+     * @date   2021/8/26 0026
      */
     public function countTeamChild()
     {
@@ -264,7 +287,7 @@ WHERE
      * Description:更新所有用户为消费者
      *
      * @author lidong<947714443@qq.com>
-     * @date 2021/8/27 0027
+     * @date   2021/8/27 0027
      */
     public function updateToConsumer()
     {
@@ -281,7 +304,7 @@ WHERE
      * Description:更新消费者为会员
      *
      * @author lidong<947714443@qq.com>
-     * @date 2021/8/27 0027
+     * @date   2021/8/27 0027
      */
     public function updateToVip()
     {
@@ -300,7 +323,7 @@ WHERE
      * @param $sliver_id
      *
      * @author lidong<947714443@qq.com>
-     * @date 2021/8/27 0027
+     * @date   2021/8/27 0027
      */
     public function updateToSliver($sliver_id = 3)
     {
@@ -329,7 +352,7 @@ WHERE
      * @param $gold_id
      *
      * @author lidong<947714443@qq.com>
-     * @date 2021/8/27 0027
+     * @date   2021/8/27 0027
      */
     public function updateToGold($gold_id = 4)
     {
@@ -354,7 +377,7 @@ AND level_id < {$UserLevel->id};
      * Description:统计下级银卡数量
      *
      * @author lidong<947714443@qq.com>
-     * @date 2021/8/27 0027
+     * @date   2021/8/27 0027
      */
     public function countChildSliverNum()
     {
@@ -376,7 +399,7 @@ WHERE
      * Description:统计团队银卡数量
      *
      * @author lidong<947714443@qq.com>
-     * @date 2021/8/27 0027
+     * @date   2021/8/27 0027
      */
     public function countTeamSliverNum()
     {
@@ -412,7 +435,7 @@ WHERE
      * Description:标记银卡团队
      *
      * @author lidong<947714443@qq.com>
-     * @date 2021/8/28 0028
+     * @date   2021/8/28 0028
      */
     public function markSilverId($silver_id = 3)
     {
@@ -457,7 +480,7 @@ WHERE
      * @param  int  $gold_id
      *
      * @author lidong<947714443@qq.com>
-     * @date 2021/8/28 0028
+     * @date   2021/8/28 0028
      */
     public function markGoldId($gold_id = 4)
     {
@@ -500,7 +523,7 @@ WHERE
      * @param  int  $diamond_id
      *
      * @author lidong<947714443@qq.com>
-     * @date 2021/8/28 0028
+     * @date   2021/8/28 0028
      */
     public function markDiamondId($diamond_id = 5)
     {
@@ -536,9 +559,9 @@ WHERE
             dump('标记钻石团队出错:markDiamondId '.$e->getMessage());
         }
     }
-    
-    
-    
+
+
+
 //    /*******************************************************************************/
 //    /**
 //     * Description:更新实名状态

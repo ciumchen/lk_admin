@@ -268,6 +268,20 @@ class RebateService
      */
     public function exchagneIets()
     {
+
+        $today = date("Y-m-d",time());
+        $exchangeIetsLog = EverydayExchangeietsLog::where('day',$today)->first();
+        if (empty($exchangeIetsLog)){
+            $addData = new EverydayExchangeietsLog();
+            $addData->day = $today;
+            $addData->type = 'encourage转换成usdt';
+            $addData->status = 1;
+            $addData->save();
+        }elseif ($exchangeIetsLog->status==2){
+            echo "命令执行失败，失败原因：今日资产已分红 \n";
+            return false;
+        }
+
         //获取USDT单价
         $usdtPrice = Setting::getSetting('usdt_price');
         if(!$usdtPrice)
@@ -324,5 +338,4 @@ class RebateService
         }
     }
 }
-
 

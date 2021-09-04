@@ -42,10 +42,11 @@ class EverydayExchangeietsLogController extends AdminController
 padding: .24em .6em .34em;line-height: 1;text-align: center;white-space: nowrap;vertical-align: baseline;border-radius: .25em;cursor: pointer;box-sizing: border-box;';
 
                     return "<div style='margin: 10px;text-align: right'>
-                        <a href=\"javascript:if(confirm('确实要分红吗?'))location='sdEveryDayIetsFh'\"><span style='$buttoncss'>今日资产手动分红</span></a>
+                        <a href=\"javascript:if(confirm('确定要分红吗?'))location='sdEveryDayIetsFh'\"><span style='$buttoncss'>今日资产手动分红</span></a>
                         </div>";
                 }}
             });
+            $grid->model()->orderBy('id', 'desc');
             $grid->column('id')->sortable();
             $grid->column('day');
             $grid->column('status')->using(EverydayExchangeietsLog::$statusText)->label(EverydayExchangeietsLog::$statusColor);

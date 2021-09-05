@@ -10,4 +10,12 @@ class EverydayExchangeietsLog extends Model
 {
 	use HasDateTimeFormatter;
     protected $table = 'everyday_exchangeiets_log';
+
+    protected $fillable = [
+        'day',
+        'type',
+        'status',
+        'created_at',
+        'updated_at',
+    ];
 }

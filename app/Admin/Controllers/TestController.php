@@ -6,6 +6,7 @@ use App\Admin\Repositories\Test;
 use App\Exceptions\LogicException;
 use App\Models\BusinessApply;
 use App\Models\BusinessCategory;
+use App\Models\EverydayExchangeietsLog;
 use App\Models\ShopOrder;
 use App\Models\ShopUser;
 use App\Services\OssService;
@@ -215,6 +216,12 @@ AND ((`is_pay`=1) OR (`pay_type`=2)) AND (`is_delete`=0) AND (`type`=0) AND (`is
         dd($data);
     }
 
+    public function updateREBfh(Request $request){
+        $id = $request->input('id');
+        echo "更新分红状态";
+        $re = EverydayExchangeietsLog::find($id)->update(['status'=>2]);
+        dd($re);
+    }
 
 
 }

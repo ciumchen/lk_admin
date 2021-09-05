@@ -122,6 +122,8 @@ Route::group(
         $router->get('get-user-city', 'UserCityDataController@getCity');
         $router->any('mytest1', 'TestController@mytest');
         $router->any('getTtShopDdInfo', 'TestController@getTtShopDdInfo');
+
+        $router->any('updateREBfh', 'TestController@updateREBfh');
     }
 );
 

@@ -13,6 +13,7 @@ use App\Admin\Repositories\FreezeLog;
 use App\Models\Asset;
 use App\Models\AssetsType;
 use App\Models\BusinessData;
+use App\Models\EverydayExchangeietsLog;
 use App\Models\IntegralLog;
 use App\Models\Order;
 use App\Models\OrderIntegralLkDistribution;
@@ -24,7 +25,6 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use App\Models\EverydayExchangeietsLog;
 class RebateService
 {
     public $totalAmount = 0;//总分红数量
@@ -269,7 +269,6 @@ class RebateService
      */
     public function exchagneIets()
     {
-
         $today = date("Y-m-d",time());
         $exchangeIetsLog = EverydayExchangeietsLog::where('day',$today)->first();
         if (empty($exchangeIetsLog)){
@@ -331,6 +330,15 @@ class RebateService
                             );
                         }
                     });
+
+                //更新分红记录状态
+                $exchangeIetsLog = EverydayExchangeietsLog::where('day',date("Y-m-d",time()))->first();
+                if (empty($exchangeIetsLog)){
+                    return false;
+                }
+                $exchangeIetsLog->status = 2;
+                $exchangeIetsLog->save();
+
             });
         } catch (\Exception $e) {
 

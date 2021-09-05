@@ -24,6 +24,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Models\EverydayExchangeietsLog;
 class RebateService
 {
     public $totalAmount = 0;//总分红数量

@@ -45,13 +45,28 @@ class UserRebateService
         return $list;
     }
     
+    /**
+     * Description:获取分享综合比例
+     *
+     * @return int|mixed
+     * @author lidong<947714443@qq.com>
+     * @date   2021/9/6 0006
+     */
     public static function getShareRatio()
     {
         $LevelCache = self::getLevelCache();
+        /* 直推最高奖励 */
         $maxShare = $LevelCache[ SystemService::$diamondLevelId ][ 'promotion_rewards_ratio' ];
+        /* 平级奖累加 */
         $sameLevel = 0;
+        /* 加权奖累加 */
         $weightedEqually = 0;
-        $shareRatio = 0;
+        foreach ($LevelCache as &$item) {
+            $sameLevel += $item[ 'same_level_rewards_ratio' ];
+            $weightedEqually += $item[ 'weighted_equally_rewards_ratio' ];
+        }
+        unset($item);
+        return ($maxShare + $sameLevel + $weightedEqually);
     }
     
     /**

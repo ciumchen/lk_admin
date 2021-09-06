@@ -45,6 +45,15 @@ class UserRebateService
         return $list;
     }
     
+    public static function getShareRatio()
+    {
+        $LevelCache = self::getLevelCache();
+        $maxShare = $LevelCache[ SystemService::$diamondLevelId ][ 'promotion_rewards_ratio' ];
+        $sameLevel = 0;
+        $weightedEqually = 0;
+        $shareRatio = 0;
+    }
+    
     /**
      * Description:分享佣金
      *

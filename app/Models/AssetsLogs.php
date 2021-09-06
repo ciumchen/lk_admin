@@ -79,6 +79,7 @@ class AssetsLogs extends Model
     const OPERATE_TYPE_EXCHANGE_IETS = 'exchagne_iets';//兑换iets
     const OPERATE_TYPE_EXCHANGE_IETS_SUB_ENCOURATGE = 'exchagne_iets_sub';//兑换扣除
     const OPERATE_TYPE_IETS_TO_USDT = 'IETS兑换为USDT';
+    const OPERATE_TYPE_PROVINCE_REBATE = 'province_rebate';//省站长分红
     /**
      * 类型文本.
      *
@@ -101,6 +102,7 @@ class AssetsLogs extends Model
         self::OPERATE_TYPE_EXCHANGE_IETS => '兑换IETS',
         self::OPERATE_TYPE_EXCHANGE_IETS_SUB_ENCOURATGE => '兑换扣除',
         self::OPERATE_TYPE_IETS_TO_USDT => '转换为USDT',
+        self::OPERATE_TYPE_PROVINCE_REBATE => '省站长分红',
     ];
 
     public function getUpdatedDateAttribute($value)

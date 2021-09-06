@@ -183,7 +183,7 @@ class VerifyOrder extends Form
             );
         }
         //分享佣金
-        (new UserRebateService())->shareScale($order, $user, $assets, $platformUid);
+        $shareAmount = (new UserRebateService())->shareScale($order, $user, $assets, $platformUid);
 //        /* 计算总佣金 */
 //        $shareScale = Setting::getSetting('share_scale');
 //        $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 2);

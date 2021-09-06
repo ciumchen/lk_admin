@@ -75,8 +75,6 @@ class UserRebateService
                 $this->inviterScale($order, $assetsType, $parent);
                 /* 所有上级中找上级的高一级分佣 */
                 $this->higherScale($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent, $allParent);
-                /* 平级奖分佣 */
-                $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent, $allParent);
             }
             /* 加权平分 */
             $this->weightRewardsCount($order);
@@ -148,11 +146,17 @@ class UserRebateService
             case SystemService::$vipLevelID: /* 会员从上级找银卡 */
                 $parent = $this->silverHigherScale($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent,
                     $allParent);
+                /* 平级奖分佣 */
+                $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent, $allParent);
             case SystemService::$silverLevelId: /* 银卡从上级找金卡 */
                 $this->goldHigherScale($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent, $allParent);
+                /* 平级奖分佣 */
+                $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent, $allParent);
             case SystemService::$goldLevelId: /* 金卡从上级找钻石卡 */
                 $this->diamondHigherScale($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent,
                     $allParent);
+                /* 平级奖分佣 */
+                $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent, $allParent);
                 break;
             default:
                 Log::debug('higherScale:Error:上级分佣异常', [json_encode($order).'||'.json_encode($user)]);

@@ -22,7 +22,8 @@
     "laravel/framework": "^8.12",
     "laravel/tinker": "^2.5",
     "overtrue/easy-sms": "^1.3",
-    "predis/predis": "^1.1"
+    "predis/predis": "^1.1",
+    "ext-bcmath": "*"
   },
   "require-dev": {
     "barryvdh/laravel-ide-helper": "^2.10",

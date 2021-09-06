@@ -13,6 +13,7 @@ use App\Models\TradeOrder;
 use App\Models\User;
 use App\Services\AssetsService;
 use App\Services\EncourageService;
+use App\Services\ProvinceCityAreaDlService;
 use Dcat\Admin\Traits\LazyWidget;
 use Dcat\Admin\Widgets\Form;
 use Illuminate\Support\Facades\DB;
@@ -22,9 +23,9 @@ use exception;
 class VerifyOrder extends Form
 {
     use LazyWidget;
-    
+
     // 使用异步加载功能
-    
+
     /**
      * Handle the form request.
      *
@@ -107,7 +108,7 @@ class VerifyOrder extends Form
         }
         return $this->location(null, '操作成功');
     }
-    
+
     /**
      * Build a form here.
      */
@@ -124,7 +125,7 @@ class VerifyOrder extends Form
              })
              ->required();
     }
-    
+
     /**
      * The data of the form.
      *
@@ -136,7 +137,7 @@ class VerifyOrder extends Form
             'remark' => '',
         ];
     }
-    
+
     /**返佣
      *
      * @param $order
@@ -207,64 +208,73 @@ class VerifyOrder extends Form
 //            AssetsLog::OPERATE_TYPE_INVITE_REBATE,
 //            $remark,$orderNo
 //        );
-        //市节点返佣
-        $cityNodeRebate = Setting::getSetting('city_node_rebate') ?? 0;
-        $cityAmount = 0;
-        if ($cityNodeRebate > 0) {
-            //判断商家是否在市节点
-            $cityNode = CityNode::where('status', 1)
-                                ->where('province', $order->businessData->province)
-                                ->whereNotNull('uid')
-                                ->where('city', $order->businessData->city)
-                                ->whereNull('district')
-                                ->first();
-            if (!$cityNode) {
-                $uid = $platformUid;
-                $remark = '市级节点暂无，分配到来客平台';
-            } else {
-                $remark = '市节点运营返佣';
-                $uid = $cityNode->uid;
-            }
-            //市长分配比列0.25%
-            $cityAmount = bcmul($order->profit_price, bcdiv($cityNodeRebate, 100, 6), 8);
-            AssetsService::BalancesChange2(
-                $uid,
-                $assets->id,
-                $assets->assets_name,
-                $cityAmount,
-                AssetsLog::OPERATE_TYPE_CITY_REBATE,
-                $remark, $orderNo
-            );
-        }
-        //区节点返佣
-        $districtNodeRebate = Setting::getSetting('district_node_rebate') ?? 0;
-        $districtAmount = 0;
-        if ($districtNodeRebate > 0) {
-            //判断商家是否在区节点
-            $districtNode = CityNode::where('status', 1)
-                                    ->where('province', $order->businessData->province)
-                                    ->whereNotNull('uid')
-                                    ->where('city', $order->businessData->city)
-                                    ->where('district', $order->businessData->district)
-                                    ->first();
-            if (!$districtNode) {
-                $uid = $platformUid;
-                $remark = '区级节点暂无，分配到来客平台';
-            } else {
-                $remark = '区级节点运营返佣';
-                $uid = $districtNode->uid;
-            }
-            //区长分配0.45%
-            $districtAmount = bcmul($order->profit_price, bcdiv($districtNodeRebate, 100, 6), 8);
-            AssetsService::BalancesChange2(
-                $uid,
-                $assets->id,
-                $assets->assets_name,
-                $districtAmount,
-                AssetsLog::OPERATE_TYPE_DISTRICT_REBATE,
-                $remark, $orderNo
-            );
-        }
+
+//*****************************************************************
+        //省市区代理返佣
+        (new ProvinceCityAreaDlService())->inviteProvinceCityAreaD($order, $user, $assets, $orderNo, $platformUid);
+
+        //*****************************************************************
+
+//        //市节点返佣
+//        $cityNodeRebate = Setting::getSetting('city_node_rebate') ?? 0;
+//        $cityAmount = 0;
+//        if ($cityNodeRebate > 0) {
+//            //判断商家是否在市节点
+//            $cityNode = CityNode::where('status', 1)
+//                                ->where('province', $order->businessData->province)
+//                                ->whereNotNull('uid')
+//                                ->where('city', $order->businessData->city)
+//                                ->whereNull('district')
+//                                ->first();
+//            if (!$cityNode) {
+//                $uid = $platformUid;
+//                $remark = '市级节点暂无，分配到来客平台';
+//            } else {
+//                $remark = '市节点运营返佣';
+//                $uid = $cityNode->uid;
+//            }
+//            //市长分配比列0.25%
+//            $cityAmount = bcmul($order->profit_price, bcdiv($cityNodeRebate, 100, 6), 8);
+//            AssetsService::BalancesChange2(
+//                $uid,
+//                $assets->id,
+//                $assets->assets_name,
+//                $cityAmount,
+//                AssetsLog::OPERATE_TYPE_CITY_REBATE,
+//                $remark, $orderNo
+//            );
+//        }
+//        //区节点返佣
+//        $districtNodeRebate = Setting::getSetting('district_node_rebate') ?? 0;
+//        $districtAmount = 0;
+//        if ($districtNodeRebate > 0) {
+//            //判断商家是否在区节点
+//            $districtNode = CityNode::where('status', 1)
+//                                    ->where('province', $order->businessData->province)
+//                                    ->whereNotNull('uid')
+//                                    ->where('city', $order->businessData->city)
+//                                    ->where('district', $order->businessData->district)
+//                                    ->first();
+//            if (!$districtNode) {
+//                $uid = $platformUid;
+//                $remark = '区级节点暂无，分配到来客平台';
+//            } else {
+//                $remark = '区级节点运营返佣';
+//                $uid = $districtNode->uid;
+//            }
+//            //区长分配0.45%
+//            $districtAmount = bcmul($order->profit_price, bcdiv($districtNodeRebate, 100, 6), 8);
+//            AssetsService::BalancesChange2(
+//                $uid,
+//                $assets->id,
+//                $assets->assets_name,
+//                $districtAmount,
+//                AssetsLog::OPERATE_TYPE_DISTRICT_REBATE,
+//                $remark, $orderNo
+//            );
+//        }
+
+
         //同级返佣
         $sameLeader = Setting::getSetting('same_leader') ?? 0;
         $sameAmount = 0;
@@ -339,7 +349,7 @@ class VerifyOrder extends Form
                         bcadd($cityAmount, bcadd(bcadd($sameAmount, $headAmount, 8), $ordinaryAmount, 8), 8), 8);
         $this->updateRebateData($welfareAmount, $shareAmount, $market, $platformAmount, $order->price, $user);
     }
-    
+
     /**找盟主
      *
      * @param     $invite_uid
@@ -372,7 +382,7 @@ class VerifyOrder extends Form
             return false;
         }
     }
-    
+
     /**更新返佣统计
      *
      * @param $welfare

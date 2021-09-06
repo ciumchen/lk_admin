@@ -33,6 +33,7 @@ class AssetsLog extends EloquentRepository
     const OPERATE_TYPE_EXCHANGE_IETS_SUB_ENCOURATGE = 'exchagne_iets_sub';//兑换扣除
     const OPERATE_TYPE_IETS_TO_USDT = 'IETS兑换为USDT';
     const OPERATE_TYPE_RECHARGE_LPJ = 'recharge_lpj';
+    const OPERATE_TYPE_PROVINCE_REBATE = 'province_rebate';//省站长分红
 
     /**
      * 类型文本.
@@ -56,6 +57,7 @@ class AssetsLog extends EloquentRepository
         self::OPERATE_TYPE_EXCHANGE_IETS_SUB_ENCOURATGE => '兑换扣除',
         self::OPERATE_TYPE_IETS_TO_USDT => 'IETS兑换为USDT',
         self::OPERATE_TYPE_RECHARGE_LPJ => '兑换来拼金',
+        self::OPERATE_TYPE_PROVINCE_REBATE => '省站长分红',
     ];
 
 }

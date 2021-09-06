@@ -275,81 +275,82 @@ class VerifyOrder extends Form
 //        }
 
 
-        //同级返佣
-        $sameLeader = Setting::getSetting('same_leader') ?? 0;
-        $sameAmount = 0;
-        //同级别分配比列0.1%
-        if ($sameLeader > 0) {
-            $sameAmount = bcmul($order->profit_price, bcdiv($sameLeader, 100, 6), 8);
-        }
-        //盟主返佣
-        $leaderShare = Setting::getSetting('leader_share') ?? 0;
-        $headAmount = 0;
-        //盟主分配0.7%
-        if ($leaderShare > 0) {
-            $headAmount = bcmul($order->profit_price, bcdiv($leaderShare, 100, 6), 8);
-        }
-        $memberHead = User::whereId($business->invite_uid)->first();
-        //普通用户邀请商家返佣
-        $userBRebate = Setting::getSetting('user_b_rebate') ?? 0;
-        $ordinaryAmount = 0;
-        if ($userBRebate > 0) {
-            $ordinaryAmount = bcmul($order->profit_price, bcdiv($userBRebate, 100, 6), 8);
-        }
-        //同级奖励是否给平台
-        $isSamePlat = false;
-        if ($memberHead->status != \App\Admin\Repositories\User::STATUS_NORMAL) {
-            $uid = $platformUid;
-            $remark = '直推人账户被封禁，分配到平台账户';
-            $inviteAmount = bcadd($headAmount, $ordinaryAmount, 8);
-        } else {
-            $inviteAmount = $ordinaryAmount;
-            $remark = '邀请商家，获得盈利返佣';
-            $uid = $memberHead->id;
-            //如果直推上级是盟主用户
-            if ($memberHead->member_head == 2) {
-                //直接拿0.7%奖励
-                $inviteAmount = bcadd($headAmount, $ordinaryAmount, 8);
-                //同级盟主奖励
-                $tes = $this->leaderRebate($orderNo, $memberHead->invite_uid, $sameAmount, $assets, '同级别盟主奖励',
-                                           AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, 1);
-                if ($tes == false) {
-                    $isSamePlat = true;
-                }
-            } else {
-                //往上找2级 是否盟主
-                $res = $this->leaderRebate($orderNo, $memberHead->invite_uid, $headAmount, $assets, '邀请商家盟主分红',
-                                           AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, 2);
-                if ($res == false) {
-                    if ($headAmount > 0) {
-                        AssetsService::BalancesChange2($platformUid, $assets->id, $assets->assets_name, $headAmount,
-                                                       AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, '没有盟主，分配到平台账户',
-                                                       $orderNo);
-                    }
-                    $isSamePlat = true;
-                } else {
-                    //同级盟主奖励
-                    $res = $this->leaderRebate($orderNo, $res->invite_uid, $sameAmount, $assets, '同级别盟主奖励',
-                                               AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, 1);
-                    if ($res == false) {
-                        $isSamePlat = true;
-                    }
-                }
-            }
-        }
-        if ($sameAmount > 0 && $isSamePlat == true) {
-            AssetsService::BalancesChange2($platformUid, $assets->id, $assets->assets_name, $sameAmount,
-                                           AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, '没有同级盟主，分配到平台账户', $orderNo);
-        }
-        if ($inviteAmount > 0) {
-            AssetsService::BalancesChange2($uid, $assets->id, $assets->assets_name, $inviteAmount,
-                                           AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, $remark, $orderNo);
-        }
+//        //同级返佣
+//        $sameLeader = Setting::getSetting('same_leader') ?? 0;
+//        $sameAmount = 0;
+//        //同级别分配比列0.1%
+//        if ($sameLeader > 0) {
+//            $sameAmount = bcmul($order->profit_price, bcdiv($sameLeader, 100, 6), 8);
+//        }
+//        //盟主返佣
+//        $leaderShare = Setting::getSetting('leader_share') ?? 0;
+//        $headAmount = 0;
+//        //盟主分配0.7%
+//        if ($leaderShare > 0) {
+//            $headAmount = bcmul($order->profit_price, bcdiv($leaderShare, 100, 6), 8);
+//        }
+//        $memberHead = User::whereId($business->invite_uid)->first();
+//        //普通用户邀请商家返佣
+//        $userBRebate = Setting::getSetting('user_b_rebate') ?? 0;
+//        $ordinaryAmount = 0;
+//        if ($userBRebate > 0) {
+//            $ordinaryAmount = bcmul($order->profit_price, bcdiv($userBRebate, 100, 6), 8);
+//        }
+//        //同级奖励是否给平台
+//        $isSamePlat = false;
+//        if ($memberHead->status != \App\Admin\Repositories\User::STATUS_NORMAL) {
+//            $uid = $platformUid;
+//            $remark = '直推人账户被封禁，分配到平台账户';
+//            $inviteAmount = bcadd($headAmount, $ordinaryAmount, 8);
+//        } else {
+//            $inviteAmount = $ordinaryAmount;
+//            $remark = '邀请商家，获得盈利返佣';
+//            $uid = $memberHead->id;
+//            //如果直推上级是盟主用户
+//            if ($memberHead->member_head == 2) {
+//                //直接拿0.7%奖励
+//                $inviteAmount = bcadd($headAmount, $ordinaryAmount, 8);
+//                //同级盟主奖励
+//                $tes = $this->leaderRebate($orderNo, $memberHead->invite_uid, $sameAmount, $assets, '同级别盟主奖励',
+//                                           AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, 1);
+//                if ($tes == false) {
+//                    $isSamePlat = true;
+//                }
+//            } else {
+//                //往上找2级 是否盟主
+//                $res = $this->leaderRebate($orderNo, $memberHead->invite_uid, $headAmount, $assets, '邀请商家盟主分红',
+//                                           AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, 2);
+//                if ($res == false) {
+//                    if ($headAmount > 0) {
+//                        AssetsService::BalancesChange2($platformUid, $assets->id, $assets->assets_name, $headAmount,
+//                                                       AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, '没有盟主，分配到平台账户',
+//                                                       $orderNo);
+//                    }
+//                    $isSamePlat = true;
+//                } else {
+//                    //同级盟主奖励
+//                    $res = $this->leaderRebate($orderNo, $res->invite_uid, $sameAmount, $assets, '同级别盟主奖励',
+//                                               AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, 1);
+//                    if ($res == false) {
+//                        $isSamePlat = true;
+//                    }
+//                }
+//            }
+//        }
+//        if ($sameAmount > 0 && $isSamePlat == true) {
+//            AssetsService::BalancesChange2($platformUid, $assets->id, $assets->assets_name, $sameAmount,
+//                                           AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, '没有同级盟主，分配到平台账户', $orderNo);
+//        }
+//        if ($inviteAmount > 0) {
+//            AssetsService::BalancesChange2($uid, $assets->id, $assets->assets_name, $inviteAmount,
+//                                           AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, $remark, $orderNo);
+//        }
         //$market = bcadd($districtAmount,
 //                        bcadd($cityAmount, bcadd(bcadd($sameAmount, $headAmount, 8), $ordinaryAmount, 8), 8), 8);
-        $market = bcadd($ssqAmount['provinceAmount'],bcadd($ssqAmount['districtAmount'],
-            bcadd($ssqAmount['cityAmount'], bcadd(bcadd($sameAmount, $headAmount, 8), $ordinaryAmount, 8), 8), 8),8);
+//        $market = bcadd($ssqAmount['provinceAmount'],bcadd($ssqAmount['districtAmount'],
+//            bcadd($ssqAmount['cityAmount'], bcadd(bcadd($sameAmount, $headAmount, 8), $ordinaryAmount, 8), 8), 8),8);
 
+        $market = bcadd($ssqAmount['provinceAmount'],bcadd($ssqAmount['districtAmount'],$ssqAmount['cityAmount'], 8),8);
         $this->updateRebateData($welfareAmount, $shareAmount, $market, $platformAmount, $order->price, $user);
     }
 

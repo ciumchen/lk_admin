@@ -347,8 +347,8 @@ class VerifyOrder extends Form
         }
         //$market = bcadd($districtAmount,
 //                        bcadd($cityAmount, bcadd(bcadd($sameAmount, $headAmount, 8), $ordinaryAmount, 8), 8), 8);
-        $market = bcadd($ssqAmount['provinceAmount'],$ssqAmount['cityAmount'],
-                        bcadd($ssqAmount['districtAmount'], bcadd(bcadd($sameAmount, $headAmount, 8), $ordinaryAmount, 8), 8), 8);
+        $market = bcadd($ssqAmount['provinceAmount'],bcadd($ssqAmount['districtAmount'],
+            bcadd($ssqAmount['cityAmount'], bcadd(bcadd($sameAmount, $headAmount, 8), $ordinaryAmount, 8), 8), 8),8);
 
         $this->updateRebateData($welfareAmount, $shareAmount, $market, $platformAmount, $order->price, $user);
     }

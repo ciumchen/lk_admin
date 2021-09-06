@@ -211,7 +211,7 @@ class VerifyOrder extends Form
 
 //*****************************************************************
         //省市区代理返佣
-        (new ProvinceCityAreaDlService())->inviteProvinceCityAreaD($order, $user, $assets, $orderNo, $platformUid);
+        $ssqAmount = (new ProvinceCityAreaDlService())->inviteProvinceCityAreaD($order, $user, $assets, $orderNo, $platformUid);
 
         //*****************************************************************
 
@@ -345,8 +345,11 @@ class VerifyOrder extends Form
             AssetsService::BalancesChange2($uid, $assets->id, $assets->assets_name, $inviteAmount,
                                            AssetsLog::OPERATE_TYPE_SHARE_B_REBATE, $remark, $orderNo);
         }
-        $market = bcadd($districtAmount,
-                        bcadd($cityAmount, bcadd(bcadd($sameAmount, $headAmount, 8), $ordinaryAmount, 8), 8), 8);
+        //$market = bcadd($districtAmount,
+//                        bcadd($cityAmount, bcadd(bcadd($sameAmount, $headAmount, 8), $ordinaryAmount, 8), 8), 8);
+        $market = bcadd($ssqAmount['provinceAmount'],$ssqAmount['cityAmount'],
+                        bcadd($ssqAmount['districtAmount'], bcadd(bcadd($sameAmount, $headAmount, 8), $ordinaryAmount, 8), 8), 8);
+
         $this->updateRebateData($welfareAmount, $shareAmount, $market, $platformAmount, $order->price, $user);
     }
 

@@ -98,6 +98,7 @@ Route::group(
         $router->resource('bm-order-lists', 'BmRechargeOrderController');
         //用户拼团列表
         $router->resource('gather-winning', 'GatherWinningController');
+
         // 用户等级管理
         $router->resource('user-level', 'UserLevelController');
         // 用户等级关系管理
@@ -106,8 +107,11 @@ Route::group(
         // 用户所绑定的省市区信息
         $router->resource('user_city_data', 'UserCityDataController');
 
-
-
+        /*********************** 广告管理 ***********************/
+        //新增广告奖励
+        $router->resource('advert-users', 'AdvertUsersController');
+        //广告录单列表
+        $router->resource('advert-trade', 'AdvertTradeController');
     }
 );
 Route::group(

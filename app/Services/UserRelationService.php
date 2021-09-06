@@ -110,7 +110,7 @@ class UserRelationService
     public function updateInviteId()
     {
         try {
-            $sql = "UPDATE user_level_relation a, users b SET a.invite_id=IF(ISNULL(b.invite_uid),2,b.invite_uid) WHERE a.user_id=b.id;";
+            $sql = "UPDATE user_level_relation a, users b SET a.invite_id=IF(ISNULL(b.invite_uid),0,b.invite_uid) WHERE a.user_id=b.id;";
             $res = DB::update($sql);
             dump('更新'.$res.'位用户邀请人关系');
         } catch (Exception $e) {
@@ -187,7 +187,7 @@ class UserRelationService
             // 无限下级
             $sql3 = "UPDATE `user_level_relation` a,user_level_relation b SET a.pid_route = IF( b.rating, concat( b.pid_route, ',', a.invite_id ), a.invite_id ), a.`rating` = b.`rating` + 1 WHERE	a.`rating` = - 1 	AND a.invite_id = b.id 	AND b.`rating` > - 1;";
             // 增加pid_route前后的分隔符
-            $sql4 = "UPDATE `user_level_relation` a SET  pid_route=IF(a.rating,concat(',',a.pid_route,','),a.invite_id) where a.rating > -1";
+//            $sql4 = "UPDATE `user_level_relation` a SET  pid_route=IF(a.rating,concat(',',a.pid_route,','),a.invite_id) where a.rating > -1";
             $res1 = DB::update($sql1);
             $res2 = DB::update($sql2);
             dump($res1.'数据初始化');
@@ -198,8 +198,8 @@ class UserRelationService
                 $i++;
                 dump('第'.$i.'层级'.$res3.'用户更新pid_route');
             } while ($res3 > 0);
-            $res4 = DB::update($sql4);
-            dump($res4.'数据pid_route增加前后分隔符');
+//            $res4 = DB::update($sql4);
+//            dump($res4.'数据pid_route增加前后分隔符');
         } catch (Exception $e) {
             dump('用户关系更新出错:updateRelation '.$e->getMessage());
         }

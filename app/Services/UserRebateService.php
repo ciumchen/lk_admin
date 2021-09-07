@@ -465,9 +465,9 @@ class UserRebateService
         try {
             $LevelCache = self::getLevelCache();
             /* 获取 金银钻 三个等级的加权评分奖比例 */
-            $silverShareScale = $LevelCache[ SystemService::$silverLevelId ];
-            $goldShareScale = $LevelCache[ SystemService::$goldLevelId ];
-            $diamondShareScale = $LevelCache[ SystemService::$diamondLevelId ];
+            $silverShareScale = $LevelCache[ SystemService::$silverLevelId ][ 'weighted_equally_rewards_ratio' ];
+            $goldShareScale = $LevelCache[ SystemService::$goldLevelId ][ 'weighted_equally_rewards_ratio' ];
+            $diamondShareScale = $LevelCache[ SystemService::$diamondLevelId ][ 'weighted_equally_rewards_ratio' ];
             /* 计算三种等级可分润的金额 */
             $silverShareAmount = bcmul($order->profit_price, bcdiv($silverShareScale, 100, 6), 3);
             $goldShareAmount = bcmul($order->profit_price, bcdiv($goldShareScale, 100, 6), 3);

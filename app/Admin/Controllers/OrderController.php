@@ -34,7 +34,7 @@ class OrderController extends AdminController
                     return $this->select_trade_order[ 'order_no' ] ?? '';
                 }
             });
-            $grid->column('business.phone', "商家手机号");
+//            $grid->column('business.phone', "商家手机号");
             $grid->column('select_trade_order.numeric', '录入消费者手机号')->display(function ($phone) {
                 if (!empty($phone)) {
                     return $phone;

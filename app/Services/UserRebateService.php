@@ -474,6 +474,7 @@ class UserRebateService
             $diamondShareAmount = bcmul($order->profit_price, bcdiv($diamondShareScale, 100, 6), 3);
             /* 奖金放入当日累计金额 */
             $WeightRewards = WeightRewards::whereCountDate(date('Ymd'))->firstOrNew();
+            $WeightRewards->save();
             $WeightRewards->increment('silver_money', $silverShareAmount);
             $WeightRewards->increment('gold_money', $goldShareAmount);
             $WeightRewards->increment('diamond_money', $diamondShareAmount);

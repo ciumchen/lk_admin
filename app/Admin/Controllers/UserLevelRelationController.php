@@ -12,6 +12,7 @@ use Dcat\Admin\Controllers\AdminController;
 
 class UserLevelRelationController extends AdminController
 {
+    
     /**
      * Make a grid builder.
      *
@@ -20,8 +21,7 @@ class UserLevelRelationController extends AdminController
     protected function grid()
     {
         $_this = $this;
-        return Grid::make(new UserLevelRelation(), function (Grid $grid) use ($_this)
-        {
+        return Grid::make(new UserLevelRelation(), function (Grid $grid) use ($_this) {
             $grid->model()->orderByDesc('user_id');
 //            $grid->column('id')->sortable();
             $grid->column('user_id')->sortable();
@@ -49,14 +49,14 @@ class UserLevelRelationController extends AdminController
             $grid->column('is_vip')
                  ->using(UserRelationModel::$isVipText)
                  ->label(UserRelationModel::$isVipStyle);
-            $grid->column('pid_route')->display(function ()
-            {
+            $grid->column('pid_route')->display(function () {
                 return trim($this->pid_route, ',');
             })->limit(5);
             $grid->column('is_ban')->switch();
-            $grid->fixColumns(2, 0);
+            $grid->fixColumns(2, -1);
             $_this->disableButton($grid);
             $_this->searchFilter($grid);
+            $_this->customActions($grid);
         });
     }
     
@@ -69,11 +69,10 @@ class UserLevelRelationController extends AdminController
      */
     protected function detail($id)
     {
-        return Show::make($id, new UserLevelRelation(), function (Show $show)
-        {
+        return Show::make($id, new UserLevelRelation(), function (Show $show) {
             $show->field('id');
             $show->field('user_id');
-            $show->field('level_id');
+            $show->field('level_id')->using(UserLevel::getLevelsArray());
             $show->field('diamond_id');
             $show->field('gold_id');
             $show->field('silver_id');
@@ -102,29 +101,32 @@ class UserLevelRelationController extends AdminController
      */
     protected function form()
     {
-        return Form::make(new UserLevelRelation(), function (Form $form)
-        {
+        return Form::make(new UserLevelRelation(), function (Form $form) {
             $form->display('id');
-            $form->text('user_id');
-            $form->text('level_id');
-            $form->text('diamond_id');
-            $form->text('gold_id');
-            $form->text('silver_id');
-            $form->text('invite_id');
-            $form->text('integral');
-            $form->text('direct_num');
-            $form->text('direct_type');
-            $form->text('direct_activity');
-            $form->text('direct_integral');
-            $form->text('team_num');
-            $form->text('team_type');
-            $form->text('team_activity');
-            $form->text('team_integral');
-            $form->text('is_verified');
-            $form->text('pid_route');
-            $form->text('is_ban');
-            $form->display('created_at');
-            $form->display('updated_at');
+            $form->display('user_id');
+            $form->select('level_id')->options(UserLevel::getTypesArray());
+            $form->display('diamond_id');
+            $form->display('gold_id');
+            $form->display('silver_id');
+            $form->display('invite_id');
+            $form->display('integral');
+            $form->display('direct_num');
+            $form->display('direct_type');
+            $form->display('direct_activity');
+            $form->display('direct_integral');
+            $form->display('team_num');
+            $form->display('team_type');
+            $form->display('team_activity');
+            $form->display('team_integral');
+            $form->display('is_verified');
+            $form->display('pid_route');
+            $form->switch('is_ban')->default(0);
+            $form->display('created_at')->customFormat(function ($a) {
+                return $a ? date('Y-m-d H:i:s', strtotime($a)) : '';
+            });
+            $form->display('updated_at')->customFormat(function ($a) {
+                return $a ? date('Y-m-d H:i:s', strtotime($a)) : '';
+            });
         });
     }
     
@@ -134,12 +136,11 @@ class UserLevelRelationController extends AdminController
      * @param  \Dcat\Admin\Grid  $grid
      *
      * @author lidong<947714443@qq.com>
-     * @date 2021/8/30 0030
+     * @date   2021/8/30 0030
      */
     public function searchFilter(Grid $grid)
     {
-        $grid->filter(function (Grid\Filter $filter)
-        {
+        $grid->filter(function (Grid\Filter $filter) {
 //            $filter->equal('id');
             $filter->equal('user_id');
             $filter->equal('invite_id');
@@ -158,7 +159,7 @@ class UserLevelRelationController extends AdminController
     protected function disableButton(Grid $grid)
     {
         //禁用操作
-        $grid->disableActions();
+//        $grid->disableActions();
         /* 禁用创建按钮 */
         $grid->disableCreateButton();
         /* 禁用编辑按钮 */
@@ -179,6 +180,7 @@ class UserLevelRelationController extends AdminController
      */
     public function customActions(Grid $grid)
     {
+        $grid->showQuickEditButton();
     }
     
     /**
@@ -186,7 +188,7 @@ class UserLevelRelationController extends AdminController
      *
      * @return array
      * @author lidong<947714443@qq.com>
-     * @date 2021/8/30 0030
+     * @date   2021/8/30 0030
      */
     public function getTitles()
     : array

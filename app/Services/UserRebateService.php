@@ -89,7 +89,7 @@ class UserRebateService
         try {
             $userLevelInfo = UserLevelRelation::whereUserId($user->id)->first();
             /* 获取所有上级 */
-            $allParent = $this->getAllParentsLevel($userLevelInfo->pid_route);
+            $allParent = (array) $this->getAllParentsLevel($userLevelInfo->pid_route);
             /* 获取直接上级 */
             $parent = $this->getParentByInviteId($allParent, $userLevelInfo->invite_id);
             /* 上级分佣 */

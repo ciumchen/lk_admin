@@ -687,7 +687,8 @@ class UserRebateService
             return null;
         }
         try {
-            $parents = UserLevelRelation::where('user_id', 'in', $pid_route)->orderByDesc('user_id')->get()->toArray();
+            $pids = array_values(array_filter(explode(',', $pid_route)));
+            $parents = UserLevelRelation::whereIn('user_id', $pids)->orderByDesc('user_id')->get()->toArray();
         } catch (Exception $e) {
             Log::debug('getAllParents-Error:', [json_encode($e)]);
             throw $e;

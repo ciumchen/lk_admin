@@ -165,6 +165,7 @@ class UserRebateService
         if (empty($userLevelInfo)) {
             $userLevelInfo = UserLevelRelation::whereUserId($user->id)->first();
         }
+        $origin_parent = $parent;
         switch (intval($parent[ 'level_id' ])) {
             case SystemService::$memberLevelID:
             case SystemService::$vipLevelID: /* 会员从上级找银卡 */
@@ -172,19 +173,21 @@ class UserRebateService
                     $allParent);
             case SystemService::$silverLevelId: /* 银卡从上级找金卡 */
                 /* 平级奖分佣 */
-                $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent, $allParent,
+                $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $origin_parent, $allParent,
                     SystemService::$silverLevelId);
+                $origin_parent = $parent;
                 $parent = $this->goldHigherScale($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent,
                     $allParent);
             case SystemService::$goldLevelId: /* 金卡从上级找钻石卡 */
                 /* 平级奖分佣 */
-                $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent, $allParent,
+                $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $origin_parent, $allParent,
                     SystemService::$goldLevelId);
+                $origin_parent = $parent;
                 $parent = $this->diamondHigherScale($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent,
                     $allParent);
             case SystemService::$diamondLevelId:
                 /* 平级奖分佣 */
-                $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent, $allParent,
+                $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $origin_parent, $allParent,
                     SystemService::$diamondLevelId);
                 break;
             default:
@@ -263,11 +266,11 @@ class UserRebateService
                 $parent[ 'user_id' ]);
             if (empty($silverParent)) {
                 $uid = $platformUid;
-                $level_id =$parent[ 'level_id' ];
+                $level_id = $parent[ 'level_id' ];
                 return $parent;
             } else {
                 $uid = $silverParent[ 'user_id' ];
-                $level_id = $silverParent[ 'level_id' ];
+                $level_id = $parent[ 'level_id' ] ?? SystemService::$vipLevelID;
             }
             /* 计算极差奖比例 */
             $shareScale = $this->LevelRangeScale($level_id, SystemService::$silverLevelId);
@@ -318,11 +321,11 @@ class UserRebateService
                 $parent[ 'user_id' ]);
             if (empty($goldParent)) {
                 $uid = $platformUid;
-                $level_id =$parent[ 'level_id' ] ?? SystemService::$vipLevelID;
+                $level_id = $parent[ 'level_id' ] ?? SystemService::$vipLevelID;
                 return $parent;
             } else {
                 $uid = $goldParent[ 'user_id' ];
-                $level_id =$goldParent[ 'level_id' ];
+                $level_id = $parent[ 'level_id' ] ?? SystemService::$vipLevelID;
             }
             /* 计算极差奖比例 */
 //            $shareScale = $this->LevelRangeScale(SystemService::$silverLevelId, SystemService::$goldLevelId);
@@ -374,7 +377,7 @@ class UserRebateService
                 $parent[ 'user_id' ]);
             if (empty($diamondParent)) {
                 $uid = $platformUid;
-                $level_id =$parent[ 'level_id' ] ?? SystemService::$vipLevelID;
+                $level_id = $parent[ 'level_id' ] ?? SystemService::$vipLevelID;
             } else {
                 $uid = $diamondParent[ 'user_id' ];
                 $level_id = $diamondParent[ 'level_id' ];

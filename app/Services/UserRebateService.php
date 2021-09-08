@@ -263,11 +263,14 @@ class UserRebateService
                 $parent[ 'user_id' ]);
             if (empty($silverParent)) {
                 $uid = $platformUid;
+                $level_id =$parent[ 'level_id' ];
+                return $parent;
             } else {
                 $uid = $silverParent[ 'user_id' ];
+                $level_id = $silverParent[ 'level_id' ];
             }
             /* 计算极差奖比例 */
-            $shareScale = $this->LevelRangeScale(SystemService::$vipLevelID, SystemService::$silverLevelId);
+            $shareScale = $this->LevelRangeScale($level_id, SystemService::$silverLevelId);
             $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 6);
             AssetsService::BalancesChange3(
                 $order->order_no,
@@ -315,11 +318,15 @@ class UserRebateService
                 $parent[ 'user_id' ]);
             if (empty($goldParent)) {
                 $uid = $platformUid;
+                $level_id =$parent[ 'level_id' ] ?? SystemService::$vipLevelID;
+                return $parent;
             } else {
                 $uid = $goldParent[ 'user_id' ];
+                $level_id =$goldParent[ 'level_id' ];
             }
             /* 计算极差奖比例 */
-            $shareScale = $this->LevelRangeScale(SystemService::$silverLevelId, SystemService::$goldLevelId);
+//            $shareScale = $this->LevelRangeScale(SystemService::$silverLevelId, SystemService::$goldLevelId);
+            $shareScale = $this->LevelRangeScale($level_id, SystemService::$goldLevelId);
             $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 6);
             AssetsService::BalancesChange3(
                 $order->order_no,
@@ -367,11 +374,13 @@ class UserRebateService
                 $parent[ 'user_id' ]);
             if (empty($diamondParent)) {
                 $uid = $platformUid;
+                $level_id =$parent[ 'level_id' ] ?? SystemService::$vipLevelID;
             } else {
                 $uid = $diamondParent[ 'user_id' ];
+                $level_id = $diamondParent[ 'user_id' ];
             }
             /* 计算极差奖比例 */
-            $shareScale = $this->LevelRangeScale(SystemService::$goldLevelId, SystemService::$diamondLevelId);
+            $shareScale = $this->LevelRangeScale($level_id, SystemService::$diamondLevelId);
             $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 6);
             AssetsService::BalancesChange3(
                 $order->order_no,
@@ -745,7 +754,7 @@ class UserRebateService
     {
         $target_parent = [];
         foreach ($parents as $row) {
-            if ($row[ 'level_id' ] >= $level && $row[ 'user_id' ] < $uid) {
+            if ($row[ 'level_id' ] == $level && $row[ 'user_id' ] < $uid) {
                 $target_parent = $row;
                 break;
             }

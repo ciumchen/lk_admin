@@ -175,7 +175,7 @@ class UserRebateService
                 /* 平级奖分佣 */
                 $origin_parent = empty($parent) ? [] : $this->getParentByLevelAndUid($allParent,
                     SystemService::$silverLevelId,
-                    $parent[ 'user_id' ]);
+                    $origin_parent[ 'user_id' ]);
                 $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $origin_parent, $allParent,
                     SystemService::$silverLevelId);
                 $parent = $this->goldHigherScale($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent,
@@ -184,7 +184,7 @@ class UserRebateService
                 /* 平级奖分佣 */
                 $origin_parent = empty($parent) ? [] : $this->getParentByLevelAndUid($allParent,
                     SystemService::$goldLevelId,
-                    $parent[ 'user_id' ]);
+                    $origin_parent[ 'user_id' ]);
                 $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $origin_parent, $allParent,
                     SystemService::$goldLevelId);
                 $parent = $this->diamondHigherScale($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent,
@@ -193,7 +193,7 @@ class UserRebateService
                 /* 平级奖分佣 */
                 $origin_parent = empty($parent) ? [] : $this->getParentByLevelAndUid($allParent,
                     SystemService::$diamondLevelId,
-                    $parent[ 'user_id' ]);
+                    $origin_parent[ 'user_id' ]);
                 $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $origin_parent, $allParent,
                     SystemService::$diamondLevelId);
                 break;

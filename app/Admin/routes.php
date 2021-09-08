@@ -112,6 +112,9 @@ Route::group(
         $router->resource('advert-users', 'AdvertUsersController');
         //广告录单列表
         $router->resource('advert-trade', 'AdvertTradeController');
+
+        //购物卡兑换录单列表
+        $router->resource('gwk-log', 'GwkLogController');
     }
 );
 Route::group(

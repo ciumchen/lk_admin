@@ -434,7 +434,7 @@ class UserRebateService
                 $uid = $sameLevelParent[ 'user_id' ];
             }
             $LevelCache = self::getLevelCache();
-            $shareScale = $LevelCache[ $parent[ 'level_id' ] ][ 'promotion_rewards_ratio' ];
+            $shareScale = $LevelCache[ $parent[ 'level_id' ] ][ 'same_level_rewards_ratio' ];
             $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 3);
             AssetsService::BalancesChange3(
                 $order->order_no,

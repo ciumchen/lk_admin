@@ -126,7 +126,7 @@ class UserRebateService
     ) {
         $LevelCache = self::getLevelCache();
         $shareScale = $LevelCache[ $parent[ 'level_id' ] ][ 'promotion_rewards_ratio' ];
-        $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 3);
+        $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 6);
         AssetsService::BalancesChange3(
             $order->order_no,
             $parent[ 'user_id' ],
@@ -173,11 +173,12 @@ class UserRebateService
                 /* 平级奖分佣 */
                 $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent, $allParent);
             case SystemService::$silverLevelId: /* 银卡从上级找金卡 */
-                $this->goldHigherScale($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent, $allParent);
+                $parent = $this->goldHigherScale($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent,
+                    $allParent);
                 /* 平级奖分佣 */
                 $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent, $allParent);
             case SystemService::$goldLevelId: /* 金卡从上级找钻石卡 */
-                $this->diamondHigherScale($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent,
+                $parent = $this->diamondHigherScale($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent,
                     $allParent);
                 /* 平级奖分佣 */
                 $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent, $allParent);
@@ -211,7 +212,7 @@ class UserRebateService
             /* 上级是平台，平台直接分佣钻石卡额度以及平级奖额度 */
             $shareScale = $LevelCache[ SystemService::$diamondLevelId ][ 'promotion_rewards_ratio' ]
                           + $LevelCache[ SystemService::$diamondLevelId ][ 'same_level_rewards_ratio' ];
-            $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 3);
+            $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 6);
             AssetsService::BalancesChange3(
                 $order->order_no,
                 $platformUid,
@@ -262,7 +263,7 @@ class UserRebateService
             }
             /* 计算极差奖比例 */
             $shareScale = $this->LevelRangeScale(SystemService::$vipLevelID, SystemService::$silverLevelId);
-            $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 3);
+            $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 6);
             AssetsService::BalancesChange3(
                 $order->order_no,
                 $uid,
@@ -314,7 +315,7 @@ class UserRebateService
             }
             /* 计算极差奖比例 */
             $shareScale = $this->LevelRangeScale(SystemService::$silverLevelId, SystemService::$goldLevelId);
-            $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 3);
+            $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 6);
             AssetsService::BalancesChange3(
                 $order->order_no,
                 $uid,
@@ -356,7 +357,7 @@ class UserRebateService
         $allParent = []
     ) {
         try {
-            $goldParent = $this->getParentByLevelAndUid($allParent, SystemService::$diamondLevelId,
+            $diamondParent = $this->getParentByLevelAndUid($allParent, SystemService::$diamondLevelId,
                 $parent[ 'user_id' ]);
             if (empty($goldParent)) {
                 $uid = $platformUid;
@@ -365,7 +366,7 @@ class UserRebateService
             }
             /* 计算极差奖比例 */
             $shareScale = $this->LevelRangeScale(SystemService::$goldLevelId, SystemService::$diamondLevelId);
-            $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 3);
+            $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 6);
             AssetsService::BalancesChange3(
                 $order->order_no,
                 $uid,
@@ -379,6 +380,7 @@ class UserRebateService
             Log::debug('diamondHigherScale:Error:'.$e->getMessage(), [json_encode($e)]);
             throw $e;
         }
+        return $diamondParent;
     }
     
     /**
@@ -435,7 +437,7 @@ class UserRebateService
             }
             $LevelCache = self::getLevelCache();
             $shareScale = $LevelCache[ $parent[ 'level_id' ] ][ 'same_level_rewards_ratio' ];
-            $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 3);
+            $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 6);
             AssetsService::BalancesChange3(
                 $order->order_no,
                 $uid,
@@ -469,9 +471,9 @@ class UserRebateService
             $goldShareScale = $LevelCache[ SystemService::$goldLevelId ][ 'weighted_equally_rewards_ratio' ];
             $diamondShareScale = $LevelCache[ SystemService::$diamondLevelId ][ 'weighted_equally_rewards_ratio' ];
             /* 计算三种等级可分润的金额 */
-            $silverShareAmount = bcmul($order->profit_price, bcdiv($silverShareScale, 100, 6), 3);
-            $goldShareAmount = bcmul($order->profit_price, bcdiv($goldShareScale, 100, 6), 3);
-            $diamondShareAmount = bcmul($order->profit_price, bcdiv($diamondShareScale, 100, 6), 3);
+            $silverShareAmount = bcmul($order->profit_price, bcdiv($silverShareScale, 100, 6), 6);
+            $goldShareAmount = bcmul($order->profit_price, bcdiv($goldShareScale, 100, 6), 6);
+            $diamondShareAmount = bcmul($order->profit_price, bcdiv($diamondShareScale, 100, 6), 6);
             /* 奖金放入当日累计金额 */
             $WeightRewards = WeightRewards::whereCountDate(date('Ymd'))->firstOrNew();
             $WeightRewards->save();

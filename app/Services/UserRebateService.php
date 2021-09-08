@@ -714,7 +714,7 @@ class UserRebateService
         foreach ($parents as $row) {
             if ($row[ 'level_id' ] == $level) {
                 $target_parent = $row;
-//                break;
+                break;
             }
         }
         return $target_parent;
@@ -737,7 +737,7 @@ class UserRebateService
         foreach ($parents as $row) {
             if ($row[ 'level_id' ] == $level && $row[ 'user_id' ] < $uid) {
                 $target_parent = $row;
-//                break;
+                break;
             }
         }
         return $target_parent;
@@ -761,6 +761,7 @@ class UserRebateService
         foreach ($parents as $row) {
             if ($row[ 'user_id' ] == $invite_id) {
                 $target_parent = $row;
+                break;
             }
         }
         return $target_parent;

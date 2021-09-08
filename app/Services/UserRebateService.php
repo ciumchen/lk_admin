@@ -377,7 +377,7 @@ class UserRebateService
                 $level_id =$parent[ 'level_id' ] ?? SystemService::$vipLevelID;
             } else {
                 $uid = $diamondParent[ 'user_id' ];
-                $level_id = $diamondParent[ 'user_id' ];
+                $level_id = $diamondParent[ 'level_id' ];
             }
             /* 计算极差奖比例 */
             $shareScale = $this->LevelRangeScale($level_id, SystemService::$diamondLevelId);

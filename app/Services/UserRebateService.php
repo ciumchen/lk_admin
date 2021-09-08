@@ -165,24 +165,27 @@ class UserRebateService
         if (empty($userLevelInfo)) {
             $userLevelInfo = UserLevelRelation::whereUserId($user->id)->first();
         }
-        switch ($parent[ 'level_id' ]) {
+        switch (intval($parent[ 'level_id' ])) {
             case SystemService::$memberLevelID:
             case SystemService::$vipLevelID: /* 会员从上级找银卡 */
                 $parent = $this->silverHigherScale($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent,
                     $allParent);
             case SystemService::$silverLevelId: /* 银卡从上级找金卡 */
                 /* 平级奖分佣 */
-                $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent, $allParent);
+                $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent, $allParent,
+                    SystemService::$silverLevelId);
                 $parent = $this->goldHigherScale($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent,
                     $allParent);
             case SystemService::$goldLevelId: /* 金卡从上级找钻石卡 */
                 /* 平级奖分佣 */
-                $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent, $allParent);
+                $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent, $allParent,
+                    SystemService::$goldLevelId);
                 $parent = $this->diamondHigherScale($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent,
                     $allParent);
             case SystemService::$diamondLevelId:
                 /* 平级奖分佣 */
-                $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent, $allParent);
+                $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent, $allParent,
+                    SystemService::$diamondLevelId);
                 break;
             default:
                 Log::debug('higherScale:Error:上级分佣异常', [json_encode($order).'||'.json_encode($user)]);
@@ -255,7 +258,8 @@ class UserRebateService
         $allParent = []
     ) {
         try {
-            $silverParent = $this->getParentByLevelAndUid($allParent, SystemService::$silverLevelId,
+            $silverParent = empty($parent) ? [] : $this->getParentByLevelAndUid($allParent,
+                SystemService::$silverLevelId,
                 $parent[ 'user_id' ]);
             if (empty($silverParent)) {
                 $uid = $platformUid;
@@ -307,7 +311,7 @@ class UserRebateService
         $allParent = []
     ) {
         try {
-            $goldParent = $this->getParentByLevelAndUid($allParent, SystemService::$goldLevelId,
+            $goldParent = empty($parent) ? [] : $this->getParentByLevelAndUid($allParent, SystemService::$goldLevelId,
                 $parent[ 'user_id' ]);
             if (empty($goldParent)) {
                 $uid = $platformUid;
@@ -358,7 +362,8 @@ class UserRebateService
         $allParent = []
     ) {
         try {
-            $diamondParent = $this->getParentByLevelAndUid($allParent, SystemService::$diamondLevelId,
+            $diamondParent = empty($parent) ? [] : $this->getParentByLevelAndUid($allParent,
+                SystemService::$diamondLevelId,
                 $parent[ 'user_id' ]);
             if (empty($diamondParent)) {
                 $uid = $platformUid;
@@ -424,20 +429,22 @@ class UserRebateService
         $platformUid = 0,
         $userLevelInfo = null,
         $parent = [],
-        $allParent = []
+        $allParent = [],
+        $level_id = 0
     ) {
         try {
             if (intval($platformUid) == 0) {
                 $platformUid = SystemService::$platformId;
             }
-            $sameLevelParent = $this->getParentByLevelAndUid($allParent, $parent[ 'level_id' ], $parent[ 'user_id' ]);
+            $sameLevelParent = empty($parent) ? [] : $this->getParentByLevelAndUid($allParent, $parent[ 'level_id' ],
+                $parent[ 'user_id' ]);
             if (empty($sameLevelParent)) {
                 $uid = $platformUid;
             } else {
                 $uid = $sameLevelParent[ 'user_id' ];
             }
             $LevelCache = self::getLevelCache();
-            $shareScale = $LevelCache[ $parent[ 'level_id' ] ][ 'same_level_rewards_ratio' ];
+            $shareScale = $LevelCache[ $level_id ][ 'same_level_rewards_ratio' ];
             $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 6);
             AssetsService::BalancesChange3(
                 $order->order_no,

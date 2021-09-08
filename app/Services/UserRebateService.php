@@ -170,16 +170,17 @@ class UserRebateService
             case SystemService::$vipLevelID: /* 会员从上级找银卡 */
                 $parent = $this->silverHigherScale($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent,
                     $allParent);
+            case SystemService::$silverLevelId: /* 银卡从上级找金卡 */
                 /* 平级奖分佣 */
                 $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent, $allParent);
-            case SystemService::$silverLevelId: /* 银卡从上级找金卡 */
                 $parent = $this->goldHigherScale($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent,
                     $allParent);
+            case SystemService::$goldLevelId: /* 金卡从上级找钻石卡 */
                 /* 平级奖分佣 */
                 $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent, $allParent);
-            case SystemService::$goldLevelId: /* 金卡从上级找钻石卡 */
                 $parent = $this->diamondHigherScale($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent,
                     $allParent);
+            case SystemService::$diamondLevelId:
                 /* 平级奖分佣 */
                 $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $parent, $allParent);
                 break;

@@ -360,10 +360,10 @@ class UserRebateService
         try {
             $diamondParent = $this->getParentByLevelAndUid($allParent, SystemService::$diamondLevelId,
                 $parent[ 'user_id' ]);
-            if (empty($goldParent)) {
+            if (empty($diamondParent)) {
                 $uid = $platformUid;
             } else {
-                $uid = $goldParent[ 'user_id' ];
+                $uid = $diamondParent[ 'user_id' ];
             }
             /* 计算极差奖比例 */
             $shareScale = $this->LevelRangeScale(SystemService::$goldLevelId, SystemService::$diamondLevelId);
@@ -569,7 +569,7 @@ class UserRebateService
                 $diamond_num_total, $diamond_num_live, $diamond_num_ban, $diamond_live_id_arr, $diamond_ban_id_arr,
             ] = $this->countUserBanNum($diamond_list);
             /** 分别计算可平分金额 */
-            $date = empty($date) ? date('Ymd') : $date;
+            $date = empty($date) ? date('Ymd', strtotime('-1 days')) : $date;
             $amountInfo = WeightRewards::whereCountDate($date)->whereIsDeal(0)->first();
             if (empty($amountInfo)) {
                 throw new Exception($date.'已经处理或未产生数据');

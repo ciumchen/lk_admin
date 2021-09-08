@@ -86,6 +86,7 @@ class UserRelationService
                 $insert_batch[ $i ][ 'integral' ] = $item->integral ?? 0;
                 $insert_batch[ $i ][ 'invite_id' ] = $item->invite_uid ?? 0;
                 $insert_batch[ $i ][ 'is_verified' ] = $item->is_auth == 2 ? 1 : 0;
+                $insert_batch[ $i ][ 'is_vip' ] = $item->member_status ?? 0;
                 $i++;
                 return $insert_batch;
             });
@@ -185,7 +186,7 @@ class UserRelationService
             // 根节点
             $sql2 = "UPDATE `user_level_relation` SET pid_route = '', `rating` = 0 WHERE `rating` = -1 AND invite_id = 0; ";
             // 无限下级
-            $sql3 = "UPDATE `user_level_relation` a,user_level_relation b SET a.pid_route = IF( b.rating, concat( b.pid_route, ',', a.invite_id ), a.invite_id ), a.`rating` = b.`rating` + 1 WHERE	a.`rating` = - 1 	AND a.invite_id = b.id 	AND b.`rating` > - 1;";
+            $sql3 = "UPDATE `user_level_relation` a,user_level_relation b SET a.pid_route = IF( b.rating, concat( b.pid_route, ',', a.invite_id ), a.invite_id ), a.`rating` = b.`rating` + 1 WHERE	a.`rating` = - 1 	AND a.invite_id = b.user_id 	AND b.`rating` > - 1;";
             // 增加pid_route前后的分隔符
 //            $sql4 = "UPDATE `user_level_relation` a SET  pid_route=IF(a.rating,concat(',',a.pid_route,','),a.invite_id) where a.rating > -1";
             $res1 = DB::update($sql1);

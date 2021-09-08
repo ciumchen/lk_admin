@@ -173,7 +173,7 @@ class UserRebateService
                     $allParent);
             case SystemService::$silverLevelId: /* 银卡从上级找金卡 */
                 /* 平级奖分佣 */
-                $origin_parent = empty($parent) ? [] : $this->getParentByLevelAndUid($allParent,
+                $origin_parent = empty($origin_parent) ? [] : $this->getParentByLevelAndUid($allParent,
                     SystemService::$silverLevelId,
                     $origin_parent[ 'user_id' ]);
                 $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $origin_parent, $allParent,
@@ -182,7 +182,7 @@ class UserRebateService
                     $allParent);
             case SystemService::$goldLevelId: /* 金卡从上级找钻石卡 */
                 /* 平级奖分佣 */
-                $origin_parent = empty($parent) ? [] : $this->getParentByLevelAndUid($allParent,
+                $origin_parent = empty($origin_parent) ? [] : $this->getParentByLevelAndUid($allParent,
                     SystemService::$goldLevelId,
                     $origin_parent[ 'user_id' ]);
                 $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $origin_parent, $allParent,
@@ -191,7 +191,7 @@ class UserRebateService
                     $allParent);
             case SystemService::$diamondLevelId:
                 /* 平级奖分佣 */
-                $origin_parent = empty($parent) ? [] : $this->getParentByLevelAndUid($allParent,
+                $origin_parent = empty($origin_parent) ? [] : $this->getParentByLevelAndUid($allParent,
                     SystemService::$diamondLevelId,
                     $origin_parent[ 'user_id' ]);
                 $this->sameLevel($order, $user, $assetsType, $platformUid, $userLevelInfo, $origin_parent, $allParent,

@@ -737,7 +737,7 @@ class UserRebateService
     {
         $target_parent = [];
         foreach ($parents as $row) {
-            if ($row[ 'level_id' ] == $level && $row[ 'user_id' ] <= $uid) {
+            if ($row[ 'level_id' ] == $level && $row[ 'user_id' ] < $uid) {
                 $target_parent = $row;
                 break;
             }

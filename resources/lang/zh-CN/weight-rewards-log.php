@@ -1,7 +1,8 @@
 <?php 
 return [
     'labels' => [
-        'WeightRewardsLog' => 'WeightRewardsLog',
+        'WeightRewardsLog' => '加权平分记录',
+        'weight-reward-log' => '加权平分记录',
     ],
     'fields' => [
         'order_no' => '订单号',

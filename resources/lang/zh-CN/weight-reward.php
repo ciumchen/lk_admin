@@ -1,7 +1,8 @@
 <?php 
 return [
     'labels' => [
-        'WeightReward' => 'WeightReward',
+        'WeightReward' => '加权平分累计',
+        'weight-reward' => '加权平分累计',
     ],
     'fields' => [
         'count_date' => '统计日期',

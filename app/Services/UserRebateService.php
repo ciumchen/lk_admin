@@ -667,7 +667,7 @@ class UserRebateService
             }
             foreach ($diamond_live_id_arr as &$uid) {
                 AssetsService::BalancesChange3("{$date}", $uid, $AssetsType, $AssetsType->assets_name,
-                    $platformDiamondAmount,
+                    $diamondShareAmount,
                     AssetsLogs::OPERATE_TYPE_INVITE_REBATE, '钻石卡平分奖');
             }
             unset($uid);

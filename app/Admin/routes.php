@@ -115,6 +115,10 @@ Route::group(
 
         //购物卡兑换录单列表
         $router->resource('gwk-log', 'GwkLogController');
+        /* 加权平分每日累计 */
+        $router->resource('weight-reward', 'WeightRewardController');
+        /* 加权评分记录 */
+        $router->resource('weight-reward-log', 'WeightRewardsLogController');
     }
 );
 Route::group(

@@ -39,4 +39,18 @@ class WeightRewards extends Model
     use HasFactory;
     
     protected $table = 'weight_rewards';
+    
+    const IS_DEAL_NO  = 0;
+    
+    const IS_DEAL_YES = 1;
+    
+    public static $isDealText = [
+        self::IS_DEAL_NO  => '否',
+        self::IS_DEAL_YES => '是',
+    ];
+    
+    public static $isDealStyle = [
+        self::IS_DEAL_NO  => 'dark',
+        self::IS_DEAL_YES => 'success',
+    ];
 }

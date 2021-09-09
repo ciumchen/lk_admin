@@ -456,7 +456,7 @@ class UserRebateService
                 $platformUid = SystemService::$platformId;
             }
             if (isset($parent[ 'level_id' ])&&$parent[ 'level_id' ] == SystemService::$silverLevelId) {
-                $sameLevelParent = empty($parent) ? [] : $this->getParentByLevelAndUid($allParent,
+                $sameLevelParent = empty($parent) ? [] : $this->getParentByLevelAndUidEgt($allParent,
                     $parent[ 'level_id' ],
                     $parent[ 'user_id' ]);
             } else {
@@ -469,6 +469,7 @@ class UserRebateService
             } else {
                 $uid = $sameLevelParent[ 'user_id' ];
             }
+            $uid = $platformUid;
             $LevelCache = self::getLevelCache();
             $shareScale = $LevelCache[ $level_id ][ 'same_level_rewards_ratio' ];
             $shareAmount = bcmul($order->profit_price, bcdiv($shareScale, 100, 6), 6);

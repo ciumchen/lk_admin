@@ -552,6 +552,7 @@ class UserRebateService
         try {
             $weightRewardsLog = new WeightRewardsLog();
             $weightRewardsLog->order_no = $order->order_no;
+            $weightRewardsLog->count_date = date('Ymd');
             $weightRewardsLog->silver_money = $silverShareAmount;
             $weightRewardsLog->gold_money = $goldShareAmount;
             $weightRewardsLog->diamond_money = $diamondShareAmount;

@@ -387,7 +387,7 @@ class UserRebateService
                 $level_id = $parent[ 'level_id' ] ?? SystemService::$vipLevelID;
             } else {
                 $uid = $diamondParent[ 'user_id' ];
-                $level_id = $diamondParent[ 'level_id' ];
+                $level_id = $parent[ 'level_id' ] ?? SystemService::$vipLevelID;
             }
             /* 计算极差奖比例 */
             $shareScale = $this->LevelRangeScale($level_id, SystemService::$diamondLevelId);
@@ -455,8 +455,15 @@ class UserRebateService
             if (intval($platformUid) == 0) {
                 $platformUid = SystemService::$platformId;
             }
-            $sameLevelParent = empty($parent) ? [] : $this->getParentByLevelAndUid($allParent, $parent[ 'level_id' ],
-                $parent[ 'user_id' ]);
+            if ($parent[ 'level_id' ] == SystemService::$silverLevelId) {
+                $sameLevelParent = empty($parent) ? [] : $this->getParentByLevelAndUidEgt($allParent,
+                    $parent[ 'level_id' ],
+                    $parent[ 'user_id' ]);
+            } else {
+                $sameLevelParent = empty($parent) ? [] : $this->getParentByLevelAndUid($allParent,
+                    $parent[ 'level_id' ],
+                    $parent[ 'user_id' ]);
+            }
             if (empty($sameLevelParent)) {
                 $uid = $platformUid;
             } else {
@@ -761,6 +768,18 @@ class UserRebateService
      * @date   2021/9/3 0003
      */
     public function getParentByLevelAndUid($parents, $level, $uid)
+    {
+        $target_parent = [];
+        foreach ($parents as $row) {
+            if ($row[ 'level_id' ] == $level && $row[ 'user_id' ] < $uid) {
+                $target_parent = $row;
+                break;
+            }
+        }
+        return $target_parent;
+    }
+    
+    public function getParentByLevelAndUidEgt($parents, $level, $uid)
     {
         $target_parent = [];
         foreach ($parents as $row) {

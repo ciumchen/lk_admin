@@ -455,7 +455,7 @@ class UserRebateService
             if (intval($platformUid) == 0) {
                 $platformUid = SystemService::$platformId;
             }
-            if (isset($parent[ 'level_id' ])&&$parent[ 'level_id' ] == SystemService::$silverLevelId) {
+            if (isset($parent[ 'level_id' ]) && $parent[ 'level_id' ] == SystemService::$silverLevelId) {
                 $sameLevelParent = empty($parent) ? [] : $this->getParentByLevelAndUidEgt($allParent,
                     $parent[ 'level_id' ],
                     $parent[ 'user_id' ]);
@@ -511,6 +511,7 @@ class UserRebateService
             $diamondShareAmount = bcmul($order->profit_price, bcdiv($diamondShareScale, 100, 6), 6);
             /* 奖金放入当日累计金额 */
             $WeightRewards = WeightRewards::whereCountDate(date('Ymd'))->firstOrNew();
+            $WeightRewards->count_date = date('Ymd');
             $WeightRewards->save();
             $WeightRewards->increment('silver_money', $silverShareAmount);
             $WeightRewards->increment('gold_money', $goldShareAmount);
@@ -550,6 +551,7 @@ class UserRebateService
     ) {
         try {
             $weightRewardsLog = new WeightRewardsLog();
+            $weightRewardsLog->order_no = $order->order_no;
             $weightRewardsLog->silver_money = $silverShareAmount;
             $weightRewardsLog->gold_money = $goldShareAmount;
             $weightRewardsLog->diamond_money = $diamondShareAmount;

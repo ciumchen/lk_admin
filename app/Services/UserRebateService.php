@@ -456,7 +456,7 @@ class UserRebateService
                 $platformUid = SystemService::$platformId;
             }
             if (isset($parent[ 'level_id' ])&&$parent[ 'level_id' ] == SystemService::$silverLevelId) {
-                $sameLevelParent = empty($parent) ? [] : $this->getParentByLevelAndUidEgt($allParent,
+                $sameLevelParent = empty($parent) ? [] : $this->getParentByLevelAndUid($allParent,
                     $parent[ 'level_id' ],
                     $parent[ 'user_id' ]);
             } else {

@@ -83,7 +83,8 @@ class GatherOrder extends Form
                     $orderDataInfo = GatherTrade::where('oid', $order->id)->first()->toArray();
                 }
                 //返佣
-                $this->encourage($order, $customer, $business, $orderDataInfo[ 'order_no' ]);
+//                $this->encourage($order, $customer, $business, $orderDataInfo[ 'order_no' ]);
+                (new VerifyOrder())->encourage($order, $customer, $business, $orderDataInfo[ 'order_no' ]);
             } else {
                 $order->remark = $remark;
             }

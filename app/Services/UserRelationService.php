@@ -363,8 +363,8 @@ WHERE
 UPDATE user_level_relation
 SET level_id ={$UserLevel->id}
 WHERE
-direct_silver_num > {$UserLevel->direct_num}
-AND team_silver_num > {$UserLevel->team_num}
+direct_silver_num >= {$UserLevel->direct_num}
+AND team_silver_num >= {$UserLevel->team_num}
 AND level_id < {$UserLevel->id};
         ";
             $res = DB::update($sql);

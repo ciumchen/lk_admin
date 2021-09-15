@@ -95,7 +95,13 @@ padding: .24em .6em .34em;line-height: 1;text-align: center;white-space: nowrap;
             ]);
 
 
-
+            $grid->column('payment_method')->display(function (){
+                if($this->payment_method=='gwk'){
+                    return Order::$ORDER_FROM[$this->payment_method];
+                }else{
+                    return '未知支付';
+                }
+            });
             $grid->column('name');
 //            $grid->column('remark');
             $grid->column('created_at');
@@ -131,6 +137,9 @@ padding: .24em .6em .34em;line-height: 1;text-align: center;white-space: nowrap;
                 //支付状态
                 $filter->equal('pay_status')->select(function () {
                     return Order::$pay_status;
+                });
+                $filter->equal('payment_method')->select(function () {
+                    return Order::$ORDER_FROM;
                 });
                 $filter->between('updated_at')->datetime();
             });

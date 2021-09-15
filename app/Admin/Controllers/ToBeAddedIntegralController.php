@@ -97,7 +97,7 @@ padding: .24em .6em .34em;line-height: 1;text-align: center;white-space: nowrap;
 
             $grid->column('payment_method')->display(function (){
                 if($this->payment_method=='gwk'){
-                    return Order::$ORDER_FROM[$this->payment_method];
+                    return '购物卡';
                 }else{
                     return '';
                 }

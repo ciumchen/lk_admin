@@ -99,7 +99,7 @@ padding: .24em .6em .34em;line-height: 1;text-align: center;white-space: nowrap;
                 if($this->payment_method=='gwk'){
                     return Order::$ORDER_FROM[$this->payment_method];
                 }else{
-                    return '未知支付';
+                    return '';
                 }
             });
             $grid->column('name');
